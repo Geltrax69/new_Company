@@ -327,11 +327,11 @@ main { display: flex; flex-direction: column; }
 .case-index { position: absolute; top: 50%; left: 50%; transform: translate(-50%,-55%); font-size: 280px; font-weight: 700; line-height: 1; color: var(--color-mist); z-index: 0; pointer-events: none; user-select: none; }
 .case-copy { position: relative; z-index: 1; }
 .case-year { display: inline-block; font-size: var(--text-caption); letter-spacing: .08em; text-transform: uppercase; color: var(--color-snow); background: var(--color-obsidian); padding: 4px 10px; border-radius: 100px; margin-bottom: 14px; }
-.case h2 { font-size: var(--text-heading-lg); line-height: var(--leading-heading-lg); margin: 0 0 6px; }
+.case h2 { font-size: var(--text-heading-lg); line-height: var(--leading-heading-lg); margin: 0 0 6px; text-wrap: balance; }
 .case .case-tag { color: var(--color-steel); font-size: var(--text-body-lg); margin: 0 0 20px; }
-.case-quote { position: relative; font-size: var(--text-subheading); line-height: var(--leading-subheading); font-weight: 500; color: var(--color-ink); padding-left: 20px; margin: 0 0 20px; }
+.case-quote { position: relative; font-size: var(--text-subheading); line-height: var(--leading-subheading); font-weight: 500; color: var(--color-ink); padding-left: 20px; margin: 0 0 20px; text-wrap: pretty; }
 .case-quote::before { content: '“'; position: absolute; left: -6px; top: -14px; font-size: 56px; font-weight: 700; color: var(--case-accent, var(--color-ember)); font-family: Georgia, serif; }
-.case-desc { color: var(--color-slate); font-size: var(--text-body-lg); line-height: var(--leading-body-lg); margin: 0 0 24px; }
+.case-desc { color: var(--color-slate); font-size: var(--text-body-lg); line-height: var(--leading-body-lg); margin: 0 0 24px; text-wrap: pretty; }
 .case-link { font-weight: 600; color: var(--color-obsidian); }
 .case-visual { position: relative; z-index: 1; display: flex; justify-content: center; }
 
@@ -339,20 +339,27 @@ main { display: flex; flex-direction: column; }
 .device-stage { position: relative; display: flex; flex-direction: column; align-items: center; perspective: 1200px; }
 .device-glow { position: absolute; inset: -40px; background: radial-gradient(closest-side, color-mix(in srgb, var(--glow, var(--color-ember)) 35%, transparent), transparent 70%); filter: blur(20px); z-index: 0; }
 .device { position: relative; z-index: 1; display: flex; flex-direction: column; align-items: center; transform-style: preserve-3d; will-change: transform; }
-.device-screen { position: relative; overflow: hidden; background: #000; width: 100%; }
+.device-screen { position: relative; overflow: hidden; background: #000; width: 100%; outline: 1px solid oklch(0 0 0 / 0.1); outline-offset: -1px; }
 .device-slide { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
 
-.device-phone { width: 230px; }
-.device-phone .device-screen { aspect-ratio: 1206/2622; border-radius: 34px; border: 10px solid var(--color-obsidian); box-shadow: 0 40px 70px -20px rgba(0,0,0,.4); }
-.device-phone .device-notch { position: absolute; top: 10px; left: 50%; transform: translateX(-50%); width: 70px; height: 18px; background: var(--color-obsidian); border-radius: 100px; z-index: 2; }
+.device-phone { width: 300px; position: relative; }
+.device-phone .device-screen { aspect-ratio: 1206/2622; border-radius: 42px; border: 12px solid var(--color-obsidian); box-shadow: 0 50px 90px -24px rgba(0,0,0,.42), inset 0 0 0 1.5px rgba(255,255,255,.08); }
+.device-phone .device-notch { position: absolute; top: 24px; left: 50%; transform: translateX(-50%); width: 94px; height: 28px; background: #000; border-radius: 100px; z-index: 2; box-shadow: inset 0 0 0 1px rgba(255,255,255,.06); }
+.device-phone .device-notch::after { content: ''; position: absolute; top: 50%; right: 10px; width: 8px; height: 8px; border-radius: 50%; transform: translateY(-50%); background: radial-gradient(circle at 35% 35%, #3a3a3c, #0a0a0a 70%); }
+.device-phone .device-btn { position: absolute; background: linear-gradient(90deg, var(--color-graphite), var(--color-obsidian)); border-radius: 3px; z-index: 0; }
+.device-phone .btn-power { right: -3px; top: 120px; width: 3px; height: 54px; }
+.device-phone .btn-vol1 { left: -3px; top: 96px; width: 3px; height: 30px; }
+.device-phone .btn-vol2 { left: -3px; top: 134px; width: 3px; height: 54px; }
 
-.device-desktop { width: 100%; max-width: 420px; }
-.device-desktop .device-screen { aspect-ratio: 16/10; border-radius: 10px; border: 10px solid #d8d9dc; box-shadow: 0 40px 70px -20px rgba(0,0,0,.35); }
-.device-desktop .device-stand { width: 54px; height: 34px; background: linear-gradient(#e4e5e8,#c7c8cc); border-radius: 0 0 10px 10px; margin-top: -2px; }
-.device-desktop::after { content: ''; width: 150px; height: 8px; background: #c7c8cc; border-radius: 100px; margin-top: 6px; }
+.device-desktop { width: 100%; max-width: 560px; position: relative; }
+.device-desktop .device-screen { aspect-ratio: 16/10; border-radius: 12px; border: 16px solid #e4e5e8; box-shadow: 0 50px 90px -24px rgba(0,0,0,.38), inset 0 0 0 1px #c7c8cc; }
+.device-desktop .device-cam { position: absolute; top: 6px; left: 50%; transform: translateX(-50%); width: 7px; height: 7px; border-radius: 50%; background: radial-gradient(circle at 35% 35%, #444, #000 70%); z-index: 2; }
+.device-desktop .device-stand { width: 90px; height: 58px; background: linear-gradient(180deg, #ececee, #c7c8cc 60%, #b7b8bc); border-radius: 0 0 6px 6px; margin-top: -2px; box-shadow: inset 1px 0 0 rgba(255,255,255,.6), inset -1px 0 0 rgba(0,0,0,.08); }
+.device-desktop::after { content: ''; width: 210px; height: 12px; background: linear-gradient(180deg, #d4d5d8, #b7b8bc); border-radius: 100px; margin-top: 6px; box-shadow: 0 1px 2px rgba(0,0,0,.08); }
 
 .device-dots { position: relative; z-index: 1; display: flex; gap: 6px; margin-top: 16px; }
-.device-dots span { width: 6px; height: 6px; border-radius: 50%; background: var(--color-pebble); cursor: pointer; transition: background .2s ease; }
+.device-dots span { position: relative; width: 6px; height: 6px; border-radius: 50%; background: var(--color-pebble); cursor: pointer; transition: background .2s ease; }
+.device-dots span::before { content: ''; position: absolute; inset: -17px; }
 .device-dots span.on { background: var(--color-obsidian); }
 
 @media (max-width: 860px) {

@@ -55,8 +55,20 @@ export default function DeviceShowcase({ images, kind = 'phone', interval = 2800
             />
           ))}
         </div>
-        {kind === 'phone' && <div className="device-notch" />}
-        {kind === 'desktop' && <div className="device-stand" />}
+        {kind === 'phone' && (
+          <>
+            <div className="device-notch" />
+            <div className="device-btn btn-power" />
+            <div className="device-btn btn-vol1" />
+            <div className="device-btn btn-vol2" />
+          </>
+        )}
+        {kind === 'desktop' && (
+          <>
+            <div className="device-cam" />
+            <div className="device-stand" />
+          </>
+        )}
       </div>
       <div className="device-dots">
         {images.map((_, i) => (
