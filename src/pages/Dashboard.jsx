@@ -56,7 +56,7 @@ export default function Dashboard() {
         <div className="dash-plan">
           <strong>Pro plan</strong>
           <span>Renews in 18 days</span>
-          <Button as={Link} to="/pricing" variant="outline">Manage</Button>
+          <Button as={Link} to="/book" variant="outline">Manage</Button>
         </div>
       </aside>
 

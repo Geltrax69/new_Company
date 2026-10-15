@@ -1,7 +1,6 @@
 import { BrowserRouter, Routes, Route } from 'react-router-dom'
 import Layout from './components/Layout.jsx'
 import Home from './pages/Home.jsx'
-import Pricing from './pages/Pricing.jsx'
 import Work from './pages/Work.jsx'
 import Love from './pages/Love.jsx'
 import About from './pages/About.jsx'
@@ -15,7 +14,6 @@ export default function App() {
       <Routes>
         <Route element={<Layout />}>
           <Route index element={<Home />} />
-          <Route path="pricing" element={<Pricing />} />
           <Route path="work" element={<Work />} />
           <Route path="services" element={<Services />} />
           <Route path="about" element={<About />} />

@@ -12,6 +12,9 @@ import BentoCard from '../components/BentoCard.jsx'
 import TagPill from '../components/TagPill.jsx'
 import CompanyCard from '../components/CompanyCard.jsx'
 import StepCard from '../components/StepCard.jsx'
+import CubesGrid from '../components/CubesGrid.jsx'
+import ImageCycle from '../components/ImageCycle.jsx'
+import CountUp from '../components/CountUp.jsx'
 import useDocumentTitle from '../useDocumentTitle.js'
 import useScrollDrift from '../useScrollDrift.js'
 
@@ -20,14 +23,14 @@ const SERVICES = [
     title: 'Web & product',
     bg: '#0f0f10',
     tagTone: 'overlay',
-    preview: <div className="prev-window"><span></span><span></span><span></span></div>,
+    preview: <ImageCycle images={['/work/school/phone-1.webp', '/work/sepaktakraw/desktop-1.webp', '/work/uniminute/phone-3.webp', '/work/scoreboard/desktop-2.webp']} />,
     tags: ['Web', 'UX/UI design', 'Mobile app'],
   },
   {
     title: 'Graphic design & marketing material',
     bg: '#13351f',
     tagTone: 'overlay',
-    preview: <div className="prev-swatches"><i style={{ background: '#7a1f3d' }} /><i style={{ background: '#1f5132' }} /><i style={{ background: '#f4c7d4' }} /><i style={{ background: '#caf06b' }} /></div>,
+    preview: <div className="prev-swatches"><i style={{ background: '#6d28d9' }} /><i style={{ background: '#1d4ed8' }} /><i style={{ background: '#16a34a' }} /><i style={{ background: '#d97706' }} /></div>,
     tags: ['Social media creative', 'Banners', 'Pitch decks', 'Packaging', 'Email design', 'Any graphic material'],
   },
 ]
@@ -122,6 +125,7 @@ export default function Home() {
   return (
     <>
       <Section className="hero">
+        <CubesGrid />
         <Reveal className="hero-left">
           <h1 className="display">
             Less <CycleWord words={['manual work', 'paperwork', 'chaos', 'guesswork']} />, more impact
@@ -174,11 +178,11 @@ export default function Home() {
         <Reveal><h2 className="heading center">Education, but smarter</h2></Reveal>
         <div className="bento">
           <Reveal><BentoCard tone="mist">
-            <span className="num">4</span><span className="lbl">Products deployed</span>
+            <span className="num"><CountUp to={4} /></span><span className="lbl">Products deployed</span>
             <div className="bento-logos"><span>Simpedu</span><span>HSTA</span><span>ScoreBoard</span><span>Uniminute</span></div>
           </BentoCard></Reveal>
           <Reveal delay={0.05}><BentoCard tone="mist">
-            <span className="num">100%</span><span className="lbl">Built in-house</span>
+            <span className="num"><CountUp to={100} suffix="%" /></span><span className="lbl">Built in-house</span>
             <div className="bento-orb" />
           </BentoCard></Reveal>
           <Reveal delay={0.1}><BentoCard tone="dark" span="bento-tall">
@@ -186,7 +190,7 @@ export default function Home() {
             <div className="t-head light"><strong>Simpedu LLP</strong><span>Born in education — now expanding into new fields</span></div>
           </BentoCard></Reveal>
           <Reveal delay={0.15}><BentoCard tone="mist">
-            <span className="num">2+</span><span className="lbl">Fields served — education & sports</span>
+            <span className="num"><CountUp to={2} suffix="+" /></span><span className="lbl">Fields served — education & sports</span>
           </BentoCard></Reveal>
           <Reveal delay={0.2}><BentoCard tone="mist" span="bento-wide">
             <div className="bento-skills">
@@ -194,7 +198,7 @@ export default function Home() {
             </div>
           </BentoCard></Reveal>
           <Reveal delay={0.25}><BentoCard tone="mist">
-            <span className="num">1</span><span className="lbl">In-house team, from design to deployment</span>
+            <span className="num"><CountUp to={1} /></span><span className="lbl">In-house team, from design to deployment</span>
           </BentoCard></Reveal>
         </div>
       </Section>

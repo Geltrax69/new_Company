@@ -33,7 +33,6 @@ export default function NavBar() {
 
       <nav className={`nav-links ${open ? 'is-open' : ''}`}>
         <Dropdown label="Our work" to="/work" items={WORK_MENU} />
-        <NavLink to="/pricing" onClick={close}>Pricing</NavLink>
         <Dropdown label="Services & solutions" to="/services" items={SERVICES_MENU} />
         <NavLink to="/about" onClick={close}>About us</NavLink>
         <NavLink to="/blog" onClick={close}>Blog</NavLink>

@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom'
 
 const COLUMNS = [
-  ['Product', [['Pricing', '/pricing'], ['Our work', '/work'], ['Services', '/services'], ['How it works', '/#how']]],
+  ['Product', [['Our work', '/work'], ['Services', '/services'], ['How it works', '/#how']]],
   ['Company', [['About us', '/about'], ['Blog', '/blog'], ['Love', '/love'], ['Careers', '/apply']]],
   ['Resources', [['Book a demo', '/book'], ['Contact us', '/work#contact'], ['Log in', '/login'], ['Privacy', '/privacy'], ['Terms', '/terms']]],
 ]

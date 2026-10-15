@@ -78,7 +78,8 @@ main { display: flex; flex-direction: column; }
 .yc-dot { background: var(--color-ember); color: #fff; border-radius: 50%; width: 16px; height: 16px; display: inline-flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; }
 
 /* ---- Hero ---- */
-.hero { display: grid; grid-template-columns: 1.35fr 1fr; gap: 48px; align-items: end; padding-top: 56px; padding-bottom: 56px; }
+.hero { position: relative; overflow: hidden; display: grid; grid-template-columns: 1.35fr 1fr; gap: 48px; align-items: end; padding-top: 56px; padding-bottom: 56px; }
+.hero > .hero-left, .hero > .hero-right { position: relative; z-index: 1; }
 .hero-left { display: flex; flex-direction: column; gap: 28px; }
 .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; }
 .cycle-word { color: var(--color-ash); transition: opacity .35s ease; }
@@ -110,14 +111,13 @@ main { display: flex; flex-direction: column; }
 .services-scroll::-webkit-scrollbar { display: none; }
 .service-card { scroll-snap-align: start; flex: none; width: 420px; min-height: 520px; border-radius: 32px; background: var(--bg); color: #fff; padding: 28px; display: flex; flex-direction: column; transition: transform .3s ease; }
 .service-card:hover { transform: translateY(-6px); }
-.service-preview { flex: 1; border-radius: 20px; background: rgba(255,255,255,.04); margin-bottom: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
+.service-preview { position: relative; flex: 1; border-radius: 20px; background: rgba(255,255,255,.04); margin-bottom: 20px; display: flex; align-items: center; justify-content: center; overflow: hidden; }
 .service-title { font-size: var(--text-heading); font-weight: 600; margin-bottom: 16px; line-height: 1.15; }
 .service-tags { display: flex; flex-wrap: wrap; gap: 8px; }
-.prev-window { display: flex; gap: 8px; }
-.prev-window span { width: 60px; height: 8px; border-radius: 100px; background: rgba(255,255,255,.3); }
-.prev-swatches { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; padding: 24px; width: 100%; height: 100%; }
+.prev-swatches { position: absolute; inset: 0; display: grid; grid-template-columns: 1fr 1fr; grid-template-rows: 1fr 1fr; gap: 10px; padding: 24px; }
 .prev-swatches i { border-radius: 12px; }
-.prev-play { font-size: 48px; color: rgba(255,255,255,.5); letter-spacing: 6px; }
+.image-cycle { position: absolute; inset: 0; }
+.image-cycle img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: top; }
 
 /* ---- Tag pills ---- */
 .tagpill { font-size: var(--text-body); font-weight: 500; border-radius: 100px; padding: 7px 14px; white-space: nowrap; }
@@ -160,7 +160,7 @@ main { display: flex; flex-direction: column; }
 .bento-card .lbl { font-size: var(--text-body-lg); color: var(--color-steel); }
 .bento-logos { margin-top: auto; display: flex; gap: 16px; color: var(--color-ash); font-weight: 600; opacity: .6; }
 .bento-orb { position: absolute; right: -20px; bottom: -20px; width: 120px; height: 120px; border-radius: 50%; background: conic-gradient(from 0deg, var(--color-ember), var(--color-graphite), var(--color-pebble), var(--color-ember)); filter: blur(2px); animation: spin 14s linear infinite; }
-.bento-portrait { position: absolute; inset: 0; background: linear-gradient(160deg, #2a3f5f, #5a7a9a); }
+.bento-portrait { position: absolute; inset: 0; background: linear-gradient(160deg, rgba(20,20,30,.15), rgba(10,10,15,.75)), url('/work/sepaktakraw/desktop-2.webp') center/cover; }
 .bento-dark .t-head { position: relative; z-index: 1; }
 .bento-skills { display: flex; flex-wrap: wrap; gap: 8px; align-content: center; height: 100%; }
 @keyframes spin { to { transform: rotate(360deg); } }
@@ -299,26 +299,6 @@ main { display: flex; flex-direction: column; }
   -webkit-mask-composite: source-in;
 }
 
-/* Pricing */
-.price-toggle { display: inline-flex; gap: 4px; background: var(--color-mist); border-radius: 100px; padding: 4px; margin: 24px auto 8px; }
-.price-toggle button { border: none; background: none; cursor: pointer; font-family: inherit; font-size: var(--text-body); font-weight: 500; color: var(--color-steel); padding: 10px 20px; border-radius: 100px; display: inline-flex; align-items: center; gap: 8px; transition: background .2s ease, color .2s ease; }
-.price-toggle button.active { background: var(--color-snow); color: var(--color-obsidian); box-shadow: var(--shadow-md); }
-.price-toggle .save { font-size: var(--text-caption); background: var(--color-ember); color: #fff; padding: 2px 6px; border-radius: 6px; }
-.price-grid { display: grid; grid-template-columns: repeat(3,1fr); gap: 20px; padding-top: 32px; padding-bottom: 40px; align-items: start; }
-.price-card { background: var(--color-snow); border: 1px solid var(--color-fog); border-radius: 28px; padding: 28px; display: flex; flex-direction: column; gap: 16px; position: relative; transition: transform .3s cubic-bezier(0.16,1,0.3,1); }
-.price-card:hover { transform: translateY(-6px); }
-.price-featured { background: var(--color-obsidian); border-color: var(--color-obsidian); color: #fff; }
-.price-featured .heading-sm, .price-featured .price-amount .num { color: #fff; }
-.price-tag { position: absolute; top: 20px; right: 20px; background: var(--color-ember); color: #fff; font-size: var(--text-caption); font-weight: 600; padding: 4px 10px; border-radius: 100px; }
-.price-blurb { color: var(--color-steel); font-size: var(--text-body); min-height: 44px; }
-.price-featured .price-blurb { color: var(--color-ash); }
-.price-amount { display: flex; align-items: baseline; gap: 6px; }
-.price-amount .num { font-size: var(--text-display-sm); font-weight: 700; color: var(--color-obsidian); }
-.price-amount .per { color: var(--color-steel); font-size: var(--text-body); }
-.price-card .btn { width: 100%; }
-.price-features { list-style: none; display: flex; flex-direction: column; gap: 10px; margin-top: 4px; }
-.price-features li { font-size: var(--text-body); color: var(--color-steel); }
-.price-featured .price-features li { color: var(--color-ash); }
 
 /* Case studies */
 .case-list { position: relative; }
@@ -520,7 +500,7 @@ main { display: flex; flex-direction: column; }
   .nav-mobile-cta .btn { width: 100%; }
 
   /* New pages */
-  .price-grid, .work-gallery, .blog-grid, .about-stats { grid-template-columns: 1fr; }
+  .work-gallery, .blog-grid, .about-stats { grid-template-columns: 1fr; }
   .values-grid, .service-groups { grid-template-columns: 1fr; }
   .love-wall { columns: 1; }
   .footer-top { grid-template-columns: 1fr 1fr; }
