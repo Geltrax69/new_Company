@@ -115,19 +115,37 @@ export default function Home() {
   const [activeCap, setActiveCap] = useState(0)
   return (
     <>
-      <Section className="hero">
+      <Section className="hero hero-product">
         <Reveal className="hero-left">
           <h1 className="display">
-            Less <span className="hero-emphasis">manual work</span>, more impact
+            Complex work.<br />Beautifully simplified.
           </h1>
-        </Reveal>
-        <Reveal className="hero-right" delay={0.1}>
           <p className="body-lg">
             We're Simpedu LLP — a software company born in education, now
             building across fields. From school management systems to live
             sports scoreboards, we design and ship products that cut the manual work.
           </p>
-          <EmailForm cta="Book demo" type="demo" />
+          <div className="hero-actions">
+            <Link to="/work" className="btn btn-pill">Explore our work</Link>
+            <Link to="/book" className="btn btn-outline">Book demo</Link>
+          </div>
+        </Reveal>
+        <Reveal className="hero-right hero-visual" delay={0.1}>
+          <div className="hero-device-stack">
+            <img
+              src="/work/school/desktop-1.webp"
+              alt="Simpedu school management dashboard showing student statistics and charts"
+              className="hero-desktop"
+              loading="eager"
+            />
+            <img
+              src="/work/school/phone-7.webp"
+              alt="Simpedu teacher mobile view"
+              className="hero-phone"
+              loading="eager"
+            />
+          </div>
+          <p className="hero-caption">Real product screenshots — Simpedu school platform</p>
         </Reveal>
       </Section>
 
