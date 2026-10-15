@@ -14,10 +14,20 @@ const SERVICES_MENU = [
 ]
 
 function Dropdown({ label, to, items }) {
+  const [open, setOpen] = useState(false)
   return (
-    <div className="nav-dd">
-      <NavLink to={to} className="nav-dd-trigger">{label} <span className="caret">⌄</span></NavLink>
-      <div className="nav-dd-menu">
+    <div className="nav-dd" onMouseEnter={() => setOpen(true)} onMouseLeave={() => setOpen(false)}>
+      <NavLink to={to} className="nav-dd-trigger">{label}</NavLink>
+      <button
+        type="button"
+        className="nav-dd-toggle"
+        aria-expanded={open}
+        aria-label={`Show ${label} submenu`}
+        onClick={() => setOpen(!open)}
+      >
+        <span className="caret" aria-hidden="true">⌄</span>
+      </button>
+      <div className={`nav-dd-menu ${open ? 'is-open' : ''}`}>
         {items.map(([t, href]) => <Link key={t} to={href}>{t}</Link>)}
       </div>
     </div>

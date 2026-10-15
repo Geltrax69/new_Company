@@ -40,23 +40,26 @@ export function Services() {
 function FormPage({ eyebrow, title, subtitle, fields, cta, type }) {
   const [done, setDone] = useState(false)
   const [sending, setSending] = useState(false)
+  const [error, setError] = useState('')
   useDocumentTitle(eyebrow)
 
   async function submit(e) {
     e.preventDefault()
     setSending(true)
+    setError('')
     const data = Object.fromEntries(new FormData(e.target).entries())
     try {
-      await fetch('/api/send-email', {
+      const r = await fetch('/api/send-email', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ type, ...data }),
       })
+      if (!r.ok) throw new Error('send failed')
+      setDone(true)
     } catch {
-      // ponytail: don't block the user on our own email delivery hiccup
+      setError('Something went wrong. Please try again, or email us directly at hello@simpedu.in.')
     }
     setSending(false)
-    setDone(true)
   }
 
   return (
@@ -76,6 +79,7 @@ function FormPage({ eyebrow, title, subtitle, fields, cta, type }) {
                     : <input name={f.name} type={f.type || 'text'} required={f.required} placeholder={f.placeholder} />}
                 </label>
               ))}
+              {error && <div className="form-error" role="alert">{error}</div>}
               <Button type="submit" disabled={sending}>{sending ? 'Sending…' : cta}</Button>
             </form>
           )}

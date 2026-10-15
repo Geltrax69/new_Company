@@ -8,13 +8,23 @@ const SHELL = { phone: '/frames/iphone-shell.webp', desktop: '/frames/studio-dis
 // ponytail: plain gsap crossfade timeline, no carousel library — one effect, not a product.
 export default function DeviceShowcase({ images, kind = 'phone', interval = 2800, glow }) {
   const [active, setActive] = useState(0)
+  const [reducedMotion, setReducedMotion] = useState(false)
   const slideRefs = useRef([])
   const tiltRef = useRef(null)
 
   useEffect(() => {
+    const mq = window.matchMedia('(prefers-reduced-motion: reduce)')
+    setReducedMotion(mq.matches)
+    const handler = (e) => setReducedMotion(e.matches)
+    mq.addEventListener('change', handler)
+    return () => mq.removeEventListener('change', handler)
+  }, [])
+
+  useEffect(() => {
+    if (reducedMotion) return
     const id = setInterval(() => setActive((i) => (i + 1) % images.length), interval)
     return () => clearInterval(id)
-  }, [images.length, interval])
+  }, [images.length, interval, reducedMotion])
 
   useEffect(() => {
     slideRefs.current.forEach((el, i) => {

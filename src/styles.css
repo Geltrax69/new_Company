@@ -51,7 +51,7 @@ main { display: flex; flex-direction: column; }
 .nav-dd .caret { font-size: 12px; transition: transform .2s ease; }
 .nav-dd:hover .caret { transform: rotate(180deg); }
 .nav-dd-menu { position: absolute; top: 100%; left: 50%; transform: translateX(-50%) translateY(8px); min-width: 220px; background: var(--color-snow); border: 1px solid var(--color-fog); border-radius: 18px; padding: 8px; display: flex; flex-direction: column; gap: 2px; box-shadow: var(--shadow-md); opacity: 0; visibility: hidden; transition: opacity .2s ease, transform .2s ease; }
-.nav-dd:hover .nav-dd-menu { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(4px); }
+.nav-dd:hover .nav-dd-menu, .nav-dd-menu.is-open { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(4px); }
 .nav-dd-menu a { padding: 10px 14px; border-radius: 12px; }
 .nav-dd-menu a:hover { background: var(--color-mist); color: var(--color-ink); }
 
@@ -79,6 +79,8 @@ main { display: flex; flex-direction: column; }
 
 /* ---- Hero ---- */
 .hero { position: relative; overflow: hidden; display: grid; grid-template-columns: 1.35fr 1fr; gap: 48px; align-items: end; padding-top: 56px; padding-bottom: 56px; }
+.hero > * { min-width: 0; }
+.hero .email-row { max-width: 100%; }
 .hero > .hero-left, .hero > .hero-right { position: relative; z-index: 1; }
 .hero-left { display: flex; flex-direction: column; gap: 28px; }
 .hero-badges { display: flex; gap: 10px; flex-wrap: wrap; }
@@ -105,7 +107,7 @@ main { display: flex; flex-direction: column; }
 .stat .lbl { font-size: 14px; color: var(--color-steel); max-width: 200px; }
 
 /* ---- Services ---- */
-.services { max-width: 100%; padding: 0; }
+.services { max-width: 100%; padding: 0; overflow-x: clip; }
 .services-drift { will-change: transform; }
 .services-scroll { display: flex; gap: 16px; overflow-x: auto; padding: 8px max(24px, calc((100vw - var(--page-max-width)) / 2 + 24px)); scroll-snap-type: x mandatory; scrollbar-width: none; }
 .services-scroll::-webkit-scrollbar { display: none; }
@@ -166,7 +168,7 @@ main { display: flex; flex-direction: column; }
 @keyframes spin { to { transform: rotate(360deg); } }
 
 /* ---- We serve the best ---- */
-.serve { background: var(--color-mist); border-radius: 40px; padding: 56px 0; max-width: 100%; margin: 0; }
+.serve { background: var(--color-mist); border-radius: 40px; padding: 56px 0; max-width: 100%; margin: 0; overflow-x: clip; }
 .serve-head { max-width: var(--page-max-width); margin: 0 auto 32px; padding: 0 40px; }
 .serve-drift { will-change: transform; }
 .serve-scroll { display: flex; gap: 16px; overflow-x: auto; padding: 0 max(40px, calc((100vw - var(--page-max-width)) / 2 + 40px)) 8px; scroll-snap-type: x mandatory; scrollbar-width: none; }
@@ -494,7 +496,7 @@ main { display: flex; flex-direction: column; }
   .nav-right { display: none; }
   .nav-burger { display: flex; }
   .nav-links { position: fixed; inset: 64px 0 auto; flex-direction: column; align-items: stretch; gap: 4px; background: var(--color-snow); border-bottom: 1px solid var(--color-fog); padding: 16px 24px 24px; transform: translateY(-12px); opacity: 0; visibility: hidden; transition: opacity .25s ease, transform .25s ease; }
-  .nav-links.is-open { opacity: 1; visibility: visible; transform: none; }
+  .nav-links.is-open { display: flex; opacity: 1; visibility: visible; transform: none; }
   .nav-dd-menu { position: static; transform: none; opacity: 1; visibility: visible; box-shadow: none; border: none; background: var(--color-mist); margin: 4px 0 8px; min-width: 0; }
   .nav-dd:hover .nav-dd-menu { transform: none; }
   .nav-mobile-cta { display: flex; flex-direction: column; gap: 12px; margin-top: 12px; }
@@ -518,3 +520,10 @@ main { display: flex; flex-direction: column; }
 .prev-type span:nth-child(2) { color: rgba(255,255,255,0.6); }
 .prev-type span:nth-child(3) { color: rgba(255,255,255,0.75); }
 .prev-type span:nth-child(4) { color: rgba(255,255,255,0.5); }
+
+/* Prevent grid/flex blowout: allow children to shrink below content size */
+.bento > *, .approval-grid > *, .why > *, .cap-grid > *, .values-grid > * { min-width: 0; }
+
+/* Systematic overflow fix: allow flex/grid children to shrink */
+main > * { min-width: 0; max-width: 100%; }
+section > * { min-width: 0; }

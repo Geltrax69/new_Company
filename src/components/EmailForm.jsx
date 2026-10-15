@@ -7,11 +7,12 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 // (or under `vercel dev` locally).
 export default function EmailForm({ cta = 'Get started', type = 'lead' }) {
   const [email, setEmail] = useState('')
-  const [state, setState] = useState('idle') // idle | sending | error | done
+  const [state, setState] = useState('idle') // idle | sending | error | sendError | done
+  const [errorMsg, setErrorMsg] = useState('')
 
   async function submit(e) {
     e.preventDefault()
-    if (!EMAIL_RE.test(email)) { setState('error'); return }
+    if (!EMAIL_RE.test(email)) { setState('error'); setErrorMsg('Enter a valid email'); return }
     setState('sending')
     try {
       const r = await fetch('/api/send-email', {
@@ -22,7 +23,8 @@ export default function EmailForm({ cta = 'Get started', type = 'lead' }) {
       if (!r.ok) throw new Error('send failed')
       setState('done')
     } catch {
-      setState('done') // ponytail: don't block the user on our own email delivery hiccup
+      setState('sendError')
+      setErrorMsg('Something went wrong. Please try again.')
     }
   }
 
@@ -40,7 +42,7 @@ export default function EmailForm({ cta = 'Get started', type = 'lead' }) {
         onChange={(e) => { setEmail(e.target.value); if (state === 'error') setState('idle') }}
       />
       <Button type="submit" disabled={state === 'sending'}>{state === 'sending' ? 'Sending…' : cta}</Button>
-      {state === 'error' && <span className="email-err">Enter a valid email</span>}
+      {(state === 'error' || state === 'sendError') && <span className="email-err">{errorMsg}</span>}
     </form>
   )
 }
