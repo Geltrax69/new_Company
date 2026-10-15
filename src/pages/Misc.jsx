@@ -37,9 +37,28 @@ export function Services() {
 }
 
 // --- Generic form page (Book demo / Apply) ---
-function FormPage({ eyebrow, title, subtitle, fields, cta }) {
+function FormPage({ eyebrow, title, subtitle, fields, cta, type }) {
   const [done, setDone] = useState(false)
+  const [sending, setSending] = useState(false)
   useDocumentTitle(eyebrow)
+
+  async function submit(e) {
+    e.preventDefault()
+    setSending(true)
+    const data = Object.fromEntries(new FormData(e.target).entries())
+    try {
+      await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type, ...data }),
+      })
+    } catch {
+      // ponytail: don't block the user on our own email delivery hiccup
+    }
+    setSending(false)
+    setDone(true)
+  }
+
   return (
     <>
       <PageHeader eyebrow={eyebrow} title={title} subtitle={subtitle} />
@@ -48,7 +67,7 @@ function FormPage({ eyebrow, title, subtitle, fields, cta }) {
           {done ? (
             <div className="form-done">✓ Thanks! We've received your details and will reach out shortly.</div>
           ) : (
-            <form className="stack-form" onSubmit={(e) => { e.preventDefault(); setDone(true) }}>
+            <form className="stack-form" onSubmit={submit}>
               {fields.map((f) => (
                 <label key={f.name} className="field">
                   <span>{f.label}</span>
@@ -57,7 +76,7 @@ function FormPage({ eyebrow, title, subtitle, fields, cta }) {
                     : <input name={f.name} type={f.type || 'text'} required={f.required} placeholder={f.placeholder} />}
                 </label>
               ))}
-              <Button type="submit">{cta}</Button>
+              <Button type="submit" disabled={sending}>{sending ? 'Sending…' : cta}</Button>
             </form>
           )}
         </Reveal>
@@ -69,7 +88,7 @@ function FormPage({ eyebrow, title, subtitle, fields, cta }) {
 export function Book() {
   return <FormPage
     eyebrow="Book a demo" title="Let's scope your project" subtitle="Tell us what you're building — we'll come back with a plan and a quote."
-    cta="Request demo"
+    cta="Request demo" type="demo"
     fields={[
       { name: 'name', label: 'Full name', required: true, placeholder: 'Jane Doe' },
       { name: 'email', label: 'Work email', type: 'email', required: true, placeholder: 'jane@company.com' },
@@ -81,7 +100,7 @@ export function Book() {
 export function Apply() {
   return <FormPage
     eyebrow="Apply as a talent" title="Join the Simpedu team" subtitle="Designers, developers and testers — show us your best work."
-    cta="Submit application"
+    cta="Submit application" type="careers"
     fields={[
       { name: 'name', label: 'Full name', required: true, placeholder: 'Your name' },
       { name: 'email', label: 'Email', type: 'email', required: true, placeholder: 'you@email.com' },

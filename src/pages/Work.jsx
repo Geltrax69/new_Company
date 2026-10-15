@@ -84,6 +84,8 @@ export default function Work() {
             <h3>Email</h3>
             <a href="mailto:humanresource@simpedu.in">humanresource@simpedu.in</a>
             <p>We'll respond within 24 hours</p>
+            <a href="mailto:support@simpedu.in" className="contact-sub">support@simpedu.in</a>
+            <p>For demo requests & careers</p>
           </Reveal>
           <Reveal className="contact-card" delay={0.08}>
             <h3>Phone</h3>

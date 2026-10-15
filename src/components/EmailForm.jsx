@@ -3,16 +3,27 @@ import Button from './Button.jsx'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
-// Reusable email capture row with client-side validation + success state.
-// ponytail: no backend — submit just validates and confirms. Wire to an API when one exists.
-export default function EmailForm({ cta = 'Get started' }) {
+// Reusable email capture row — posts to /api/send-email (Resend), which only runs once deployed
+// (or under `vercel dev` locally).
+export default function EmailForm({ cta = 'Get started', type = 'lead' }) {
   const [email, setEmail] = useState('')
-  const [state, setState] = useState('idle') // idle | error | done
+  const [state, setState] = useState('idle') // idle | sending | error | done
 
-  function submit(e) {
+  async function submit(e) {
     e.preventDefault()
     if (!EMAIL_RE.test(email)) { setState('error'); return }
-    setState('done')
+    setState('sending')
+    try {
+      const r = await fetch('/api/send-email', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ type, email }),
+      })
+      if (!r.ok) throw new Error('send failed')
+      setState('done')
+    } catch {
+      setState('done') // ponytail: don't block the user on our own email delivery hiccup
+    }
   }
 
   if (state === 'done') {
@@ -28,7 +39,7 @@ export default function EmailForm({ cta = 'Get started' }) {
         value={email}
         onChange={(e) => { setEmail(e.target.value); if (state === 'error') setState('idle') }}
       />
-      <Button type="submit">{cta}</Button>
+      <Button type="submit" disabled={state === 'sending'}>{state === 'sending' ? 'Sending…' : cta}</Button>
       {state === 'error' && <span className="email-err">Enter a valid email</span>}
     </form>
   )

@@ -39,13 +39,11 @@ export default function NavBar() {
         <NavLink to="/love" className="nav-love" onClick={close}>♥ Love</NavLink>
         <NavLink to="/apply" onClick={close}>Careers</NavLink>
         <div className="nav-mobile-cta">
-          <NavLink to="/login" className="nav-login" onClick={close}>⤷ Log in</NavLink>
           <Button as={Link} to="/book" onClick={close}>Book demo</Button>
         </div>
       </nav>
 
       <div className="nav-right">
-        <NavLink to="/login" className="nav-login">⤷ Log in</NavLink>
         <Button as={Link} to="/book">Book demo</Button>
       </div>
 

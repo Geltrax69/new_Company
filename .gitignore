@@ -5,3 +5,6 @@ source-images
 .agents/
 .claude/skills/
 .playwright-mcp/
+.env
+.env.local
+.vercel

@@ -137,7 +137,7 @@ export default function Home() {
             building across fields. From school management systems to live
             sports scoreboards, we design and ship products that cut the manual work.
           </p>
-          <EmailForm cta="Book demo" />
+          <EmailForm cta="Book demo" type="demo" />
         </Reveal>
       </Section>
 
