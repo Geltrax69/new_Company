@@ -12,18 +12,16 @@ import BentoCard from '../components/BentoCard.jsx'
 import TagPill from '../components/TagPill.jsx'
 import CompanyCard from '../components/CompanyCard.jsx'
 import StepCard from '../components/StepCard.jsx'
-import CubesGrid from '../components/CubesGrid.jsx'
-import ImageCycle from '../components/ImageCycle.jsx'
 import CountUp from '../components/CountUp.jsx'
 import useDocumentTitle from '../useDocumentTitle.js'
-import useScrollDrift from '../useScrollDrift.js'
+import { PROJECTS, PROJECT_COUNT } from '../data/projects.js'
 
 const SERVICES = [
   {
     title: 'Web & product',
     bg: '#0f0f10',
     tagTone: 'overlay',
-    preview: <ImageCycle images={['/work/school/phone-1.webp', '/work/sepaktakraw/desktop-1.webp', '/work/uniminute/phone-3.webp', '/work/scoreboard/desktop-2.webp']} />,
+    preview: <img className="service-product" src="/work/school/desktop-1.webp" alt="Simpedu school management dashboard" width="2560" height="1325" loading="lazy" />,
     tags: ['Web', 'UX/UI design', 'Mobile app'],
   },
   {
@@ -48,12 +46,7 @@ const SKILLS = [
   'APIs & integrations', 'Maintenance & support',
 ]
 
-const COMPANIES = [
-  { name: 'Simpedu', desc: 'School Management System — a digital operating system for running a school: students, staff, academics, fees, exams and communication.', status: '2025 · Flagship product', link: 'https://www.educonnect.me', color: '#6d28d9' },
-  { name: 'Haryana Sepak Takraw Association', desc: 'Sepak Takraw CMS Platform — manages and showcases athletes, events, tournaments, results, news and affiliated districts.', status: '2025', link: 'https://www.hsta.in/', color: '#1d4ed8' },
-  { name: 'ScoreBoard Display', desc: 'Live match score control — referees set the score courtside, the venue display updates instantly, set by set.', status: '2026', link: 'http://scorecast.simpedu.in/', color: '#16a34a' },
-  { name: 'Uniminute', desc: 'E-commerce platform — browse, cart, checkout and order tracking, built mobile-first for speed.', status: '2026', color: '#d97706' },
-]
+const COMPANIES = PROJECTS.map(({ title, year, ...project }) => ({ ...project, name: title, status: year }))
 
 const CAP_DATA = [
   {
@@ -119,16 +112,13 @@ const FAQS = [
 
 export default function Home() {
   useDocumentTitle(null, 'Simpedu LLP — a software company born in education, now building across fields. School management systems, sports portals and live scoring platforms. Less manual. More impact.')
-  const servicesRef = useScrollDrift(90)
-  const serveRef = useScrollDrift(140)
   const [activeCap, setActiveCap] = useState(0)
   return (
     <>
       <Section className="hero">
-        <CubesGrid />
         <Reveal className="hero-left">
           <h1 className="display">
-            Less <CycleWord words={['manual work', 'paperwork', 'chaos', 'guesswork']} />, more impact
+            Less <span className="hero-emphasis">manual work</span>, more impact
           </h1>
         </Reveal>
         <Reveal className="hero-right" delay={0.1}>
@@ -142,7 +132,7 @@ export default function Home() {
       </Section>
 
       <Section className="services">
-        <div className="services-drift" ref={servicesRef}>
+        <div className="services-drift">
           <div className="services-scroll">
             {SERVICES.map((s, i) => (
               <Reveal key={s.title} delay={i * 0.08}><ServiceCard {...s} /></Reveal>
@@ -178,7 +168,7 @@ export default function Home() {
         <Reveal><h2 className="heading center">Education, but smarter</h2></Reveal>
         <div className="bento">
           <Reveal><BentoCard tone="mist">
-            <span className="num"><CountUp to={4} /></span><span className="lbl">Products deployed</span>
+            <span className="num"><CountUp to={PROJECT_COUNT} /></span><span className="lbl">Projects in our portfolio</span>
             <div className="bento-logos"><span>Simpedu</span><span>HSTA</span><span>ScoreBoard</span><span>Uniminute</span></div>
           </BentoCard></Reveal>
           <Reveal delay={0.05}><BentoCard tone="mist">
@@ -207,7 +197,7 @@ export default function Home() {
         <Reveal className="serve-head">
           <h2 className="heading">Built by Simpedu, running today</h2>
         </Reveal>
-        <div className="serve-drift" ref={serveRef}>
+        <div className="serve-drift">
           <div className="serve-scroll">
             {COMPANIES.map((c, i) => (
               <Reveal key={c.name} delay={i * 0.06}><CompanyCard {...c} /></Reveal>

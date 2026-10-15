@@ -5,50 +5,7 @@ import DeviceShowcase from '../components/DeviceShowcase.jsx'
 import CubesGrid from '../components/CubesGrid.jsx'
 import useDocumentTitle from '../useDocumentTitle.js'
 
-const img = (dir, kind, n) => Array.from({ length: n }, (_, i) => `/work/${dir}/${kind}-${i + 1}.webp`)
-
-const CASES = [
-  {
-    year: '2025',
-    title: 'Simpedu',
-    tag: 'School Management System',
-    quote: 'From morning attendance to year-end report cards — one login, zero paperwork.',
-    desc: 'A complete digital OS for running a school: admissions, attendance, fees, exams, timetables and parent–teacher communication, built mobile-first for staff on the move.',
-    kind: 'phone',
-    images: img('school', 'phone', 8),
-    color: '#6d28d9',
-  },
-  {
-    year: '2025',
-    title: 'Haryana Sepak Takraw Association',
-    tag: 'Sepak Takraw CMS Platform',
-    quote: 'Every athlete, every tournament, every result — one federation, one platform.',
-    desc: "A content and management platform for Haryana's sepak takraw federation: athlete profiles, district affiliations, tournament listings and news, all editable without touching code.",
-    kind: 'desktop',
-    images: img('sepaktakraw', 'desktop', 4),
-    color: '#1d4ed8',
-  },
-  {
-    year: '2026',
-    title: 'ScoreBoard Display',
-    tag: 'Live match score control system',
-    quote: 'The whole crowd sees it the instant the referee signals it.',
-    desc: 'A live scoreboard system for sepak takraw matches — referees control the score from a courtside device while the venue display updates instantly, set by set.',
-    kind: 'desktop',
-    images: img('scoreboard', 'desktop', 8),
-    color: '#16a34a',
-  },
-  {
-    year: '2026',
-    title: 'Uniminute',
-    tag: 'E-commerce Platform',
-    quote: 'Browse, cart, checkout — under a minute, start to finish.',
-    desc: 'A fast, mobile-first e-commerce platform — product catalogue, cart, checkout and order tracking built for speed on every screen size.',
-    kind: 'phone',
-    images: img('uniminute', 'phone', 8),
-    color: '#d97706',
-  },
-]
+import { PROJECTS as CASES } from '../data/projects.js'
 
 export default function Work() {
   useDocumentTitle('Our work', 'Products built by Simpedu LLP — school management, sports federation CMS, live scoreboards and e-commerce.')
@@ -64,7 +21,7 @@ export default function Work() {
           <Reveal key={c.title} as="article" className="case" delay={i * 0.04}>
             <span className="case-index">{String(i + 1).padStart(2, '0')}</span>
             <div className="case-visual">
-              <DeviceShowcase images={c.images} kind={c.kind} glow={c.color} />
+              <DeviceShowcase images={c.images} kind={c.kind} glow={c.color} label={c.title} />
             </div>
             <div className="case-copy">
               <span className="case-year">{c.year}</span>

@@ -1,5 +1,7 @@
 # Simpedu review: latest pull and next implementation brief
 
+> Historical audit. The gallery controls, footer links, typography, hero contrast, shared portfolio count, and remaining layout overflow were addressed in the subsequent local repair pass. Use `SIMPEDU_REDESIGN_PROMPT.md` for the current implementation brief and `P2_FIXES_VALIDATION.md` for verification. Approved policy text and cleaner source captures remain external content dependencies.
+
 Reviewed local `main` at `9cdf6cd` on 15 October 2026. This is a review and handoff; no website implementation was edited. The review covers the current React/Vite repository, not the different website described by the newly revised redesign document.
 
 ## What actually changed

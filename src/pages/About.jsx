@@ -3,6 +3,7 @@ import Reveal from '../components/Reveal.jsx'
 import StatBlock from '../components/StatBlock.jsx'
 import Section from '../components/Section.jsx'
 import useDocumentTitle from '../useDocumentTitle.js'
+import { PROJECT_COUNT } from '../data/projects.js'
 
 const VALUES = [
   ['Born in education', 'We started by helping schools go digital — EduConnect, our school management system, is our flagship.'],
@@ -12,7 +13,7 @@ const VALUES = [
 ]
 
 const STATS = [
-  ['3', 'products deployed'],
+  [String(PROJECT_COUNT), 'projects in our portfolio'],
   ['100%', 'built in-house'],
   ['2+', 'fields and counting'],
   ['More', 'on the way'],

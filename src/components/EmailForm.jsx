@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useId, useState } from 'react'
 import Button from './Button.jsx'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
@@ -6,6 +6,8 @@ const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 // Reusable email capture row — posts to /api/send-email (Resend), which only runs once deployed
 // (or under `vercel dev` locally).
 export default function EmailForm({ cta = 'Get started', type = 'lead' }) {
+  const errorId = useId()
+  const hasError = state => state === 'error' || state === 'sendError'
   const [email, setEmail] = useState('')
   const [state, setState] = useState('idle') // idle | sending | error | sendError | done
   const [errorMsg, setErrorMsg] = useState('')
@@ -33,16 +35,19 @@ export default function EmailForm({ cta = 'Get started', type = 'lead' }) {
   }
 
   return (
-    <form className={`email-row ${state === 'error' ? 'has-error' : ''}`} onSubmit={submit} noValidate>
+    <form className={`email-row ${hasError(state) ? 'has-error' : ''}`} onSubmit={submit} noValidate>
       <input
         type="email"
         placeholder="Enter your work email"
         aria-label="Work email"
+        aria-invalid={hasError(state)}
+        aria-describedby={hasError(state) ? errorId : undefined}
+        autoComplete="email"
         value={email}
-        onChange={(e) => { setEmail(e.target.value); if (state === 'error') setState('idle') }}
+        onChange={(e) => { setEmail(e.target.value); if (hasError(state)) setState('idle') }}
       />
       <Button type="submit" disabled={state === 'sending'}>{state === 'sending' ? 'Sending…' : cta}</Button>
-      {(state === 'error' || state === 'sendError') && <span className="email-err">{errorMsg}</span>}
+      {(state === 'error' || state === 'sendError') && <span id={errorId} role="alert" className="email-err">{errorMsg}</span>}
     </form>
   )
 }
