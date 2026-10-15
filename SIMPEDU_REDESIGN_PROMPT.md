@@ -1,185 +1,192 @@
-# Simpedu: design audit and implementation prompt
+# Simpedu: website review and implementation prompt
 
-Copy everything between START PROMPT and END PROMPT into the model implementing the redesign. This brief is based on the local repository, rendered desktop and mobile pages, and inspection of the existing image assets on 15 October 2026. No website implementation was changed during this audit.
+Reviewed 15 October 2026 against the local checkout at `/Users/lalitsingh/WORKS/simpedu_website`.
 
-START PROMPT
+## What the current website gets wrong
 
-You are the creative director, senior frontend engineer, and motion designer redesigning Simpedu LLP's company website. Implement the redesign in this repository. Deliver a working, polished website, not just recommendations or a static concept.
+The biggest gap is presentation of the work. Simpedu has tangible material—school software screens and physical ID-card designs—but the homepage uses it as background decoration. Visitors see broad claims before they can appreciate what the company has built.
 
-The business goal: make visitors see the quality of the products Simpedu has built, understand what the company can build for them, and start a serious project conversation. The owner wants a confident, visually rich, memorable site with the craft associated with award-winning websites. Treat that as a quality ambition, never as an award claim or guarantee.
+| Priority | Observed issue | Required change |
+| --- | --- | --- |
+| High | The homepage puts a large, cropped dashboard screenshot behind its headline, paragraph, buttons, and service panel. These layers compete. | Give the message a clean surface and give the software its own large, legible showcase. |
+| High | “Smart Solutions,” “Excellence in Every Solution,” and “Ready to Transform” could describe almost any technology supplier. | Explain the school workflows Simpedu handles, then show the implementation. Lead with specific product value. |
+| High | The most prominent foreground graphic is an “Our Services” panel with blue, orange, and green strips. “Fast & Reliable” is presented like a third service. | Replace this panel with a beautifully composed product scene. Clearly distinguish the two actual offerings. |
+| High | There are no substantial work stories on the homepage. The ID-card gallery requires a separate visit. | Bring selected software and ID-card work into the homepage, with a clear distinction between client work and sample designs. |
+| High | The homepage requests approximately 4.0 MB of images on a fresh local browser load, before counting scripts and fonts. All eight hero backgrounds are requested, including a duplicate. | Use one intentional hero composition. Load additional imagery only when needed. |
+| High | `assets/logo2.png` is 545,188 bytes, although the header displays it at about 40 px. | Create an appropriately sized logo asset or use an authentic vector source. |
+| Medium | Saturated gradients, multicolor headings, icon tiles, thick borders, glows, oversized shadows, and large hover scaling appear together. | Establish a restrained hierarchy of material, typography, color, and depth. Let product imagery carry richness. |
+| Medium | The light-mode closing “View Services” CTA has white text on a very pale fill. | Define explicit foreground/background colors for every button variant and verify contrast. |
+| Medium | The hero cycles every five seconds, uses one-second crossfades, and includes pulsing glows. The CSS contains no `prefers-reduced-motion` rule. | Replace ambient movement with a choreographed entrance and one product demonstration; implement reduced motion. |
+| Medium | Clicking the theme switch changes surrounding colors, but the homepage still uses `light_bg*` images. The hero reads theme context while the switch changes the root class directly. | Use a single theme state and make media selection consistent with it. |
+| Medium | Mobile stacks the same desktop service panel under a tightly cropped dashboard background. | Design a dedicated mobile composition with readable product detail and a shorter opening sequence. |
+| Medium | The gallery instructs visitors to hover to flip cards. The mobile menu button lacks `aria-expanded` and `aria-controls`. | Provide explicit tap/keyboard controls, clear state, focus handling, and accessible navigation. |
+| Medium | Gallery labels call teacher/manager examples “Student ID Card”; portrait/landscape dimensions appear reversed. | Audit every sample’s identity, orientation, aspect ratio, and description. |
+| Medium | The site asserts “10K+” institutions, “70%” workload reduction, “99.9% Uptime,” “24/7 Support,” and broad compliance without supporting evidence in this checkout. Contact lists weekday support hours. | Verify and reconcile claims. Present only substantiated business evidence. |
+| Medium | Footer Blog, Careers, Privacy, and Terms links point to `#`. All pages reuse the same broad title. | Remove empty destinations, implement approved pages where supplied, and write route-specific metadata. |
+| Medium | The contact page places a tall introduction and four large information cards before the form. | Bring the form and a concise contact explanation into the first useful viewport. |
 
-## 1. Read the project before changing it
+### Review boundaries
 
-The current stack is React 18, Vite 5, React Router 7, vanilla CSS, and GSAP 3.15. Keep this stack. Inspect package.json rather than assuming other animation or component libraries exist. Do not migrate to Next.js, add Tailwind, or rebuild the company as a fictional SaaS business.
+All five public page documents and their relevant compiled scripts/styles were inspected. Local Chrome screenshots covered desktop/mobile homepage, desktop ID cards/contact, mobile About/Services, and desktop dark mode. The four initial page loads produced no uncaught JavaScript errors; the homepage fit the tested 1440 px and 390 px viewport widths.
 
-Read applicable AGENTS.md instructions, DESIGN.md, src/App.jsx, src/styles.css, src/variables.css, index.html, src/pages/Home.jsx, src/pages/Work.jsx, src/pages/About.jsx, src/pages/Misc.jsx, src/pages/Love.jsx, src/pages/Blog.jsx, src/components/DeviceShowcase.jsx, ImageCycle.jsx, CycleWord.jsx, Reveal.jsx, NavBar.jsx, Footer.jsx, EmailForm.jsx, src/useScrollDrift.js, and api/send-email.js. Inspect the actual assets in public/work and public/frames. Render the existing site before editing it.
+An ID-card image appeared broken in the first full-page capture; a subsequent fresh-page check found all images loaded. Treat this as an intermittent observation to investigate, not a confirmed missing file. Form submission was inspected in code, not sent. No Lighthouse score, field performance result, or full accessibility certification is claimed.
 
-Apply the relevant available skills: redesign-existing-projects, design-taste-frontend, impeccable, better-typography, better-colors, make-interfaces-feel-better, 12-principles-of-animation, and accessible-animation. Use imagegen-frontend-web and image-to-code if producing visual reference images; use high-end-visual-design and gpt-taste for ideas only where compatible with this brief. Do not mechanically combine every aesthetic. Resolve conflicting skill suggestions in favor of this brief, product truth, accessibility, and measured performance. Do not install unrelated skills or invoke unrelated document, pet, plugin, or mobile-app workflows.
+**Version mismatch:** no iPhone or Studio Display composition was found in this checkout. Current hero assets are dashboard captures and ID-card photos. The prompt below covers the requested device presentation, but the implementing model must inspect any newer source/version before making assumptions.
 
-This is a replacement visual direction for a company portfolio. Keep genuine brand and product facts; replace the current template-like composition. Update DESIGN.md to document the final implemented system rather than preserving rules that caused the old look.
+**Repository constraint:** this is a compiled Next.js export, not a normal editable Next.js project. `package.json` has a no-op build and a Python static server. There is no `app/` or `src/` source tree. The review did not modify the website.
 
-## 2. Fix the actual weaknesses
+---
 
-These findings come from the current code and rendered pages:
+## Copy everything below into the implementation model
 
-- The homepage presents a generic software-services pitch before meaningful product proof. Its first visual is a cropped school login screen, next to four colored rectangles representing graphic design. This undersells the company's work.
-- The hero's isometric cube pattern competes with the words and has no specific relationship to Simpedu. Remove it from the main identity.
-- The page mixes school software, sports systems, unlimited design requests, subscription capabilities, marketing, and freelancer complaints. Establish a coherent company story instead of carrying over all this copy.
-- Home.jsx and Love.jsx contain named testimonials and YC affiliations with no supporting evidence in the repository. They are unverified, not established facts. Exclude them from the redesigned public presentation unless the owner supplies verification. Do not replace them with invented people or quotes.
-- Home shows four deployed products; About shows three. There are four listed projects, but their deployment status requires confirmation. Distinguish portfolio count from verified deployment count. Avoid an unverified numerical claim while resolving this.
-- Work.jsx repeats the same alternating device-and-copy row four times. There are no substantial case-study narratives or case-detail links. Different projects need different visual treatments and deeper proof.
-- The Studio Display shell is an opaque RGB image, 2400×1846. Its pale rectangular background remains visible around the stand. In the rendered page it looks pasted in, with a heavy clipped shadow. The screen is painted above the shell using percentage insets.
-- The iPhone shell is RGBA, 1736×3528. Both shell and screenshot are forced into one screen model with object-fit: cover. Mobile screenshots are 1206×2622 and include system chrome; some include browser controls. The Uniminute screenshot already includes a Dynamic Island. Separate screenshot content from hardware features to avoid duplicated notches, status areas, and browser UI.
-- Desktop project screenshots include browser tabs and address bars. A screenshot of a browser inside a physical monitor makes the showcase feel like a screen capture rather than a finished presentation.
-- DeviceShowcase cycles every 2.8 seconds; ImageCycle every 2.2 seconds; CycleWord every 2.6 seconds. These compete with reading. Device dots are clickable spans rather than keyboard-operable buttons. Their expanded hit regions overlap.
-- DeviceShowcase's pointer tilt and crossfade run through GSAP; its CSS reduced-motion rule only neutralizes the device transform. Several animation paths lack full preference handling. Some background/drift effects check the preference only at mount.
-- The homepage overflows horizontally at both 1440px desktop and 390px mobile. A desktop check measured document width 1580px at a 1440px viewport; serve-drift is one confirmed contributor. Investigate every contributor rather than adding a global clipping patch.
-- CSS names Cosmica, but no matching font-face is defined in the inspected source. index.html requests DM Sans, which the body font stack does not use. The intended typography is not reliably loaded.
-- Caption tokens start at 10px. The hero's muted rotating words need contrast measurement. Improve readability rather than treating tiny labels and pale text as premium design.
-- Nav dropdowns rely on CSS hover. Footer Privacy and Terms links have no matching routes. Blog detail copy explicitly identifies itself as placeholder content.
-- EmailForm.jsx reports success after a failed request. FormPage in Misc.jsx neither checks response.ok nor reports request failures truthfully. A rich design must also capture leads reliably.
+You are the creative director, product designer, motion designer, and frontend engineer rebuilding Simpedu’s company website. Deliver a complete, working, visually distinctive site that confidently showcases the work Simpedu has created.
 
-Preserve what is useful: real product screenshots, the education-to-sports company origin, the existing contact details, the compact codebase, and the already installed GSAP tooling.
+The owner wants an ambitious, award-caliber presentation: compelling art direction, beautiful product imagery, expressive typography, purposeful motion, and fast mobile performance. Make the craft visible through composition and product detail. Do not imply the company has won awards.
 
-## 3. Commit to one visual concept
+### 1. Understand the company and inspect the actual project
 
-Design read: an independent software company presenting its work to school leaders, sports organizations, and businesses commissioning software; a product gallery with editorial typography and cinematic, controlled motion.
+Simpedu provides school management software and professional ID-card printing. The available website describes student records, attendance, fees, grades, school communications, and administrative workflows. Preserve only features supported by the actual product/source. Likely visitors include school owners, principals, administrators, and institutional purchasing teams. This audience is inferred from the current site, not confirmed market research.
 
-Concept: “From everyday complexity to working software.” Let the movement from a human task to a useful interface organize the page. The products provide the color and personality. The surrounding site provides confidence and clarity.
+The primary conversion is requesting a demo. ID-card visitors also need an obvious route to discuss printing requirements. The homepage should let visitors understand the offer, appreciate the work, and choose their next step quickly.
 
-Use a warm light canvas, dark ink, a controlled burnt-orange company accent, and silver hardware. Suggested starting primitives: canvas #F5F3EE, surface #EAE7E0, ink #171918, muted text #595D58, accent #B74725. Measure actual rendered contrast before approving any combination. Project-specific colors can appear inside their exhibits; they should not turn the entire site into four competing brands.
+Inspect the repository, local instructions, available assets, existing routes, form integration, and any newer implementation before changing files. Start the site and capture the existing desktop/mobile experience. Reuse factual content and working integrations.
 
-Build a 12-column desktop grid with a 1360–1440px maximum content width, fluid gutters of roughly 24–64px, and a 4-column mobile grid. Use generous spacing with purposeful changes in density. Alternate large work imagery, concise text, and quiet detail; do not repeat a card grid for every section.
+The reviewed repository was a compiled Next.js static export. Prefer the original editable source if it is available. Otherwise reconstruct a maintainable source project with reusable components, an actual build command, and deployment configuration appropriate to that stack. Do not hand-edit minified `_next` chunks as the implementation strategy. Keep the existing public routes working: `/`, `/about/`, `/services/`, `/id-cards/`, `/contact/`. Preserve the Google verification file and valid social links. Update Vercel output/cache rules if filenames or build output change.
 
-Use one properly loaded, licensed display grotesk and a readable body face. Prefer supplied Cosmica assets if available; otherwise choose an available open-license alternative such as Manrope. Do not assume commercial fonts are available. Make the headline broad and confident, roughly 80–112px on large screens and 40–52px on phones, adjusted to real text. Body text should generally be 16–18px; supporting labels 12–14px. Use rem units, unitless line heights, balanced headings, and readable paragraph measures.
+Use the relevant available skills for interface design, typography, motion, interaction polish, image art direction, accessibility, and optimization. Read their instructions. Avoid applying unrelated document, spreadsheet, plugin, or native-app workflows simply because they are installed.
 
-Avoid generic purple glows, decorative cubes, fake dashboard art, excessive glass, color-swatch placeholders, card-within-card layouts, massive rounded containers around every section, and gratuitous badges. Richness should come from strong composition, real product detail, credible materials, and choreography.
+### 2. Commit to this visual direction
 
-## 4. Rebuild the homepage around the work
+Create a contemporary editorial product showcase with a recognizable Simpedu identity: warm ivory, deep ink, and a single confident cobalt accent. Use the company’s existing blue as a starting point. Retain the authentic logo; simplify its presentation without inventing a replacement brand.
 
-Use this sequence, adapting exact spacing after rendering:
+The visual signature is the relationship between **school software and physical identity**: a crisp desktop dashboard, a complementary mobile view if the product supports it, and a beautifully photographed ID card. Connect these objects through alignment, a shared grid, consistent lighting, and carefully staged movement. They should explain what Simpedu makes.
 
-1. **Navigation.** Simpedu wordmark, Work, Capabilities, Company, and a clear “Start a project” CTA. Retain access to legitimate existing pages through an appropriate navigation hierarchy. De-emphasize unfinished or unverified content without silently deleting working routes.
+Use large product imagery, asymmetrical layouts, quiet editorial captions, generous but purposeful whitespace, and fine structural rules. Introduce one deep-ink showcase section to create a memorable change of atmosphere. Avoid making every section another rounded card grid.
 
-2. **Hero.** Suggested headline: “Complex work. Beautifully simplified.” Suggested supporting copy: “We’re Simpedu LLP. We design and build software for schools, sports organizations, and businesses.” Primary browsing action: “Explore our work.” Secondary action: “Start a project.” Put a substantial, carefully composed view of real product UI in the first viewport. At 1366×768 the headline, action, and a meaningful part of the product should be visible. Avoid a huge empty opening or a forced email form before visitors have seen the work. Use a useful product screen rather than a login form.
+Suggested starting tokens: ivory `#F6F5F0`, ink `#14181F`, cobalt `#2457E7`, muted text `#555D69`. Validate actual color pairings for contrast. Use surface-specific inverse tokens. Aim for a 1280–1440 px content limit, 48–80 px desktop gutters, and 20–24 px mobile gutters. Use a consistent spacing scale and a small set of radii. Let occasional full-bleed work imagery break the container deliberately.
 
-3. **Selected work as the centerpiece.** Show all four projects with individual compositions. Give each a large visual, project name, what it does, the team's contribution where known, and a clear path into its case study. Include live links only where verified. Preserve the existing destinations in project data and check them before changing or promoting them.
+Keep Geist for body/interface copy if suitable. Give display typography more identity through composition, weight, scale, and deliberate line breaks; add at most one properly licensed display family only if it materially improves the result. Use roughly 72–112 px desktop display text and 40–56 px mobile, adjusted with `clamp()` and tested for wrapping. Keep body text around 16–18 px, unitless line heights, and readable measures. Balance short headings and use natural paragraph wrapping. Never make important copy an image.
 
-   - **Simpedu / school platform:** an attendance, fees, or academic workflow from the existing screenshots, with a main phone and one supporting detail. Verify how the Simpedu and EduConnect names should relate; do not invent separate products.
-   - **Haryana Sepak Takraw Association:** a large desktop website view with supporting athlete, event, or content-management detail if available. Let the actual sports content carry the composition.
-   - **ScoreBoard Display:** let the scoreboard dominate a widescreen composition, with an authentic controller view if available. It should communicate a venue display system, not merely another desktop website.
-   - **Uniminute:** a mobile commerce sequence showing catalogue, product, and checkout screens where available. Avoid leading with Safari controls or unsupported claims about checkout speed.
+Exclude rainbow-gradient headings, emoji section badges, generic glowing blobs, ubiquitous glass panels, default three-column benefit grids, decorative counters, fake award laurels, a custom cursor, and a loading intro. The expression should come from the company’s work.
 
-4. **Company point of view and capability.** Briefly tell the education origin and expansion into other fields. Group supported capabilities around software design, development, integration, deployment, and support. Connect each capability to a real example. Remove unverified subscription language and broad promises carried over from the old template.
+### 3. Build this homepage narrative
 
-5. **One process section.** Discovery, scope, build, launch/support. Merge the duplicate “How we work” and “How it works” sections. Do not promise 24–48-hour delivery or a 48-hour quote unless confirmed.
+**Opening: a clear promise and a strong artifact.** Use a compact header with Products, Our Work, About, and a prominent “Book a demo” action. These may use existing routes or meaningful section anchors. Provide direct access to ID-card work. Keep the header legible over every surface.
 
-6. **Contact and footer.** A confident closing headline, “Tell us what you want to build,” with a short, working enquiry flow and clear email access. Preserve factual company and contact information. Product-specific demo requests can use a separate context-aware CTA. Make every displayed link resolve to a real destination.
+Suggested copy direction, subject to factual review:
 
-Aim for approximately 60% of the homepage's visual attention to go to actual work. If verified customer outcomes are unavailable, show the workflow, scope, and implementation detail. Do not fill the gap with fake metrics or generic testimonials.
+> A clearer school day.
+>
+> School management software and custom ID cards, built around the way your institution works.
 
-## 5. Make the work worth opening
+Primary CTA: “Book a demo.” Secondary: “Explore our work.” The latter scrolls to an actual showcase. Place the message on a clean background, alongside a large, art-directed product composition. The screen must remain readable and immediately recognizable as school software. Do not set the screenshot behind the headline. Make the opening useful before motion or JavaScript runs.
 
-Add reusable case-study detail routes, such as /work/:slug, keeping the existing /work route intact. Use shared project data so Home, Work, and details cannot drift in names, images, years, and status.
+**Selected work: make the bragging tangible.** Show two substantial visual stories: school management and identity printing. Use one dominant image and one complementary detail in each story. Include concise captions for what was built, the problem addressed, and the company’s contribution. Use verified project names and results only. Without client evidence, label the section “Product & design showcase” and use sample designs transparently. Do not invent case studies, clients, testimonials, or adoption numbers.
 
-Each case study should show: the project and audience; the problem being addressed; Simpedu's verified role; several large UI views; one useful workflow explained visually; relevant implementation detail supported by available information; and a next-project or contact action. Label unknown information in the development handoff, not as public claims. Do not invent client outcomes, team sizes, technologies, adoption numbers, or awards.
+**Software in action: show a workflow.** Build a clean, accessible selector for three supported workflows, such as attendance, fees, and communications. Each selection updates a large screen/detail view with a short explanation. Default to a useful visible panel. The interaction must work by click, touch, and keyboard. Show complete, coherent sample states rather than empty graphs. Use real screens with sanitized demo data. If you build an illustrative preview, label it as such and do not imply it is a captured shipping product screen.
 
-## 6. Repair the iPhone and Studio Display presentation
+**Identity as a physical product.** Use a tightly art-directed display of a card front, card back, material edge, and lanyard detail. Show two or three strong examples before linking to the full gallery. Present verified customization and printing capabilities. Provide visible “View back” / “View front” controls instead of requiring hover.
 
-Treat hardware as a framing device for the software. Do not let hardware occupy the entire design budget.
+**Proof and delivery.** Use verified customer evidence if supplied. Otherwise explain the supported implementation process clearly: requirements, setup/customization, onboarding, and ongoing support, with factual review of each step. Keep this concise. Do not turn the absence of evidence into invented metrics.
 
-First classify every source screenshot: app-only, OS status area, browser chrome, existing device notch, useful crop, and source aspect ratio. Prefer fresh, permission-safe captures of actual products without browser chrome. Use existing clean screenshots when they are adequate. Mask personal or sensitive information in new captures.
+**Closing action.** End with a strong typographic invitation, one primary demo CTA, and a quieter route to ID-card enquiries. Replace the large multicolor gradient block. Carry the same restraint into the footer. Remove dead links and unsupported assurances.
 
-For reusable device composites, separate screen content, bezel/hardware, and contact shadow. Use a real transparent shell with a correctly measured screen aperture. Keep the hardware foreground above the screen where it should occlude the display. Do not place app content over a camera cutout. Remove a notch embedded in a source capture before adding another through the shell.
+### 4. Fix the iPhone and Studio Display presentation
 
-The desktop screenshot's common 16:9 ratio differs from the Studio Display's approximately 16:9.8 screen region. Capture at the intended viewport or use a deliberate contain/crop treatment. Do not stretch interfaces. Reserve object-fit: cover for intentional, reviewed crops; it is not a universal solution for readable UI.
+If newer assets already contain these devices, inspect them first. Problems to eliminate: distorted device geometry, wrong screen ratios, unreadable AI-generated text, floating hardware, inconsistent perspective, fake reflections, generic empty dashboards, mismatched lighting, and crowded overlap.
 
-Replace the opaque Studio Display asset with a transparent, cleanly isolated source where possible. Check permission to use externally sourced mockups. If an accurate hardware source is unavailable, use a precise, understated browser-free screen frame as a temporary implementation rather than a distorted generated monitor. Record the missing final asset clearly.
+Use a sharp real dashboard screenshot inside a correctly proportioned desktop screen. A Studio Display-style screen is 16:9. Preserve proportions and show enough of the UI to establish credibility. Use a closer crop elsewhere to reveal detail rather than forcing the full desktop UI into a tiny thumbnail.
 
-Use consistent camera angle, light direction, metal finish, and shadow softness across hardware scenes. Keep UI crisp at the rendered size and target pixel density. Use one main device and at most one supporting device per exhibit. Let several screenshots appear directly without hardware so the portfolio has visual variation.
+Only put the product in an iPhone if the mobile experience exists. A responsive web view is acceptable when supported; do not imply a native app or parent app without evidence. Match the aperture, corner radius, perspective, and safe areas of the chosen device model.
 
-Do not default to autoplay galleries. Use deliberately selected lead screens with accessible manual screen selection. Provide labelled buttons, current-screen indication, keyboard support, meaningful image descriptions, and non-overlapping touch targets. Decorative shells should have empty alt text; the product presentation needs a meaningful accessible description.
+Preferred production technique: obtain authentic mockups or generate device shells, then composite real UI using deterministic image layers or HTML/CSS masks. Keep the UI separate from the environment so it remains crisp, editable, and theme-consistent. Screen position and perspective must match exactly. An almost frontal camera simplifies this. Never ask an image model to invent the final dashboard text.
 
-## 7. Create a motion system, including one signature moment
+Use one consistent scene: satin aluminum, controlled softbox highlights, gentle cobalt reflected light, grounded contact shadows, believable scale, and uncluttered negative space. The devices support the product; avoid letting hardware dominate it. On mobile, use a dedicated tighter crop or one device/detail, not a scaled-down desktop scene.
 
-Motion should explain the product and make transitions feel considered. Use the existing GSAP and CSS. Preserve native scrolling by default. Do not introduce a preloader that delays content, cursor replacement, scroll hijacking, or a WebGL background without a specific demonstrated need.
+### 5. Choreograph motion
 
-- **Hero entrance:** readable headline first, then supporting copy and the product scene. Use a short line reveal and a modest image settle, approximately 500–800ms, with 30–50ms stagger where useful. Do not keep the main content invisible while waiting for a timeline.
-- **Signature sequence:** on desktop, give one flagship workflow a short scroll-controlled story: its real source screen, one enlarged useful detail, then the complete interface in context. Tie copy to those same states. Keep text readable throughout. A single brief pinned sequence is acceptable if it adds clarity; budget about one extra viewport of scrolling and provide normal-flow mobile and reduced-motion layouts. Do not pin every project.
-- **Work entrances:** restrained mask reveals or 24–40px movement. Choose one entrance grammar and keep it consistent.
-- **Interaction feedback:** roughly 150–250ms for buttons, links, and controls; small arrow movement and pressed feedback. Optional device tilt is limited to fine pointers and approximately 2–3 degrees, with inexpensive setters and proper cleanup.
-- **Gallery changes:** user-controlled crossfades around 200–350ms; respect reading time. If any long-running autoplay remains, provide a visible pause control and pause when hidden or offscreen.
-- **Reduced motion:** use live preference handling. Remove pinning, depth movement, large transforms, tilt, and autoplay; keep short fades, focus, and state feedback. A CSS rule that cancels a transform while a GSAP loop keeps running is insufficient.
+Design one memorable sequence: the desktop screen settles into place, the ID card reveals its front/back relationship, and one supported workflow comes into focus. Keep each prominent movement sequential so the visitor knows where to look.
 
-Scope GSAP selectors to components and revert contexts and matchMedia setup on cleanup. Clear timers, including delayed callbacks in CycleWord. Use transform/opacity wherever possible. Avoid the existing continuously animated background-position pattern. Do not animate blur or broad shadows across large surfaces. Reserve will-change for elements that need it while active.
+| Element | Motion specification |
+| --- | --- |
+| Hero copy | Short semantic groups, 12–20 px upward travel, opacity reveal, roughly 450–650 ms, 40–50 ms stagger; readable immediately if enhancement fails. |
+| Hero product | Gentle 16–24 px translation or small perspective correction over roughly 700–900 ms; no perpetual bobbing. |
+| Showcase entry | One-time image/detail reveal over roughly 500–700 ms. No animation gate on reading or interaction. |
+| Workflow selection | Roughly 180–260 ms transition, stable container dimensions, no flash or content jump. |
+| Buttons/links | 120–180 ms targeted transitions; subtle press scale around 0.97, clear static focus/active feedback. |
+| ID-card flip | Explicit toggle, roughly 350–450 ms, controlled perspective, backface handling, correct focus/reading state. |
+| Optional desktop scroll scene | One short, bounded sticky sequence only if it explains the product; ordinary document flow on mobile. |
 
-Use GSAP's documented media-query lifecycle: https://gsap.com/docs/v3/GSAP/gsap.matchMedia()/
+Use a coherent ease-out curve such as `cubic-bezier(0.22, 1, 0.36, 1)` for editorial reveals. Keep routine controls faster than showcase movement. Use CSS/WAAPI for simple predetermined sequences; add a motion library only where it earns its cost. Prefer transforms and opacity. Measure clip-path, blur, shadows, and large composited layers on the actual target browser instead of assuming they are cheap.
 
-## 8. Image-generation prompts, only where useful
+Preserve native scrolling. Do not require users to finish an animation before clicking. Avoid continuous parallax and page-wide mouse tracking. Gate hover effects to fine pointers. Pause nonessential activity offscreen and when the tab is hidden.
 
-Do not generate fictional screenshots, client imagery, testimonials, logos, or a fake team. Keep actual UI as real image layers or live frontend. Generation is appropriate for hardware, controlled environments, and design references. Prompts below are production briefs, not permission to replace the portfolio with synthetic product work.
+Honor `prefers-reduced-motion`: remove positional reveals, perspective changes, parallax, and pinned sequences; keep content and controls available with immediate changes or brief fades. Preserve complete content if observers or animation initialization fail.
 
-**A. iPhone hardware plate, transparent, portrait 2:3.**
+### 6. Give every page the same level of craft
 
-“Create a premium photorealistic product mockup of one accurately proportioned contemporary iPhone Pro in natural titanium, straight-on front view, no perspective distortion. Entire device visible with generous margin, exact bilateral geometry, subtle brushed metal edge, realistic black bezel and a physically plausible single camera island. Uniform blank neutral display suitable for replacement with a real app screenshot. Soft large studio key light from upper left, restrained specular highlights. Isolated on transparent background. No text, no app UI, no hands, no props, no watermark. Keep the device frontal so a rectangular screen layer can be composited precisely.”
+- **Services:** separate the two offerings through substantial product imagery and concrete capabilities. Replace feature-list overload with small, understandable groups. Give each offering a relevant CTA.
+- **ID cards:** use correct aspect ratios, accurate sample names, clear front/back state, tap/keyboard controls, and accessible enlarged viewing. Audit asset loading and reserve image space. Do not present sample templates as completed client commissions.
+- **About:** show verified company information and the work behind it. Replace unsupported “industry leader,” “global reach,” and institution counts with accurate material. Use real team/workshop photographs if supplied; do not generate fictional employees and present them as staff.
+- **Contact:** put a concise intro and usable form near the top. Preserve the existing Web3Forms integration and field mapping unless intentionally replacing it. Keep the existing business email, telephone, and address unless the owner supplies updates. Make phone/email actionable. Provide pending, success, validation, and failure states; preserve input after failure. Do not make a real test enquiry without authorization.
+- **Shared system:** accessible mobile navigation, consistent buttons, proper heading order, visible focus, sensible touch targets, and a useful footer. Preserve the theme toggle if retained, with shared state, suitable media, and no initial theme flash.
 
-Export a genuinely transparent asset if the generator supports it. Prepare and inspect the screen mask separately. Reject malformed geometry; use a licensed real mockup instead if necessary.
+### 7. Image-generation prompts
 
-**B. Studio Display hardware plate, transparent, landscape 4:3.**
+Generate only assets that improve the site. Use the image tool available in your environment and save final assets in the project. Keep website copy, logos, product screens, card text, barcodes, and QR codes as authentic separate layers. Use sanitized demo identities. Mark illustrative work appropriately.
 
-“Create a premium photorealistic front elevation of a single Apple Studio Display with accurate thin black bezel, silver aluminum body and centered stand. Entire monitor and stand visible with breathing room. Camera exactly centered at screen height, no keystone distortion. Blank neutral screen reserved for a real website screenshot. Consistent soft studio light from upper left, precise metal texture, restrained edge highlights. Isolated on transparent background, with no baked rectangular backdrop and no floor. No UI, no browser chrome, no keyboard, no laptop, no text, no watermark.”
+**A — Main product scene, desktop base**
 
-Keep a separate shadow layer. Validate actual screen proportions and the aperture before compositing.
+> Premium editorial product photograph for Simpedu, a school software and identity company. A single satin-silver Apple Studio Display-style monitor on a warm ivory seamless surface, almost frontal with a very slight three-quarter angle, physically accurate 16:9 screen, elegant thin black bezel and believable aluminum stand. A restrained dark titanium iPhone stands vertically beside the monitor at a complementary shallow angle, with accurate geometry and an unobstructed screen aperture. Both screens are uniform neutral charcoal placeholders for later compositing. Large softbox key light from upper left, subtle cobalt reflected light, soft grounded contact shadows, restrained reflections, tactile materials, generous negative space, precise premium commercial photography. Wide 3:2 composition, entire devices comfortably inside frame, no cropped stand. No text, no invented UI, no watermark, no extra devices, no floating objects, no dramatic neon, no lens flare. The devices must share one camera perspective and lighting setup.
 
-**C. Optional atmospheric background for the live-score exhibit, landscape 16:9.**
+Use only the monitor if the mobile product is unverified. Composite authentic screens afterward; this prompt creates a scene base, not a finished product screenshot.
 
-“Editorial photograph of an empty indoor sepak takraw court, authentic net, court markings, and high-ceiling sports-hall proportions. Camera near sideline, warm overhead lighting, deep charcoal shadows, subtle photographic grain, believable materials. Clear dark negative space on the right half reserved for a separately composited real scoreboard interface. No people, no signage, no branding, no generated scoreboard, no text. Restrained cinematic realism rather than neon science fiction.”
+**B — Mobile-specific device scene**
 
-This is illustrative scenery, not evidence of a real Simpedu installation. Keep it secondary to the actual scoreboard and never imply it documents a client venue.
+> Portrait 4:5 premium studio product photograph matching the same Simpedu campaign: warm ivory surface, dark titanium iPhone with physically accurate proportions, almost frontal screen facing camera, slight natural perspective, screen aperture clearly visible and filled with uniform neutral charcoal for later compositing. One simple unprinted white ID card rests beside it with a subtle cobalt edge reflection. Softbox light from upper left, grounded soft shadows, precise materials, generous breathing room, calm editorial composition, restrained contrast. No text, no invented UI, no branding, no extra phones, no hands, no watermark, no floating objects.
 
-**D. Optional website section-reference prompt.**
+Use only if the mobile experience is supported. Otherwise create a close desktop-screen crop for mobile.
 
-“Design ONE horizontal desktop website section for Simpedu LLP, an independent software company. Section: [hero / school project exhibit / sports website exhibit / live scoring exhibit / commerce exhibit / company and capabilities / process / contact]. Visual concept: everyday complexity becoming working software. Warm off-white canvas #F5F3EE, near-black #171918, restrained burnt orange #B74725, silver hardware, precise editorial grotesk typography. Incorporate supplied real product screenshots without inventing their contents. Large readable hierarchy, generous negative space, strong alignment, and one clear focal point. Each project uses its own authentic screen colors within the consistent company identity. Avoid purple glow, meaningless 3D shapes, generic service-card grids, badge clutter, and excessive containers. Flat website presentation, not a laptop photograph. 1600×1000 reference image showing this section only.”
+**C — Physical ID-card campaign**
 
-Generate each requested section reference separately; never compress the whole website into one tall board. Use supplied references when available. Keep final website text, controls, and UI content as real HTML. Do not ship a screenshot of a website as the website.
+> High-end product photograph of two blank institution ID cards and one neatly arranged navy woven lanyard on a warm ivory studio surface. One card shows its front plane, the other its back plane, with clean standard ID-1 proportions, subtly rounded corners and believable thin PVC edges. One card rests on a low rectangular plinth; the other lies naturally on the surface. Controlled softbox lighting from upper left, gentle contact shadows, fine satin surface texture, subtle cobalt reflected light, restrained commercial photography, no dramatic plastic shine. Landscape 3:2 framing with generous margins. Blank card faces for accurate artwork compositing. No names, portraits, letters, QR codes, barcodes, invented school logos, extra straps, metal distortions, or watermark.
 
-## 9. Optimize and finish the functional experience
+Composite actual approved front/back artwork afterward. Keep materials consistent with what Simpedu actually prints.
 
-Fix root causes of horizontal overflow, including transformed service/company rows, fixed widths, min-content sizing, and mobile form layout. Intentional galleries may scroll within their own bounded container. Never conceal broken content with a global overflow-x: hidden patch.
+**D — Material detail, optional**
 
-Use AVIF/WebP derivatives, responsive srcset/sizes, correct intrinsic dimensions, and stable aspect-ratio boxes. Load the actual LCP image eagerly with appropriate priority; lazy-load below-fold imagery. Avoid requesting every screen of every case study on initial load. Poster images must work before video or optional enhancement. Retain source masters separately from delivery assets.
+> Macro product photograph matching the Simpedu identity campaign, closely observed edge of an unprinted white PVC ID card beside a sharply rendered metal lanyard clip and navy woven strap. Warm neutral backdrop, soft directional light, tactile weave and restrained metal reflections, shallow but controlled depth of field, elegant negative space. Physically plausible card thickness and clip mechanism. No text, logos, holograms, security claims, watermark, extra objects, or glossy CGI appearance. Landscape 3:2 composition.
 
-Use properly loaded WOFF2 fonts with the required weights, font-display, and sensible fallback metrics. Remove the currently unused font request. Split below-fold or route-specific code where measurement warrants it. The audited build was approximately 335KB JS / 118KB gzip before redesign; use it as a comparison point, not evidence that current user performance is good or bad.
+These are supporting assets. The real software and approved card designs remain the principal evidence of the company’s work.
 
-Aim for LCP ≤2.5s, INP ≤200ms, and CLS ≤0.1 at the 75th percentile in real use. Lighthouse is a lab diagnostic and cannot establish a field INP result. Measure production builds and report tooling, viewport, network/CPU conditions, and observed values honestly. These target thresholds follow https://web.dev/articles/vitals .
+### 8. Performance, accessibility, and reliability
 
-Keep semantic landmarks, one clear H1 per page, heading hierarchy, focus-visible states, a skip link, readable contrast, and usable zoom behavior. Prefer 44px touch targets without overlapping hit regions. Support hover, focus, touch, Escape, and focus restoration in navigation. Mobile menu state should close after route selection.
+Replace the eight-background carousel. Use responsive AVIF/WebP assets, explicit dimensions/aspect ratios, appropriate `srcset`/`sizes`, and distinct mobile crops where needed. Prioritize the actual LCP image; lazy-load below-the-fold images. Remove duplicate asset requests. Keep the header logo lightweight, ideally below 15 KB where quality permits. Treat a roughly 200–350 KB hero and an initial image budget below about 700 KB as engineering targets to validate against fidelity, not excuses to visibly degrade the product.
 
-Fix lead forms: check HTTP status, display real failure feedback, retain submitted values on error, allow retry, and only acknowledge receipt after actual server acceptance. Test with mocked success, non-2xx responses, and network failure without sending real test leads. Preserve /api/send-email and its deployment requirements. Do not expose secrets to client code.
+Use static/server-rendered content where appropriate, isolate interactive code, and avoid shipping a heavy 3D engine for a single device composition. Subset/self-host only licensed font weights actually used. Avoid layout shifts during fonts, media, tab changes, and sticky behavior. Match cache strategy to asset versioning so changed images do not stay stale for a year.
 
-Audit every existing route. Remove placeholder articles and unverified reviews from public promotion until genuine content is available. Preserve useful routes and give unfinished destinations an honest treatment. Resolve Privacy and Terms links without inventing legal policies. Do not publish invented company commitments.
+Target LCP ≤2.5 seconds, INP ≤200 ms, and CLS ≤0.1 at the 75th percentile of real visits. Use Lighthouse and local traces as development evidence; do not claim they establish field INP. Aim for mobile Lighthouse performance ≥90, report actual measurements and conditions, and explain any remaining bottleneck. See [Google’s Core Web Vitals guidance](https://web.dev/articles/vitals).
 
-## 10. Implementation order and completion criteria
+Verify text contrast, focus visibility, form labels/errors, screen-reader state, 44 px touch targets where practical, keyboard-operated tabs/gallery/navigation, and Escape/focus restoration in overlays. Test at 320, 390, 768, 1024, and 1440 px, with enlarged text and reduced motion. See [MDN’s reduced-motion reference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion).
 
-Start with shared project data, truthful content, typography, tokens, and asset preparation. Build the static composition and responsive hierarchy next. Repair hardware compositing, add case studies, then implement the motion layer. Finish contact flow, navigation, route integrity, and measured optimization. Keep changes reviewable. Make ordinary design and implementation decisions without repeatedly asking for approval.
+Write unique titles/descriptions for existing routes, correct social preview images and dimensions, meaningful alt text, and structured data limited to verified business facts. Keep important content in semantic HTML.
 
-If a factual answer is missing, continue independent work, use honest neutral wording, and list the precise question in the handoff. If an external generated asset is missing, deliver a polished version using real screenshots and clean screen frames, supply the exact asset brief, and identify the remaining replacement. Never substitute random stock images or fabricated metrics.
+### 9. Execution and acceptance
 
-Verify the homepage, work index, every case study, capabilities, company, and enquiry flow. Capture desktop at 1440×900 and 1366×768, and mobile at 390×844 and 320px width. Check normal and reduced motion, keyboard-only navigation, 200% zoom, direct route loads, back navigation, long project titles, form failure, image loading, and resizing across breakpoints. Ensure useful page content stays available if optional animations fail.
+Proceed through inspection, a concise visual rationale, implementation, asset integration, and verification. Resolve routine design choices yourself within this brief. Record assumptions about missing business evidence. Keep unavailable claims out of production copy and list missing proof separately in the handoff.
 
-Run npm run build. Check console errors, missing assets, duplicate/overlapping hardware features, stretched screens, clipped shadows, unintended horizontal scrolling, broken links, and animation cleanup on route changes. Test substantive behavior changes; avoid tests that merely mirror styling choices. Use one batched visual review and one confirmation pass after fixes rather than open-ended polishing.
+Deliver the complete site, not only a plan or hero prototype. Use reusable source components, shared design tokens, and a central content/asset structure. Preserve existing public behavior unless this brief explicitly improves it.
 
-Deliver the implemented site, updated DESIGN.md, an asset manifest identifying real screenshots versus generated illustrative material, representative desktop/mobile screenshots, a concise change summary, measured checks, and remaining factual/asset dependencies. Do not call it finished if the work still leads with generic service boxes, product screens remain unreadable, forms falsely succeed, or mobile layout breaks.
+Perform one combined desktop/mobile review, fix the issues found, then make one confirmation pass. Check all existing routes, navigation, button destinations, image decoding, theme behavior, form states without sending real leads, keyboard controls, reduced motion, and browser errors. Run the actual build. Provide screenshots and measured performance results with conditions.
 
-END PROMPT
+The work is complete when:
 
-## Audit evidence and limits
+1. The opening clearly explains Simpedu and immediately showcases something it built.
+2. Software screens are crisp and purposeful; device composition is physically credible.
+3. Identity-printing work is visible on the homepage and useful on its dedicated page.
+4. Layout, typography, color, and imagery feel intentionally authored for Simpedu.
+5. Motion creates a memorable product story and remains comfortable and usable on mobile.
+6. Every route and primary action works; no dead links, invented proof, broken imagery, or unreadable CTA remains.
+7. Performance and accessibility checks have actual evidence, and the source is maintainable.
 
-- Inspected local source, tokens, routes, screenshot assets, and both hardware shells. Rendered Home, Work, About, and Services at desktop size, and Home at mobile size. Visually inspected desktop Home, mobile Home, device showcase, Studio Display, and an asset contact sheet. Other rendered pages received basic runtime checks, not exhaustive visual review.
-- Build passed: 76 modules, CSS 37.17KB / 7.76KB gzip, JS 334.93KB / 117.71KB gzip. No page exceptions observed during the sampled route checks. No Lighthouse or field Core Web Vitals measurement was performed.
-- Confirmed Home document overflow at desktop and mobile; one desktop observation was 1580px document width against 1440px viewport width. Motion changes layout bounds over time, so this is an observation, not a constant invariant.
-- Deterministic Impeccable scan returned one warning at src/components/ImageCycle.jsx:24. It flags a dynamic image src as potentially broken; the inspected image rendered successfully. Treat this warning as a false positive for that observed asset, not evidence of a broken source.
-- Review target: Simpedu marketing site. Ignore list: no custom ignores supplied. Assessment independence: one sequential source/browser review; no independent parallel assessment was performed. Browser fallback: headless local Chrome through Playwright because no native browser automation tool was exposed; bundled headless Chromium was unavailable. No visible browser overlay, detector injection, or detector live server was used. No production website or external client relationship was verified.
-- Temporary audit screenshots and scan output are under /tmp/simpedu-audit and /tmp/simpedu-detect.json. They were retained as review evidence. The temporary Vite server was stopped after the audit. No application source changes were made; this document is the handoff artifact.
-
-Reference guidance: [GSAP media-query lifecycle](https://gsap.com/docs/v3/GSAP/gsap.matchMedia()/), [Core Web Vitals definitions and thresholds](https://web.dev/articles/vitals), [reduced-motion preference](https://developer.mozilla.org/en-US/docs/Web/CSS/Reference/At-rules/@media/prefers-reduced-motion).
+Finish with a concise handoff explaining what changed, how it was checked, where any missing real assets or verified business facts are still needed, and how to run/build the project.

@@ -30,7 +30,7 @@ const SERVICES = [
     title: 'Graphic design & marketing material',
     bg: '#13351f',
     tagTone: 'overlay',
-    preview: <div className="prev-swatches"><i style={{ background: '#6d28d9' }} /><i style={{ background: '#1d4ed8' }} /><i style={{ background: '#16a34a' }} /><i style={{ background: '#d97706' }} /></div>,
+    preview: <div className="prev-type"><span>Social</span><span>Brand</span><span>Print</span><span>Digital</span></div>,
     tags: ['Social media creative', 'Banners', 'Pitch decks', 'Packaging', 'Email design', 'Any graphic material'],
   },
 ]
