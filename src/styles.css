@@ -275,9 +275,29 @@ main { display: flex; flex-direction: column; }
 main { display: flex; flex-direction: column; }
 
 /* Page header */
-.page-header { max-width: var(--page-max-width); margin: 0 auto; padding: 72px 24px 8px; display: flex; flex-direction: column; gap: 16px; align-items: center; text-align: center; }
+.page-header-wrap { position: relative; overflow: hidden; }
+.page-header { position: relative; z-index: 1; max-width: var(--page-max-width); margin: 0 auto; padding: 72px 24px 8px; display: flex; flex-direction: column; gap: 16px; align-items: center; text-align: center; }
 .page-eyebrow { color: var(--color-steel); font-weight: 600; font-size: var(--text-body); text-transform: uppercase; letter-spacing: .04em; }
 .page-header .body-lg { max-width: 620px; color: var(--color-steel); }
+
+/* Cube-grid background */
+.cubes-grid {
+  position: absolute; inset: 0; height: 260px; z-index: 0; pointer-events: none;
+  --cube-line: color-mix(in srgb, var(--color-obsidian) 6%, transparent);
+  background-image:
+    linear-gradient(30deg, var(--cube-line) 12%, transparent 12.5%, transparent 87%, var(--cube-line) 87.5%, var(--cube-line)),
+    linear-gradient(150deg, var(--cube-line) 12%, transparent 12.5%, transparent 87%, var(--cube-line) 87.5%, var(--cube-line)),
+    linear-gradient(30deg, var(--cube-line) 12%, transparent 12.5%, transparent 87%, var(--cube-line) 87.5%, var(--cube-line)),
+    linear-gradient(150deg, var(--cube-line) 12%, transparent 12.5%, transparent 87%, var(--cube-line) 87.5%, var(--cube-line)),
+    linear-gradient(60deg, var(--cube-line) 25%, transparent 25.5%, transparent 75%, var(--cube-line) 75%, var(--cube-line)),
+    linear-gradient(60deg, var(--cube-line) 25%, transparent 25.5%, transparent 75%, var(--cube-line) 75%, var(--cube-line));
+  background-size: 64px 112px;
+  background-position: 0 0, 0 0, 32px 56px, 32px 56px, 0 0, 32px 56px;
+  mask-image: linear-gradient(to bottom, #000 0%, #000 30%, transparent 95%), radial-gradient(ellipse 60% 100% at 50% 0%, #000 55%, transparent 100%);
+  mask-composite: intersect;
+  -webkit-mask-image: linear-gradient(to bottom, #000 0%, #000 30%, transparent 95%), radial-gradient(ellipse 60% 100% at 50% 0%, #000 55%, transparent 100%);
+  -webkit-mask-composite: source-in;
+}
 
 /* Pricing */
 .price-toggle { display: inline-flex; gap: 4px; background: var(--color-mist); border-radius: 100px; padding: 4px; margin: 24px auto 8px; }

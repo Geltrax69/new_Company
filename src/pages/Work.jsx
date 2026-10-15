@@ -2,6 +2,7 @@ import PageHeader from '../components/PageHeader.jsx'
 import Reveal from '../components/Reveal.jsx'
 import Section from '../components/Section.jsx'
 import DeviceShowcase from '../components/DeviceShowcase.jsx'
+import CubesGrid from '../components/CubesGrid.jsx'
 import useDocumentTitle from '../useDocumentTitle.js'
 
 const img = (dir, kind, n) => Array.from({ length: n }, (_, i) => `/work/${dir}/${kind}-${i + 1}.webp`)
@@ -53,7 +54,10 @@ export default function Work() {
   useDocumentTitle('Our work', 'Products built by Simpedu LLP — school management, sports federation CMS, live scoreboards and e-commerce.')
   return (
     <>
-      <PageHeader eyebrow="Our work" title="Built by Simpedu, running today" subtitle="Real products, deployed and in use — from school ERP to live sports scoreboards." />
+      <div className="page-header-wrap">
+        <CubesGrid />
+        <PageHeader eyebrow="Our work" title="Built by Simpedu, running today" subtitle="Real products, deployed and in use — from school ERP to live sports scoreboards." />
+      </div>
 
       <Section className="case-list">
         {CASES.map((c, i) => (
