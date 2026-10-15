@@ -137,12 +137,16 @@ export default function Home() {
               alt="Simpedu school management dashboard showing student statistics and charts"
               className="hero-desktop"
               loading="eager"
+              width="2560"
+              height="1325"
             />
             <img
               src="/work/school/phone-7.webp"
               alt="Simpedu teacher mobile view"
               className="hero-phone"
               loading="eager"
+              width="1206"
+              height="2622"
             />
           </div>
           <p className="hero-caption">Real product screenshots — Simpedu school platform</p>
@@ -157,17 +161,23 @@ export default function Home() {
         </Reveal>
         <div className="workflow-steps">
           <Reveal className="workflow-step" delay={0}>
-            <img src="/work/school/desktop-1.webp" alt="School office dashboard overview" loading="lazy" />
+            <div className="workflow-media">
+              <img src="/work/school/desktop-1.webp" alt="School office dashboard overview" loading="lazy" width="2560" height="1325" />
+            </div>
             <h3>1. Office overview</h3>
             <p>Admins see attendance, fees, and staff status at a glance.</p>
           </Reveal>
           <Reveal className="workflow-step" delay={0.1}>
-            <img src="/work/school/phone-8.webp" alt="Teacher marking attendance on mobile" loading="lazy" />
+            <div className="workflow-media">
+              <img src="/work/school/phone-8.webp" alt="Teacher marking attendance on mobile" loading="lazy" />
+            </div>
             <h3>2. Teacher action</h3>
             <p>Teachers mark attendance from the classroom in seconds.</p>
           </Reveal>
           <Reveal className="workflow-step" delay={0.2}>
-            <img src="/work/school/phone-4.webp" alt="Parent viewing attendance updates" loading="lazy" />
+            <div className="workflow-media">
+              <img src="/work/school/phone-4.webp" alt="Parent viewing attendance updates" loading="lazy" />
+            </div>
             <h3>3. Parent view</h3>
             <p>Parents see updates instantly, no phone calls needed.</p>
           </Reveal>

@@ -597,10 +597,13 @@ p { text-wrap: pretty; }
 
 /* Distinct project compositions */
 .case { display: grid; gap: 32px; margin-bottom: 80px; }
-.case-index { font-size: 14px; color: var(--color-steel); font-weight: 600; }
+.case-index { position: static; transform: none; font-size: 14px; color: var(--color-steel); font-weight: 600; display: block; margin-bottom: 16px; }
 .case-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .case-duo figure { margin: 0; }
 .case-duo img { width: 100%; border-radius: 16px; box-shadow: 0 12px 32px rgba(0,0,0,0.1); display: block; }
+.case-federation .case-wide, .case-scoreboard .case-hero-img { grid-column: 1 / -1; }
+.case-federation, .case-scoreboard { grid-template-columns: 1fr; }
+.case-federation .case-copy, .case-scoreboard .case-copy { max-width: 640px; }
 .case-duo figcaption { font-size: 13px; color: var(--color-steel); margin-top: 8px; text-align: center; }
 .case-wide img, .case-hero-img img { width: 100%; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.12); display: block; }
 .case-hero-img img { aspect-ratio: 16/9; object-fit: cover; }
@@ -611,14 +614,16 @@ p { text-wrap: pretty; }
 }
 
 /* Workflow sequence */
-.workflow-sequence { padding: 80px 0; }
+.workflow-sequence { padding: 80px 24px; }
 .workflow-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px; }
-.workflow-step { text-align: center; }
-.workflow-step img { width: 100%; max-width: 280px; border-radius: 16px; box-shadow: 0 12px 32px rgba(0,0,0,0.1); margin: 0 auto 20px; display: block; }
-.workflow-step:first-child img { max-width: 100%; }
+.workflow-step { text-align: center; display: flex; flex-direction: column; }
+.workflow-step .workflow-media { height: 380px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
+.workflow-step img { max-height: 380px; max-width: 100%; width: auto; border-radius: 16px; box-shadow: 0 12px 32px rgba(0,0,0,0.1); display: block; object-fit: contain; }
 .workflow-step h3 { font-size: 20px; margin-bottom: 8px; }
 .workflow-step p { color: var(--color-steel); font-size: 15px; }
 
 @media (max-width: 768px) {
   .workflow-steps { grid-template-columns: 1fr; }
+  .workflow-step .workflow-media { height: auto; }
+  .workflow-step img { max-height: 300px; }
 }

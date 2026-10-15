@@ -37,6 +37,10 @@ export default function Work() {
               <figcaption>Parent view — see updates</figcaption>
             </figure>
           </div>
+          <details className="case-more">
+            <summary>View more screenshots</summary>
+            <DeviceShowcase images={CASES[0].images} kind="phone" label={CASES[0].title} />
+          </details>
         </Reveal>
 
         {/* 02 Federation: large desktop canvas */}
@@ -85,8 +89,8 @@ export default function Work() {
               <figcaption>Browse products</figcaption>
             </figure>
             <figure>
-              <img src="/work/uniminute/phone-3.webp" alt="Uniminute checkout on mobile" loading="lazy" />
-              <figcaption>Checkout</figcaption>
+              <img src="/work/uniminute/phone-3.webp" alt="Uniminute product details on mobile" loading="lazy" />
+              <figcaption>Product details</figcaption>
             </figure>
           </div>
         </Reveal>
