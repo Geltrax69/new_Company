@@ -1,7 +1,10 @@
 import { useEffect, useRef, useState } from 'react'
 import gsap from 'gsap'
 
-// Cycles through `images` inside a CSS device frame (phone or desktop/"Mac Studio Display").
+const SHELL = { phone: '/frames/iphone-shell.webp', desktop: '/frames/studio-display-shell.webp' }
+
+// Cycles through `images` inside a real Apple device shell (PNG with a transparent screen
+// cutout, sourced from Figma — see DeviceShowcase CSS comment for the source files).
 // ponytail: plain gsap crossfade timeline, no carousel library — one effect, not a product.
 export default function DeviceShowcase({ images, kind = 'phone', interval = 2800, glow }) {
   const [active, setActive] = useState(0)
@@ -55,20 +58,7 @@ export default function DeviceShowcase({ images, kind = 'phone', interval = 2800
             />
           ))}
         </div>
-        {kind === 'phone' && (
-          <>
-            <div className="device-notch" />
-            <div className="device-btn btn-power" />
-            <div className="device-btn btn-vol1" />
-            <div className="device-btn btn-vol2" />
-          </>
-        )}
-        {kind === 'desktop' && (
-          <>
-            <div className="device-cam" />
-            <div className="device-stand" />
-          </>
-        )}
+        <img src={SHELL[kind]} alt="" className="device-shell" />
       </div>
       <div className="device-dots">
         {images.map((_, i) => (
