@@ -594,3 +594,31 @@ p { text-wrap: pretty; }
   .hero-phone { right: 8px; bottom: -24px; width: 32%; }
   .hero-caption { margin-top: 36px; }
 }
+
+/* Distinct project compositions */
+.case { display: grid; gap: 32px; margin-bottom: 80px; }
+.case-index { font-size: 14px; color: var(--color-steel); font-weight: 600; }
+.case-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
+.case-duo figure { margin: 0; }
+.case-duo img { width: 100%; border-radius: 16px; box-shadow: 0 12px 32px rgba(0,0,0,0.1); display: block; }
+.case-duo figcaption { font-size: 13px; color: var(--color-steel); margin-top: 8px; text-align: center; }
+.case-wide img, .case-hero-img img { width: 100%; border-radius: 20px; box-shadow: 0 20px 60px rgba(0,0,0,0.12); display: block; }
+.case-hero-img img { aspect-ratio: 16/9; object-fit: cover; }
+.case-phones img { max-width: 280px; margin: 0 auto; }
+
+@media (max-width: 768px) {
+  .case-duo { grid-template-columns: 1fr; }
+}
+
+/* Workflow sequence */
+.workflow-sequence { padding: 80px 0; }
+.workflow-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px; }
+.workflow-step { text-align: center; }
+.workflow-step img { width: 100%; max-width: 280px; border-radius: 16px; box-shadow: 0 12px 32px rgba(0,0,0,0.1); margin: 0 auto 20px; display: block; }
+.workflow-step:first-child img { max-width: 100%; }
+.workflow-step h3 { font-size: 20px; margin-bottom: 8px; }
+.workflow-step p { color: var(--color-steel); font-size: 15px; }
+
+@media (max-width: 768px) {
+  .workflow-steps { grid-template-columns: 1fr; }
+}

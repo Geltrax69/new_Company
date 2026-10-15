@@ -149,6 +149,31 @@ export default function Home() {
         </Reveal>
       </Section>
 
+      <Section className="workflow-sequence">
+        <Reveal>
+          <p className="eyebrow">How it works</p>
+          <h2 className="heading">One workflow, three views.</h2>
+          <p className="body-lg">The school day, from office to classroom to home.</p>
+        </Reveal>
+        <div className="workflow-steps">
+          <Reveal className="workflow-step" delay={0}>
+            <img src="/work/school/desktop-1.webp" alt="School office dashboard overview" loading="lazy" />
+            <h3>1. Office overview</h3>
+            <p>Admins see attendance, fees, and staff status at a glance.</p>
+          </Reveal>
+          <Reveal className="workflow-step" delay={0.1}>
+            <img src="/work/school/phone-8.webp" alt="Teacher marking attendance on mobile" loading="lazy" />
+            <h3>2. Teacher action</h3>
+            <p>Teachers mark attendance from the classroom in seconds.</p>
+          </Reveal>
+          <Reveal className="workflow-step" delay={0.2}>
+            <img src="/work/school/phone-4.webp" alt="Parent viewing attendance updates" loading="lazy" />
+            <h3>3. Parent view</h3>
+            <p>Parents see updates instantly, no phone calls needed.</p>
+          </Reveal>
+        </div>
+      </Section>
+
       <Section className="services">
         <div className="services-drift">
           <div className="services-scroll">
