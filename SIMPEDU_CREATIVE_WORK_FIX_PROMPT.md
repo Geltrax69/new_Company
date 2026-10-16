@@ -2,28 +2,23 @@
 
 Implemented 16 October 2026 in the actual React/Vite repository. This document supersedes older instructions that ask for a Studio Display, a plain “View more screenshots” disclosure, or the removed homepage subscription/capability grid.
 
-## Current scroll direction — supersedes the modal gallery
+## Current direction — sticky case studies
 
-The owner clarified that a normal gallery is not the desired experience and supplied this [9.4-second Romans reference video](https://inspiration-library.b-cdn.net/inspo-video/big-wearetheromans-1791719044763-30527.mp4). It was viewed directly in Chromium and inspected as 47 time-indexed images at 0.2-second intervals, with larger views around 3 and 6 seconds. This was a sampled motion analysis, not an examination of every encoded frame.
+The owner rejected the previous independently floating image layers. The new authoritative research and decision are in `WORK_SCROLL_DESIGN_RESEARCH.md`. The earlier Romans-inspired image overlap is historical, not the implementation target.
 
-Observed sequence: the page enters a dark section; a huge two-line headline holds near the viewport center; foreground images rise across it, alternating left/right/center and landscape/portrait sizes; captions travel with images; the headline remains behind them until the section ends. The important mechanism is persistent typography plus a moving, overlapping image track, not a carousel transition.
+Four projects use a stable editorial grid: one image stage stays in place while four narrative sections explain the work and select the matching screenshot. Crossfades take 240ms. There is no independent translation, rotation, scale, giant text behind images, forced scroll engine or pinned fullscreen slideshow. Only the progress rule tracks continuous scroll. Numbered screen links and a details link support direct navigation.
 
-The current premium pass keeps the scroll structure and brings it into the existing site's theme:
+`src/data/workStories.js` defines each project's meaningful screen sequence and explanatory copy. Update that file when products change. Additional catalog screenshots remain available in an aligned collection after each case. Expansion and collapse preserve deliberate keyboard focus.
 
-- Shared DM Sans, white, graphite and cool gray; no isolated dark-green portfolio theme. `src/premium.css` refines common navigation, buttons, page headings, footer and Home. Existing form behavior and backend are preserved.
-- `ProductComposition` supplies the same generated silver ribbon and authentic dashboard, commerce and scoreboard layers to Home and Work. The sculpture is illustrative brand art. Screens are never generated. Hovering or focusing Work's project index previews that specific project; no autoplay.
-- Four real project chapters retain oversized two-line sticky statements. Screens pass in front with alternating positions, refined frames and shadows, captions, and shorter gaps.
-- Foreground screen translation, small rotation and scale changes are tied to native scrolling with a 0.25-second scrub. Scroll-linked transforms use `ease: none` so input maps consistently to progress; this is not a time-based linear entrance. Each sticky stage has a small progress rule.
-- “There’s more to this story” inserts the remaining screenshots inline and focuses the first new image. “Back to the selection” collapses to four views and focuses project details. Chapter skip links and the footer contact anchor work.
-- On small screens, type and layouts adapt and screen rotation is removed. Live reduced-motion removes sticky overlap and parallax, preserves the normal reading flow, and disables preview movement.
-- Shared buttons have restrained hover and pressed states. The heavy inset button treatment is removed. Home's unsupported named testimonial was replaced with an unattributed, factual studio approach statement.
-- The homepage capability/subscription grid, Graphic Design Work-menu item, modal gallery, hardware shells, carousel dots and monitor stands remain removed.
+Mobile, short viewports and live reduced motion receive the full narrative with each image directly beside/below its description in ordinary flow. The CSS/GSAP media lifecycle must revert on preference/viewport changes and route exit.
 
-Use the installed frontend design, animation principles, and accessible motion skills where relevant. Do not apply unrelated skills or replace the existing React/Vite/CSS stack. Do not copy reference logos, exact writing, photos, or unsubstantiated company claims.
+Home and Work now share one aligned product exhibit. Work's index can preview one project via hover or keyboard focus. The previous floating dashboard, phone and scoreboard layers have been removed. Retain the site's DM Sans / white / graphite theme, authentic UI and subtle silver-loop backdrop.
+
+The homepage capability/subscription section, Graphic Design Work-menu item, modal gallery and hardware frames remain removed. Keep existing shared form/API behavior.
 
 ## Exact image prompts and placement
 
-The built-in ImageGen tool generated the two backgrounds. The exact prompts, optimized files, byte sizes, intended placements, and source/crop rules are in `public/images/showcase/ASSETS.md`. Keep generated backgrounds illustrative; never present them as real customer photography. Do not ask an image model to invent application screens, student records, testimonials, or project results.
+The built-in ImageGen tool generated the retained background assets. The current case-study pass does not require new imagery. The exact prompts, optimized files, byte sizes, intended placements, and source/crop rules are in `public/images/showcase/ASSETS.md`. Keep generated backgrounds illustrative; never present them as real customer photography. Do not ask an image model to invent application screens, student records, testimonials, or project results.
 
 ## Resend: actual fix and setup
 
@@ -56,12 +51,12 @@ The Vite development command serves the API; a plain static file server or `vite
 
 ## Copy-ready continuation prompt
 
-Continue the current Simpedu React/Vite site. Maintain the Romans-inspired scroll choreography implemented in `src/pages/Work.jsx` and `src/pages/work.css`: large stationary two-line type, real product screens passing in front, alternating placement and scale, and captions moving with each screen. Keep four real product chapters and all existing catalog screenshots. Match the white/graphite site theme, refined DM Sans hierarchy and current image framing in `src/premium.css`. Preserve the shared ProductComposition on Home and Work and its project-index hover/keyboard previews. Do not turn this back into a modal, slider, ordinary static card grid, monitor mockup, or “View more screenshots” disclosure.
+Continue the current Simpedu React/Vite site using `WORK_SCROLL_DESIGN_RESEARCH.md` as the motion/design decision. Preserve the sticky case-study sequence: project introduction, four explanatory sections on the left, one stable image stage on the right, and 240ms crossfades as the narrative reaches the reading zone. Keep numbered direct navigation, active-step cues, details links and optional extra screen grids. Do not restore floating, tilting, scaling or image-over-text compositions.
 
-Use CSS sticky for the typography and the installed GSAP/ScrollTrigger for modest foreground depth. Keep native scroll and scoped cleanup. On small screens preserve the same scroll concept with shorter offsets. Under live prefers-reduced-motion, remove sticky/parallax and use normal document flow. Keep meaningful headings, alt text, visible focus, per-project skip links, and expansion focus on the first newly added screenshot. Test expansion and collapse at every chapter because inserted content changes scroll geometry.
+Maintain the curated source/label/description data in `src/data/workStories.js`; keep the full catalog and original crop metadata. On mobile, short viewports and live reduced motion, show each image with its explanation in normal document flow. Scope and clean up ScrollTriggers. Align the last section so the stage remains in view through its explanation.
 
-Preserve `ScreenArtwork` and source-specific crop metadata. Do not generate application UI, customer records, quotes, metrics, or awards. The generated silver-loop backdrop is the current brand asset; the older studio/arena files are retained historical variants. Exact reusable background prompts are in `public/images/showcase/ASSETS.md`. Use silver-loop scenery behind portrait UI and on Home; leave landscape product screens large and readable.
+Keep the single aligned ProductComposition shared by Home and Work, white/graphite tokens, clear focus states and actual screenshots. No new generated art is required. Existing image prompts and placement rules are in `public/images/showcase/ASSETS.md`. Do not generate product UI, awards, testimonials or unsupported metrics.
 
-Keep the removed homepage capability block and Graphic Design menu item removed. Preserve Resend's shared server handler, Vite middleware, Vercel entrypoint, and server-only secrets. Test email with mocked transport; acknowledge success only after provider acceptance.
+Preserve the removed homepage capability block and Graphic Design menu item, plus the working shared Resend handler, Vite middleware and Vercel entrypoint. Keep secrets server-side and test email with mocked transport.
 
-Verify the headline remains at the same viewport position while images move across it. Check 320, 390, 768, 1024, and 1440px; all four chapters; expansion/collapse and focus; reduced motion and live preference changes; route navigation and Home. Inspect actual browser screenshots of motion at multiple scroll positions and a reduced-motion screenshot. Run `npm test` and `npm run build`. Report verified outcomes, without inventing awards, scores, or email delivery.
+Verify all four steps in all four cases, forward and reverse scrolling, stable stage geometry, current-screen state, direct navigation, image fit, expansion/collapse and focus, responsive widths from 320–1440px, short viewports, live reduced motion, Home and route cleanup. Inspect normal and fallback browser screenshots. Run tests/build and report only verified results.

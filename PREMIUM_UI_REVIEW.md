@@ -1,4 +1,6 @@
-# Premium interface pass — 16 October 2026
+# Historical premium interface pass — 16 October 2026
+
+Superseded for Work motion and the shared opening composition by `WORK_SCROLL_DESIGN_RESEARCH.md`. The owner rejected floating images after this pass.
 
 Full interface-polish review of Home and Work, plus shared navigation, headings, buttons and footer. React 18 / Vite / vanilla CSS / installed GSAP. Browser coverage: desktop Chrome through Playwright; other routes received layout and console checks, not a complete product/content audit.
 

@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState } from 'react'
+import { useLayoutEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
@@ -6,83 +6,99 @@ import ScreenArtwork from '../components/ScreenArtwork.jsx'
 import ProductComposition from '../components/ProductComposition.jsx'
 import useDocumentTitle from '../useDocumentTitle.js'
 import { PROJECTS } from '../data/projects.js'
+import { WORK_STORIES as STORIES } from '../data/workStories.js'
 import './work.css'
 
 gsap.registerPlugin(ScrollTrigger)
 
-const STORIES = [
-  { id: 'school', category: 'Education', headline: 'A clearer\nschool day.', quote: 'From the first attendance mark to the final report card.', scene: 'studio', main: '/work/school/desktop-1.webp', note: 'School management, designed around the people who use it.' },
-  { id: 'federation', category: 'Sports & community', headline: 'A home for\nthe whole game.', quote: 'The athletes. The fixtures. The moments that matter.', scene: 'arena', main: '/work/sepaktakraw/desktop-1.webp', note: 'A digital home for Haryana Sepak Takraw Association.' },
-  { id: 'scoreboard', category: 'Live scoring', headline: 'Every point.\nIn full view.', quote: 'From courtside control to the big picture.', scene: 'arena', main: '/work/scoreboard/desktop-1.webp', note: 'Match control and a display built for the whole venue.' },
-  { id: 'commerce', category: 'Commerce', headline: 'Little finds.\nEveryday life.', quote: 'From discovery to the details that make you choose.', scene: 'studio', main: '/work/uniminute/phone-5.webp', note: 'Uniminute: a mobile-first product and shopping experience.' },
-]
 const pad = value => String(value).padStart(2, '0')
 
 function Chapter({ project, story, index }) {
   const [expanded, setExpanded] = useState(false)
-  const screens = [...new Set([story.main, ...project.images])]
-  const visible = expanded ? screens : screens.slice(0, 4)
-  const collectionId = `${story.id}-screens`
-
   const chapter = useRef(null)
   const revealRequested = useRef(false)
-  useEffect(() => {
+  const selected = new Set(story.steps.map(step => step.src))
+  const extraScreens = project.images.filter(src => !selected.has(src))
+  const collectionId = `${story.id}-collection`
+
+  useLayoutEffect(() => {
     const media = gsap.matchMedia()
-    media.add('(prefers-reduced-motion: no-preference)', () => {
+    media.add('(min-width: 901px) and (min-height: 650px) and (prefers-reduced-motion: no-preference)', () => {
+      const root = chapter.current
+      const storyRoot = root.querySelector('.case-story')
+      storyRoot.classList.add('is-enhanced')
       const ctx = gsap.context(() => {
-        gsap.utils.toArray('.scroll-screen').forEach((frame, i) => {
-          gsap.fromTo(frame.querySelector('.scroll-screen-motion'),
-            { y: () => window.innerWidth < 700 ? 20 : 80 + (i % 3) * 16, rotation: () => window.innerWidth < 700 ? 0 : (i % 2 ? 2 : -2), scale: .96 },
-            { y: () => window.innerWidth < 700 ? -20 : -80 - (i % 3) * 16, rotation: () => window.innerWidth < 700 ? 0 : (i % 2 ? -1 : 1), scale: 1, ease: 'none',
-              scrollTrigger: { trigger: frame, start: 'top bottom', end: 'bottom top', scrub: .25, invalidateOnRefresh: true } })
+        const panels = gsap.utils.toArray('.case-panel')
+        const steps = gsap.utils.toArray('.case-step')
+        const indicators = gsap.utils.toArray('.case-screen-nav a')
+        const counter = root.querySelector('.case-current')
+        const select = index => {
+          steps.forEach((step, i) => step.classList.toggle('is-current', i === index))
+          panels.forEach((panel, i) => panel.classList.toggle('is-shown', i === index))
+          indicators.forEach((link, i) => {
+            if (i === index) link.setAttribute('aria-current', 'step')
+            else link.removeAttribute('aria-current')
+          })
+          counter.textContent = pad(index + 1)
+        }
+        select(0)
+        steps.forEach((step, i) => {
+          ScrollTrigger.create({ trigger: step.querySelector('.case-step-copy'), start: 'top 65%', end: 'bottom 35%', onEnter: () => select(i), onEnterBack: () => select(i) })
         })
-        gsap.fromTo('.collection-progress-fill', { scaleX: 0 }, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: chapter.current.querySelector('.scroll-collection'), start: 'top top', end: 'bottom bottom', scrub: .25 } })
+        gsap.fromTo('.case-progress-fill', { scaleX: 0 }, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: storyRoot, start: 'top 100px', end: 'bottom bottom', scrub: .2 } })
       }, chapter)
-      return () => ctx.revert()
+      return () => {
+        ctx.revert()
+        storyRoot.classList.remove('is-enhanced')
+        root.querySelectorAll('.is-current, .is-shown').forEach(node => node.classList.remove('is-current', 'is-shown'))
+      }
     })
     ScrollTrigger.refresh()
-    if (revealRequested.current) {
-      revealRequested.current = false
-      const target = expanded ? chapter.current.querySelectorAll('.scroll-screen')[4] : chapter.current.querySelector('.chapter-ending')
-      target.focus({ preventScroll: true })
-      window.scrollTo({ top: target.getBoundingClientRect().top + window.scrollY - 110, behavior: 'instant' })
-    }
     return () => media.revert()
+  }, [story])
+
+  useLayoutEffect(() => {
+    ScrollTrigger.refresh()
+    if (!revealRequested.current) return
+    revealRequested.current = false
+    const target = expanded ? chapter.current.querySelector('.case-extra-screen') : chapter.current.querySelector('.case-more')
+    target.focus({ preventScroll: true })
+    target.scrollIntoView({ behavior: 'instant', block: 'center' })
   }, [expanded])
 
   return (
     <article ref={chapter} id={story.id} className={`project-chapter chapter-${story.id}`}>
-      <div className="chapter-heading">
-        <div className="chapter-meta"><span>{pad(index + 1)} / {story.category}</span><span>{project.year}</span></div>
-        <div className="chapter-description"><p className="chapter-project-name">{project.title}</p><p>{story.note}</p></div>
-      </div>
-      <div className="scroll-collection" id={collectionId}>
-        <div className="collection-type-stage">
-          <div className="collection-type">
-            <span className="collection-chapter-number" aria-hidden="true">{pad(index + 1)}</span><p className="collection-eyebrow">{project.tag}</p>
-            <h2>{story.headline.split('\n').map(line => <span key={line}>{line}</span>)}</h2>
-            <div className="collection-progress" aria-hidden="true"><span className="collection-progress-fill" /></div>
-            <a className="collection-skip" href={`#${story.id}-details`}>Skip to project details <span aria-hidden="true">↓</span></a>
+      <header className="case-header">
+        <div className="case-meta"><span>{pad(index + 1)} / {story.category}</span><span>{project.year}</span></div>
+        <div className="case-heading-row"><h2>{story.headline}</h2><p>{story.summary}</p></div>
+        <div className="case-project-row"><span>{project.title}</span><span>{story.introduction}</span></div>
+      </header>
+      <div className="case-story">
+        <aside className="case-stage" aria-label={`${project.title} screen sequence`}>
+          <div className="case-stage-top"><span>The product in practice</span><span><b className="case-current">01</b> / {pad(story.steps.length)}</span></div>
+          <div className="case-display" aria-hidden="true">
+            {story.steps.map((step, i) => <div key={step.src} className={`case-panel ${step.src.includes('/phone-') || step.src.includes('scoreboard/desktop-3') ? 'is-portrait' : ''}`}>
+              <ScreenArtwork src={step.src} alt="" />
+              <span className="case-panel-caption">{pad(i + 1)} — {step.label}</span>
+            </div>)}
           </div>
-        </div>
-        <div className="scroll-screen-track">
-          {visible.map((src, i) => <figure tabIndex={-1} className={`scroll-screen screen-position-${i % 4} ${src.includes('/phone-') ? 'screen-portrait' : 'screen-landscape'}`} key={src}>
-            <div className="scroll-screen-motion">
-              <div className={`scroll-screen-surface surface-${story.scene}`}>
-                <ScreenArtwork src={src} alt={`${project.title} — product screen ${i + 1}`} />
-              </div>
-              <figcaption><span>{pad(i + 1)} / {pad(screens.length)}</span><span>{project.title}<small>{src.includes('/phone-') ? 'Mobile experience' : 'Web experience'}</small></span></figcaption>
-            </div>
-          </figure>)}
+          <div className="case-stage-bottom"><nav className="case-screen-nav" aria-label={`${project.title} story chapters`}>{story.steps.map((step, i) => <a key={step.src} href={`#${story.id}-step-${i}`} aria-label={`${pad(i + 1)}: ${step.label}`}>{pad(i + 1)}</a>)}</nav><a href={`#${story.id}-details`} className="case-skip">Project details <span aria-hidden="true">↘</span></a></div>
+          <div className="case-progress" aria-hidden="true"><span className="case-progress-fill" /></div>
+        </aside>
+        <div className="case-narrative">
+          {story.steps.map((step, i) => <section key={step.src} id={`${story.id}-step-${i}`} className="case-step">
+            <div className="case-step-copy"><p className="case-step-label"><span>{pad(i + 1)}</span>{step.label}</p><h3>{step.title}</h3><p className="case-step-description">{step.description}</p></div>
+            <figure className={`case-inline-screen ${step.src.includes('/phone-') || step.src.includes('scoreboard/desktop-3') ? 'is-portrait' : ''}`}><ScreenArtwork src={step.src} alt={`${project.title} — ${step.label}`} /></figure>
+          </section>)}
         </div>
       </div>
-      <div className="chapter-ending" tabIndex={-1} id={`${story.id}-details`}>
-        <p className="project-pullquote">{story.quote}</p>
-        {screens.length > 4 && <button type="button" className="explore-screens" aria-expanded={expanded} aria-controls={collectionId} onClick={() => { revealRequested.current = true; setExpanded(value => !value) }}>
-          <span>{expanded ? 'Back to the selection' : 'There’s more to this story'}<small>{expanded ? 'Return to four selected views' : `${pad(screens.length - 4)} more screens in the scroll`}</small></span><span className="explore-arrow" aria-hidden="true">{expanded ? '−' : '+'}</span>
-        </button>}
+      <div className="case-details" id={`${story.id}-details`}>
+        <p>{project.desc}</p>{project.link && <a href={project.link} target="_blank" rel="noreferrer">Visit the live project <span aria-hidden="true">↗</span></a>}
       </div>
-      <div className="chapter-footnote"><p>{project.desc}</p>{project.link && <a href={project.link} target="_blank" rel="noreferrer">Visit project <span aria-hidden="true">↗</span></a>}</div>
+      {extraScreens.length > 0 && <div className="case-more" tabIndex={-1}>
+        <button type="button" aria-expanded={expanded} aria-controls={collectionId} onClick={() => { revealRequested.current = true; setExpanded(value => !value) }}><span>{expanded ? 'Close the collection' : 'Explore the rest of the product'}<small>{pad(extraScreens.length)} additional screens</small></span><span aria-hidden="true">{expanded ? '−' : '+'}</span></button>
+        <div id={collectionId} className="case-extra-grid" hidden={!expanded}>{expanded && extraScreens.map((src, i) => <figure tabIndex={-1} className={`case-extra-screen ${src.includes('/phone-') ? 'is-portrait' : ''}`} key={src}><ScreenArtwork src={src} alt={`${project.title} — additional screen ${i + 1}`} /><figcaption>{project.title} / {pad(i + 5)}</figcaption></figure>)}</div>
+      </div>}
     </article>
   )
 }
@@ -99,7 +115,7 @@ export default function Work() {
         <h1><span>Built to work.</span><br /><span className="work-hero-muted">Made to matter.</span></h1>
         <div className="work-introduction"><p>Software for school days, match days,<br />and everything in between.</p><a href="#school" className="work-hero-link">Take a closer look <span aria-hidden="true">↙</span></a></div>
         </div>
-        <ProductComposition className="work-hero-composition" preview={previewIndex === null ? null : { src: STORIES[previewIndex].main, title: PROJECTS[previewIndex].title }} />
+        <ProductComposition className="work-hero-composition" preview={previewIndex === null ? null : { src: STORIES[previewIndex].steps[0].src, title: PROJECTS[previewIndex].title }} />
         <nav className="work-index" aria-label="Jump to a project" onMouseLeave={() => setPreviewIndex(null)} onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) setPreviewIndex(null) }}>{STORIES.map((story, i) => <a href={`#${story.id}`} key={story.id} onMouseEnter={() => setPreviewIndex(i)} onFocus={() => setPreviewIndex(i)}><span className="work-index-number">{pad(i + 1)}</span><span className="work-index-name">{PROJECTS[i].title}<small>{story.category}</small></span><span className="work-index-arrow" aria-hidden="true">↗</span></a>)}</nav>
       </header>
       <div className="work-chapters">{PROJECTS.map((project, index) => <Chapter key={project.title} project={project} story={STORIES[index]} index={index} />)}</div>

@@ -10,13 +10,17 @@ The general site remains light. The work experience uses the same white, graphit
 
 ## Work experience
 
-`src/pages/Work.jsx` and `work.css` present four scroll collections inspired by the owner's Romans video. Large two-line sentence-case headings hold in a native CSS sticky stage while staggered foreground product screens pass in front. Alternating positions and widths create the sequence; captions move with the screens. GSAP/ScrollTrigger adds small scroll-linked vertical offsets, scale and rotation with 0.25-second smoothing, without scroll hijacking or pin spacers. Native-scroll progress rules provide orientation. On phones, rotation is removed.
+The current direction is documented in `WORK_SCROLL_DESIGN_RESEARCH.md`. It supersedes the floating-image scroll and giant sticky typography treatments.
 
-Four selected screens appear initially in each chapter. “There’s more to this story” adds the rest inline, focuses the first new screen, and scrolls it into view. Collapse returns focus to details. Skip links bypass each image sequence. The former WorkGallery modal is removed.
+`src/pages/Work.jsx` presents four curated case studies. Real product information leads into an editorial two-column layout: narrative on the left, one fixed image stage on the right. Four steps per case show meaningful product capabilities. The data and selected screenshot order live in `src/data/workStories.js`, separate from the full catalog in `src/data/projects.js`.
 
-`ScreenArtwork` reads source dimensions and presentation crops from `src/data/workMedia.js`; originals remain intact. The current silver-loop generated brand art supports Home, Work, portrait panels and the Home process section. ProductComposition shares authentic floating screen layers between Home and Work, with live project previews from Work’s index. Earlier studio/arena art is retained but unused. Backgrounds are illustrative; exact prompts are in `public/images/showcase/ASSETS.md`.
+Desktop CSS sticky holds the stage while narrative sections select one screen at a time. Screens crossfade over 240ms; they do not independently translate, rotate or scale. Numbered links, a current counter and a scroll progress rule provide orientation. The final step has trailing space to avoid releasing the stage prematurely. Optional extra screenshots use an aligned grid after the case.
 
-Small screens retain the sticky scroll concept with smaller motion offsets. `src/premium.css` provides shared refined typography, buttons, navigation, page headings and footer; use existing tokens rather than a parallel palette. Live reduced-motion changes revert GSAP and replace sticky overlap with normal document flow. Images are never initially hidden. Scoped matchMedia contexts clean up on expansion, preference changes, and route unmount.
+Below 901px, below 650px viewport height, or under live reduced motion, every narrative step includes its own image in natural flow. Native scrolling and contextual cleanup are retained. The default unenhanced layout is readable without animation setup.
+
+`ScreenArtwork` retains authentic image sizes and source-specific crop metadata. `ProductComposition` is a single aligned exhibit shared by Home and Work, with hover/keyboard project previews in Work. The existing silver-loop art remains a subtle backdrop there and in Home's process visual; no new generated image is needed. Exact prompts are in `public/images/showcase/ASSETS.md`.
+
+`src/premium.css` retains shared typography, controls, navigation and footer. Keep white/graphite tokens and clear focus states. Never restore independent floating-image choreography from older review documents.
 
 ## Homepage and navigation
 
