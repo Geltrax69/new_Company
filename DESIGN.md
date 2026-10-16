@@ -10,15 +10,17 @@ The general site remains light. The work experience uses the same white, graphit
 
 ## Work experience
 
-The authoritative current direction is `WORK_SCROLL_DESIGN_RESEARCH.md`: compact inline project galleries. This replaces the long sticky story and earlier floating-image layouts.
+The current direction is documented in `WORK_SCROLL_DESIGN_RESEARCH.md`. It supersedes the floating-image scroll and giant sticky typography treatments.
 
-`src/pages/Work.jsx` presents one bounded image viewer per project, an explanation for the selected screen, previous/next controls and a thumbnail grid containing every source. The complete sequences live in `src/data/workStories.js`, with 12 school, 4 federation, 8 scoreboard and 8 commerce screens. The catalog in `src/data/projects.js` matches the physical files. No expansion is required to access images.
+`src/pages/Work.jsx` presents four curated case studies. Real product information leads into an editorial two-column layout: narrative on the left, one fixed image stage on the right. Every source WebP is part of the main story: school 12, federation 4, scoreboard 8 and commerce 8. Nothing is hidden behind an expansion button. The data and selected screenshot order live in `src/data/workStories.js`, separate from the full catalog in `src/data/projects.js`.
 
-Screens crossfade over 240ms, without autoplay, pinning, independent movement or per-image scroll distance. Keyboard Left/Right/Home/End and touch swipe select screens. All thumbnails remain direct buttons with labels and selected state. On phones the viewer precedes the changing explanation, so selecting a thumbnail keeps the image area stable. Reduced motion uses 150ms opacity feedback and removes the text entrance.
+Desktop CSS sticky holds the stage while narrative sections select one screen at a time. Screens crossfade over 240ms; they do not independently translate, rotate or scale. Numbered links, a current counter and a scroll progress rule provide orientation. The final step has trailing space to avoid releasing the stage prematurely. Each case ends with a clearly titled project-details section containing the product name, scope, year, full image count and relevant links. Details anchors target that section, with room beneath the sticky navigation.
 
-The full project-details sections remain explicit anchor targets with the product name, scope, metadata and links. Page scrolling moves between projects; it does not advance every screenshot. `ScreenArtwork` preserves actual aspect ratios and crop metadata.
+Below 901px, below 650px viewport height, or under live reduced motion, every narrative step includes its own image in natural flow. Native scrolling and contextual cleanup are retained. The default unenhanced layout is readable without animation setup.
 
-`ProductComposition` remains the aligned single-product exhibit shared by Home and Work. Work's index supports hover/keyboard previews. Existing decorative silver-loop art is retained; no new asset or dependency is required. `src/premium.css` keeps the shared white/graphite theme, typography, controls and navigation.
+`ScreenArtwork` retains authentic image sizes and source-specific crop metadata. `ProductComposition` is a single aligned exhibit shared by Home and Work, with hover/keyboard project previews in Work. The existing silver-loop art remains a subtle backdrop there and in Home's process visual; no new generated image is needed. Exact prompts are in `public/images/showcase/ASSETS.md`.
+
+`src/premium.css` retains shared typography, controls, navigation and footer. Keep white/graphite tokens and clear focus states. Never restore independent floating-image choreography from older review documents.
 
 ## Homepage and navigation
 

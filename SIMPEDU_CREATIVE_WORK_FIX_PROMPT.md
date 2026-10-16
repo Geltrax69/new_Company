@@ -2,15 +2,19 @@
 
 Implemented 16 October 2026 in the actual React/Vite repository. This document supersedes older instructions that ask for a Studio Display, a plain “View more screenshots” disclosure, or the removed homepage subscription/capability grid.
 
-## Current direction — compact inline galleries
+## Current direction — sticky case studies
 
-The complete current specification is in `WORK_SCROLL_DESIGN_RESEARCH.md`. Each project has one large bounded viewer, a selected-screen explanation, previous/next controls and a thumbnail grid. All 32 WebPs remain available directly: 12 school, 4 federation, 8 scoreboard and 8 commerce. Do not reintroduce one scroll section per image: it makes the page unnecessarily long.
+The owner rejected the previous independently floating image layers. The new authoritative research and decision are in `WORK_SCROLL_DESIGN_RESEARCH.md`. The earlier Romans-inspired image overlap is historical, not the implementation target.
 
-Keep the full sequence in `src/data/workStories.js` and the catalog in `src/data/projects.js`. Buttons select any image with a 240ms crossfade. Support keyboard Left/Right/Home/End and touch swipe, without autoplay, scroll locking or fullscreen modals. Preserve selected-state labels and live screen feedback. On phones the image viewer and thumbnails precede the changing explanation to keep their position stable.
+Four projects use a stable editorial grid: one image stage stays in place while all product screens have narrative sections that explain the work and select the matching screenshot. Crossfades take 240ms. There is no independent translation, rotation, scale, giant text behind images, forced scroll engine or pinned fullscreen slideshow. Only the progress rule tracks continuous scroll. Numbered screen links and a details link support direct navigation.
 
-Reduced motion keeps a short 150ms fade and removes the explanation entrance animation. There is no GSAP scroll setup in Work anymore. Page scroll moves between projects, not through mandatory screenshot steps.
+`src/data/workStories.js` defines each project's meaningful screen sequence and explanatory copy. Update that file when products change. All 32 product WebPs are included in the main sequence by default: 12 school, 4 federation, 8 scoreboard and 8 commerce. No expansion control hides images. The numbered navigation scrolls horizontally when needed and keeps the current screen visible. Project details have their own visible heading, product name, metadata, description and links.
 
-Keep the clearly named product-details sections and their working same-project anchors, plus the shared single-image Home/Work exhibit and the white/graphite visual theme. No image is hidden behind an expansion control.
+Mobile, short viewports and live reduced motion receive the full narrative with each image directly beside/below its description in ordinary flow. The CSS/GSAP media lifecycle must revert on preference/viewport changes and route exit.
+
+Home and Work now share one aligned product exhibit. Work's index can preview one project via hover or keyboard focus. The previous floating dashboard, phone and scoreboard layers have been removed. Retain the site's DM Sans / white / graphite theme, authentic UI and subtle silver-loop backdrop.
+
+The homepage capability/subscription section, Graphic Design Work-menu item, modal gallery and hardware frames remain removed. Keep existing shared form/API behavior.
 
 ## Exact image prompts and placement
 
@@ -47,12 +51,12 @@ The Vite development command serves the API; a plain static file server or `vite
 
 ## Copy-ready continuation prompt
 
-Continue the current Simpedu React/Vite compact galleries. Preserve one stable image viewer per project, selected-screen copy, all-source thumbnails and previous/next navigation. All 32 source WebPs must remain in the sequence and accessible without expansion: 12 school, 4 federation, 8 scoreboard, 8 commerce. Use the filesystem coverage test to catch missing images.
+Continue the current Simpedu React/Vite site using `WORK_SCROLL_DESIGN_RESEARCH.md` as the motion/design decision. Preserve the sticky case-study sequence: project introduction, the complete product sequence on the left, one stable image stage on the right, and 240ms crossfades as the narrative reaches the reading zone. Keep numbered direct navigation, active-step cues, details links and a clearly titled details section for the same product. Do not restore floating, tilting, scaling or image-over-text compositions.
 
-Keep 240ms opacity transitions, keyboard Left/Right/Home/End, touch swipe and selected-state labels. No autoplay, one-section-per-image scrolling, scroll pinning, modal gallery or independent floating/tilting images. On phones keep the viewer before the changing explanation; preserve reduced-motion feedback. Keep project-details anchors clearly within their named product.
+Maintain the curated source/label/description data in `src/data/workStories.js`; keep the full catalog and original crop metadata. On mobile, short viewports and live reduced motion, show each image with its explanation in normal document flow. Scope and clean up ScrollTriggers. Align the last section so the stage remains in view through its explanation.
 
-Update `src/data/workStories.js` and catalog data when products change. Retain ScreenArtwork, real screenshots and source-specific crops. Preserve the shared Home/Work exhibit and neutral site theme. Existing generation prompts are in `public/images/showcase/ASSETS.md`; no new image is required for the gallery change.
+Keep the single aligned ProductComposition shared by Home and Work, white/graphite tokens, clear focus states and actual screenshots. No new generated art is required. Existing image prompts and placement rules are in `public/images/showcase/ASSETS.md`. Do not generate product UI, awards, testimonials or unsupported metrics.
 
-Keep the previously removed capability block, Graphic Design Work-menu item and hardware frames removed. Preserve shared Resend behavior and server-only secrets. Use mocked transport for email tests.
+Preserve the removed homepage capability block and Graphic Design menu item, plus the working shared Resend handler, Vite middleware and Vercel entrypoint. Keep secrets server-side and test email with mocked transport.
 
-Verify all 32 thumbnail selections, arrows and keyboard controls, swipe, stable viewer geometry, page height, all details anchors, responsive widths 320–1440px, reduced motion and route navigation. Run tests and production build. Report measured results only.
+Verify all 32 screens across all four cases, forward and reverse scrolling, stable stage geometry, current-screen state, direct navigation, image fit, complete asset coverage, details anchors and focus, responsive widths from 320–1440px, short viewports, live reduced motion, Home and route cleanup. Inspect normal and fallback browser screenshots. Run tests/build and report only verified results.
