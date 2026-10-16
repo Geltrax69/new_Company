@@ -12,9 +12,9 @@ The general site remains light. The work experience uses the same white, graphit
 
 The current direction is documented in `WORK_SCROLL_DESIGN_RESEARCH.md`. It supersedes the floating-image scroll and giant sticky typography treatments.
 
-`src/pages/Work.jsx` presents four curated case studies. Real product information leads into an editorial two-column layout: narrative on the left, one fixed image stage on the right. Four steps per case show meaningful product capabilities. The data and selected screenshot order live in `src/data/workStories.js`, separate from the full catalog in `src/data/projects.js`.
+`src/pages/Work.jsx` presents four curated case studies. Real product information leads into an editorial two-column layout: narrative on the left, one fixed image stage on the right. Every source WebP is part of the main story: school 12, federation 4, scoreboard 8 and commerce 8. Nothing is hidden behind an expansion button. The data and selected screenshot order live in `src/data/workStories.js`, separate from the full catalog in `src/data/projects.js`.
 
-Desktop CSS sticky holds the stage while narrative sections select one screen at a time. Screens crossfade over 240ms; they do not independently translate, rotate or scale. Numbered links, a current counter and a scroll progress rule provide orientation. The final step has trailing space to avoid releasing the stage prematurely. Optional extra screenshots use an aligned grid after the case.
+Desktop CSS sticky holds the stage while narrative sections select one screen at a time. Screens crossfade over 240ms; they do not independently translate, rotate or scale. Numbered links, a current counter and a scroll progress rule provide orientation. The final step has trailing space to avoid releasing the stage prematurely. Each case ends with a clearly titled project-details section containing the product name, scope, year, full image count and relevant links. Details anchors target that section, with room beneath the sticky navigation.
 
 Below 901px, below 650px viewport height, or under live reduced motion, every narrative step includes its own image in natural flow. Native scrolling and contextual cleanup are retained. The default unenhanced layout is readable without animation setup.
 

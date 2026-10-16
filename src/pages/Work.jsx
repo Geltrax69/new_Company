@@ -14,12 +14,7 @@ gsap.registerPlugin(ScrollTrigger)
 const pad = value => String(value).padStart(2, '0')
 
 function Chapter({ project, story, index }) {
-  const [expanded, setExpanded] = useState(false)
   const chapter = useRef(null)
-  const revealRequested = useRef(false)
-  const selected = new Set(story.steps.map(step => step.src))
-  const extraScreens = project.images.filter(src => !selected.has(src))
-  const collectionId = `${story.id}-collection`
 
   useLayoutEffect(() => {
     const media = gsap.matchMedia()
@@ -40,6 +35,10 @@ function Chapter({ project, story, index }) {
             else link.removeAttribute('aria-current')
           })
           counter.textContent = pad(index + 1)
+          const nav = root.querySelector('.case-screen-nav')
+          const link = indicators[index]
+          if (link.offsetLeft < nav.scrollLeft) nav.scrollLeft = link.offsetLeft
+          else if (link.offsetLeft + link.offsetWidth > nav.scrollLeft + nav.clientWidth) nav.scrollLeft = link.offsetLeft + link.offsetWidth - nav.clientWidth
         }
         select(0)
         steps.forEach((step, i) => {
@@ -57,14 +56,6 @@ function Chapter({ project, story, index }) {
     return () => media.revert()
   }, [story])
 
-  useLayoutEffect(() => {
-    ScrollTrigger.refresh()
-    if (!revealRequested.current) return
-    revealRequested.current = false
-    const target = expanded ? chapter.current.querySelector('.case-extra-screen') : chapter.current.querySelector('.case-more')
-    target.focus({ preventScroll: true })
-    target.scrollIntoView({ behavior: 'instant', block: 'center' })
-  }, [expanded])
 
   return (
     <article ref={chapter} id={story.id} className={`project-chapter chapter-${story.id}`}>
@@ -92,13 +83,10 @@ function Chapter({ project, story, index }) {
           </section>)}
         </div>
       </div>
-      <div className="case-details" id={`${story.id}-details`}>
-        <p>{project.desc}</p>{project.link && <a href={project.link} target="_blank" rel="noreferrer">Visit the live project <span aria-hidden="true">↗</span></a>}
-      </div>
-      {extraScreens.length > 0 && <div className="case-more" tabIndex={-1}>
-        <button type="button" aria-expanded={expanded} aria-controls={collectionId} onClick={() => { revealRequested.current = true; setExpanded(value => !value) }}><span>{expanded ? 'Close the collection' : 'Explore the rest of the product'}<small>{pad(extraScreens.length)} additional screens</small></span><span aria-hidden="true">{expanded ? '−' : '+'}</span></button>
-        <div id={collectionId} className="case-extra-grid" hidden={!expanded}>{expanded && extraScreens.map((src, i) => <figure tabIndex={-1} className={`case-extra-screen ${src.includes('/phone-') ? 'is-portrait' : ''}`} key={src}><ScreenArtwork src={src} alt={`${project.title} — additional screen ${i + 1}`} /><figcaption>{project.title} / {pad(i + 5)}</figcaption></figure>)}</div>
-      </div>}
+      <section className="case-details" id={`${story.id}-details`} tabIndex={-1} aria-labelledby={`${story.id}-details-title`}>
+        <div className="case-details-heading"><p className="case-details-eyebrow">Project details</p><h3 id={`${story.id}-details-title`}>{project.title}</h3><p>{project.tag}</p></div>
+        <div className="case-details-content"><p>{project.desc}</p><dl className="case-details-facts"><div><dt>Field</dt><dd>{story.category}</dd></div><div><dt>Year</dt><dd>{project.year}</dd></div><div><dt>Product screens</dt><dd>{story.steps.length}</dd></div></dl><div className="case-details-actions">{project.link && <a href={project.link} target="_blank" rel="noreferrer">Visit the live project <span aria-hidden="true">↗</span></a>}<Link to="/book">Discuss a similar project <span aria-hidden="true">↗</span></Link><a href={`#${story.id}-step-0`}>Back to the screens <span aria-hidden="true">↑</span></a></div></div>
+      </section>
     </article>
   )
 }

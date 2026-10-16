@@ -4,7 +4,7 @@
 
 ## Decision
 
-Use an editorial, sticky case-study sequence: a fixed image stage on the right, a scrolling narrative on the left, and one complete screenshot at a time. Four carefully selected screens explain each product. On phones, short laptop viewports and reduced motion, pair each explanation with its image in ordinary document flow.
+Use an editorial, sticky case-study sequence: a fixed image stage on the right, a scrolling narrative on the left, and one complete screenshot at a time. Every product WebP appears in the main sequence: 12 school, 4 federation, 8 scoreboard and 8 commerce. On phones, short laptop viewports and reduced motion, pair each explanation with its image in ordinary document flow.
 
 The supplied products contain both detailed landscape dashboards and tall mobile screens. Their value needs explanation: office overview versus teacher actions, public federation site versus administration, referee controls versus venue display. A stable frame makes those relationships legible. Independent translation, tilting and foreground image overlap made the previous version feel arbitrary and could obscure text.
 
@@ -30,16 +30,16 @@ The chosen composition is an original fit for Simpedu's screenshots, not a claim
 
 1. Each case introduces its real product, category, year, summary and scope.
 2. The desktop stage stays at 100px from the top. Its footprint does not change between screenshots.
-3. Four narrative sections activate their corresponding screen when the explanation enters the reading zone. A 240ms opacity crossfade changes the screen; images do not translate, rotate or scale.
+3. Narrative sections for every product image activate their corresponding screen when the explanation enters the reading zone. A 240ms opacity crossfade changes the screen; images do not translate, rotate or scale.
 4. Numbered chapter links and the current counter provide direct navigation and orientation. The bottom progress rule alone tracks continuous scroll with a short scrub.
 5. The last section includes enough trailing space to keep the stage aligned until its explanation is read.
-6. Additional screenshots open in a secondary aligned grid after the case. Expansion focuses the first added screen; closing focuses the control area.
+6. All screens are visible in the main sequence. No expansion is required. A titled details section names the product and presents its description, scope, year, screen count and links; the details anchor leads directly there.
 7. The shared Home/Work opening is one aligned product exhibit with a fixed frame and caption. Project-index hover/focus replaces that single image. Existing silver-loop art remains a subdued decorative background.
 
 ## Implementation boundaries
 
 - `src/data/workStories.js`: curated screen order, real feature labels and explanatory copy. Update this file when the work changes.
-- `src/pages/Work.jsx`: scoped ScrollTrigger callbacks, CSS-current state, case navigation, optional collection.
+- `src/pages/Work.jsx`: scoped ScrollTrigger callbacks, CSS-current state, case navigation and clearly named product details.
 - `src/pages/work.css`: complete replacement of obsolete floating-layout rules with the editorial grid and responsive reading flow.
 - `src/components/ProductComposition.jsx`, `src/premium.css`: shared single-image exhibit; removed independent depth transforms, tilted layers and the old parallax lifecycle.
 - No additional dependency or generated image. Original screenshots and crop metadata remain intact. No invented awards, customer testimonials, performance improvements or usage metrics.
@@ -60,7 +60,7 @@ Resolved file findings: `src/pages/Work.jsx` — staging-one-focal-point, scoped
 
 Verification results are reported after browser checks. The implementation does not imply an award or a measured conversion improvement. Physical-device Safari and production hosting are outside the automated browser verification scope.
 
-## Verification completed
+## Verification completed for the initial four-screen revision (historical)
 
 - Production build passed: CSS 54.99 KB (11.26 KB gzip), JavaScript 344.79 KB (120.96 KB gzip). No new dependency.
 - Existing test suite: 8 passed; mocked email/provider transport only.
@@ -73,3 +73,11 @@ Verification results are reported after browser checks. The implementation does 
 - Normal/reduced screenshots compared; screen transitions replayed at 10% animation speed through Chromium's Animation playback-rate control.
 
 Verdict: Approve within the inspected Chromium scope. Physical Safari, screen-reader speech, production hosting and live email delivery were not verified by this design pass.
+
+## Complete catalog correction
+
+The owner requested every product image in the primary story. All 32 WebPs now appear there without expansion, including the previously missing school desktop screens 2–4. The school catalog itself now includes its 4 desktop and 8 mobile screens. A filesystem-backed regression test checks each source file against both the catalog and visible story data, preventing silent omissions.
+
+The old details destination was only a small paragraph near the next case. It is now a separate, titled details section for the same product, with scope, year, total screen count, live link where available, an enquiry link and a return-to-screens link. Numbered navigation can scroll horizontally and follows the active screen without scrolling the page.
+
+Verification of the complete-catalog correction: 9 tests and production build passed; all 32 screens selected correctly in Chromium; all 4 details links landed on their own named product section; 20 responsive project checks passed; mobile and reduced-motion paths retain all 32 images. No page errors. Source coverage is enforced by `tests/work-media.test.js`.

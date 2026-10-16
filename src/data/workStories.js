@@ -1,4 +1,4 @@
-// Curated sequences describe the actual screens, rather than arbitrary catalog order.
+// Complete product sequences: every WebP in public/work appears in its project story.
 export const WORK_STORIES = [
   {
     id: 'school', category: 'Education', headline: 'A clearer school day.',
@@ -9,6 +9,14 @@ export const WORK_STORIES = [
       { src: '/work/school/phone-7.webp', title: 'Built around the teacher’s day.', label: 'Teacher workspace', description: 'A mobile workspace brings attendance, homework, marks and messages into reach, with the classroom at the centre.' },
       { src: '/work/school/phone-8.webp', title: 'Less admin. More teaching.', label: 'Mark attendance', description: 'An individual register and quick class actions make the daily attendance task clear and easy to work through.' },
       { src: '/work/school/phone-4.webp', title: 'A clearer picture for parents.', label: 'Attendance history', description: 'A calendar view turns attendance records into something a parent can understand at a glance, day by day.' },
+      { src: "/work/school/desktop-2.webp", title: "Keep access activity visible.", label: "Login records", description: "The login overview provides a structured view of user access and activity for school administrators." },
+      { src: "/work/school/desktop-3.webp", title: "Bring fee records together.", label: "Student fees", description: "The student fee workspace brings balances, records and payment actions into one administration view." },
+      { src: "/work/school/desktop-4.webp", title: "See the learning picture.", label: "Grades & reports", description: "A reporting workspace brings grade information and student records together for review." },
+      { src: "/work/school/phone-1.webp", title: "A clear place to begin.", label: "Account sign-in", description: "The sign-in screen provides parent and teacher entry points into the school platform." },
+      { src: "/work/school/phone-2.webp", title: "Keep the school day close.", label: "Parent dashboard", description: "A parent dashboard brings attendance, schoolwork, upcoming items and important updates into one mobile view." },
+      { src: "/work/school/phone-3.webp", title: "Know what comes next.", label: "Timetable", description: "A daily timetable shows lesson times, subjects and classroom information in a mobile schedule." },
+      { src: "/work/school/phone-5.webp", title: "Make results easier to read.", label: "Exam results", description: "Subject-level results and visual progress bars give exam performance a clear mobile presentation." },
+      { src: "/work/school/phone-6.webp", title: "Follow the fee history.", label: "Fees & payments", description: "The fees screen brings amounts, due balances and past payment records together for parents." },
     ],
   },
   {
@@ -31,6 +39,10 @@ export const WORK_STORIES = [
       { src: '/work/scoreboard/desktop-1.webp', title: 'Make every point visible.', label: 'Venue display', description: 'Large scores, clear team names and the current set give the audience a display built around the match.' },
       { src: '/work/scoreboard/desktop-4.webp', title: 'Keep the match in context.', label: 'Match workspace', description: 'The match workspace brings the live score and set information into a single view for the people running the event.' },
       { src: '/work/scoreboard/desktop-2.webp', title: 'Give the result its moment.', label: 'Winner screen', description: 'A dedicated result screen carries the final score and set history through to the end of the match.' },
+      { src: "/work/scoreboard/desktop-5.webp", title: "Prepare the teams.", label: "Team setup", description: "A focused setup dialog brings team names and player details together before a match begins." },
+      { src: "/work/scoreboard/desktop-6.webp", title: "Set up the next match.", label: "Match setup", description: "A guided match form collects teams, event information and match settings before scoring starts." },
+      { src: "/work/scoreboard/desktop-7.webp", title: "Shape the venue experience.", label: "Display settings", description: "Display, announcement and presentation settings sit together in a dedicated configuration workspace." },
+      { src: "/work/scoreboard/desktop-8.webp", title: "Keep the pause in view.", label: "Timeout display", description: "The venue screen shows a visible timeout countdown alongside the current score and set." },
     ],
   },
   {
@@ -42,6 +54,10 @@ export const WORK_STORIES = [
       { src: '/work/uniminute/phone-2.webp', title: 'Bring local shops closer.', label: 'Nearby stores', description: 'The nearby-store view gives people a way to discover the shops around them before choosing where to browse.' },
       { src: '/work/uniminute/phone-5.webp', title: 'Make browsing feel easy.', label: 'Product catalogue', description: 'Product images, prices and shopping actions stay together in a mobile catalogue with familiar navigation.' },
       { src: '/work/uniminute/phone-3.webp', title: 'Let the product do the talking.', label: 'Product detail', description: 'A generous product image leads into the details and buying actions, keeping the decision clear on a small screen.' },
+      { src: "/work/uniminute/phone-4.webp", title: "A clear next step.", label: "Shopping cart", description: "The cart view includes a considered empty state and a direct route back to shopping." },
+      { src: "/work/uniminute/phone-6.webp", title: "Give every shop a presence.", label: "Food storefront", description: "A food shop storefront pairs the business identity with its product collection and shopping actions." },
+      { src: "/work/uniminute/phone-7.webp", title: "Make help easy to find.", label: "Help & support", description: "Frequently asked questions, policy links and contact options share a clear mobile support screen." },
+      { src: "/work/uniminute/phone-8.webp", title: "Built for more than one category.", label: "Electronics storefront", description: "An electronics storefront shows how the same shopping experience accommodates a different kind of local shop." },
     ],
   },
 ]

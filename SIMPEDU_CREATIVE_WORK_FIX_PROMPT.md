@@ -6,9 +6,9 @@ Implemented 16 October 2026 in the actual React/Vite repository. This document s
 
 The owner rejected the previous independently floating image layers. The new authoritative research and decision are in `WORK_SCROLL_DESIGN_RESEARCH.md`. The earlier Romans-inspired image overlap is historical, not the implementation target.
 
-Four projects use a stable editorial grid: one image stage stays in place while four narrative sections explain the work and select the matching screenshot. Crossfades take 240ms. There is no independent translation, rotation, scale, giant text behind images, forced scroll engine or pinned fullscreen slideshow. Only the progress rule tracks continuous scroll. Numbered screen links and a details link support direct navigation.
+Four projects use a stable editorial grid: one image stage stays in place while all product screens have narrative sections that explain the work and select the matching screenshot. Crossfades take 240ms. There is no independent translation, rotation, scale, giant text behind images, forced scroll engine or pinned fullscreen slideshow. Only the progress rule tracks continuous scroll. Numbered screen links and a details link support direct navigation.
 
-`src/data/workStories.js` defines each project's meaningful screen sequence and explanatory copy. Update that file when products change. Additional catalog screenshots remain available in an aligned collection after each case. Expansion and collapse preserve deliberate keyboard focus.
+`src/data/workStories.js` defines each project's meaningful screen sequence and explanatory copy. Update that file when products change. All 32 product WebPs are included in the main sequence by default: 12 school, 4 federation, 8 scoreboard and 8 commerce. No expansion control hides images. The numbered navigation scrolls horizontally when needed and keeps the current screen visible. Project details have their own visible heading, product name, metadata, description and links.
 
 Mobile, short viewports and live reduced motion receive the full narrative with each image directly beside/below its description in ordinary flow. The CSS/GSAP media lifecycle must revert on preference/viewport changes and route exit.
 
@@ -51,7 +51,7 @@ The Vite development command serves the API; a plain static file server or `vite
 
 ## Copy-ready continuation prompt
 
-Continue the current Simpedu React/Vite site using `WORK_SCROLL_DESIGN_RESEARCH.md` as the motion/design decision. Preserve the sticky case-study sequence: project introduction, four explanatory sections on the left, one stable image stage on the right, and 240ms crossfades as the narrative reaches the reading zone. Keep numbered direct navigation, active-step cues, details links and optional extra screen grids. Do not restore floating, tilting, scaling or image-over-text compositions.
+Continue the current Simpedu React/Vite site using `WORK_SCROLL_DESIGN_RESEARCH.md` as the motion/design decision. Preserve the sticky case-study sequence: project introduction, the complete product sequence on the left, one stable image stage on the right, and 240ms crossfades as the narrative reaches the reading zone. Keep numbered direct navigation, active-step cues, details links and a clearly titled details section for the same product. Do not restore floating, tilting, scaling or image-over-text compositions.
 
 Maintain the curated source/label/description data in `src/data/workStories.js`; keep the full catalog and original crop metadata. On mobile, short viewports and live reduced motion, show each image with its explanation in normal document flow. Scope and clean up ScrollTriggers. Align the last section so the stage remains in view through its explanation.
 
@@ -59,4 +59,4 @@ Keep the single aligned ProductComposition shared by Home and Work, white/graphi
 
 Preserve the removed homepage capability block and Graphic Design menu item, plus the working shared Resend handler, Vite middleware and Vercel entrypoint. Keep secrets server-side and test email with mocked transport.
 
-Verify all four steps in all four cases, forward and reverse scrolling, stable stage geometry, current-screen state, direct navigation, image fit, expansion/collapse and focus, responsive widths from 320–1440px, short viewports, live reduced motion, Home and route cleanup. Inspect normal and fallback browser screenshots. Run tests/build and report only verified results.
+Verify all 32 screens across all four cases, forward and reverse scrolling, stable stage geometry, current-screen state, direct navigation, image fit, complete asset coverage, details anchors and focus, responsive widths from 320–1440px, short viewports, live reduced motion, Home and route cleanup. Inspect normal and fallback browser screenshots. Run tests/build and report only verified results.

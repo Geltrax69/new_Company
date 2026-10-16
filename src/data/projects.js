@@ -9,7 +9,7 @@ export const PROJECTS = [
     quote: 'From morning attendance to year-end report cards — one login, zero paperwork.',
     desc: 'A complete digital OS for running a school: admissions, attendance, fees, exams, timetables and parent–teacher communication, built mobile-first for staff on the move.',
     kind: 'phone',
-    images: [7, 8, 4, 2, 3, 5, 6, 1].map((n) => `/work/school/phone-${n}.webp`),
+    images: [...img('school', 'desktop', 4), ...[7, 8, 4, 2, 3, 5, 6, 1].map((n) => `/work/school/phone-${n}.webp`)],
     color: '#6d28d9',
   },
   {
