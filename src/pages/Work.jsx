@@ -1,7 +1,5 @@
-import { useLayoutEffect, useRef, useState } from 'react'
+import { useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
-import gsap from 'gsap'
-import ScrollTrigger from 'gsap/ScrollTrigger'
 import ScreenArtwork from '../components/ScreenArtwork.jsx'
 import ProductComposition from '../components/ProductComposition.jsx'
 import useDocumentTitle from '../useDocumentTitle.js'
@@ -9,83 +7,56 @@ import { PROJECTS } from '../data/projects.js'
 import { WORK_STORIES as STORIES } from '../data/workStories.js'
 import './work.css'
 
-gsap.registerPlugin(ScrollTrigger)
-
 const pad = value => String(value).padStart(2, '0')
 
 function Chapter({ project, story, index }) {
-  const chapter = useRef(null)
-
-  useLayoutEffect(() => {
-    const media = gsap.matchMedia()
-    media.add('(min-width: 901px) and (min-height: 650px) and (prefers-reduced-motion: no-preference)', () => {
-      const root = chapter.current
-      const storyRoot = root.querySelector('.case-story')
-      storyRoot.classList.add('is-enhanced')
-      const ctx = gsap.context(() => {
-        const panels = gsap.utils.toArray('.case-panel')
-        const steps = gsap.utils.toArray('.case-step')
-        const indicators = gsap.utils.toArray('.case-screen-nav a')
-        const counter = root.querySelector('.case-current')
-        const select = index => {
-          steps.forEach((step, i) => step.classList.toggle('is-current', i === index))
-          panels.forEach((panel, i) => panel.classList.toggle('is-shown', i === index))
-          indicators.forEach((link, i) => {
-            if (i === index) link.setAttribute('aria-current', 'step')
-            else link.removeAttribute('aria-current')
-          })
-          counter.textContent = pad(index + 1)
-          const nav = root.querySelector('.case-screen-nav')
-          const link = indicators[index]
-          if (link.offsetLeft < nav.scrollLeft) nav.scrollLeft = link.offsetLeft
-          else if (link.offsetLeft + link.offsetWidth > nav.scrollLeft + nav.clientWidth) nav.scrollLeft = link.offsetLeft + link.offsetWidth - nav.clientWidth
-        }
-        select(0)
-        steps.forEach((step, i) => {
-          ScrollTrigger.create({ trigger: step.querySelector('.case-step-copy'), start: 'top 65%', end: 'bottom 35%', onEnter: () => select(i), onEnterBack: () => select(i) })
-        })
-        gsap.fromTo('.case-progress-fill', { scaleX: 0 }, { scaleX: 1, ease: 'none', scrollTrigger: { trigger: storyRoot, start: 'top 100px', end: 'bottom bottom', scrub: .2 } })
-      }, chapter)
-      return () => {
-        ctx.revert()
-        storyRoot.classList.remove('is-enhanced')
-        root.querySelectorAll('.is-current, .is-shown').forEach(node => node.classList.remove('is-current', 'is-shown'))
-      }
-    })
-    ScrollTrigger.refresh()
-    return () => media.revert()
-  }, [story])
-
+  const [active, setActive] = useState(0)
+  const thumbnails = useRef([])
+  const gesture = useRef(null)
+  const step = story.steps[active]
+  const select = (index, focus = false) => {
+    const next = (index + story.steps.length) % story.steps.length
+    setActive(next)
+    if (focus) thumbnails.current[next]?.focus({ preventScroll: true })
+  }
+  const onGalleryKey = event => {
+    const next = event.key === 'ArrowRight' ? active + 1 : event.key === 'ArrowLeft' ? active - 1 : event.key === 'Home' ? 0 : event.key === 'End' ? story.steps.length - 1 : null
+    if (next === null) return
+    event.preventDefault()
+    select(next, true)
+  }
 
   return (
-    <article ref={chapter} id={story.id} className={`project-chapter chapter-${story.id}`}>
+    <article id={story.id} className={`project-chapter chapter-${story.id}`}>
       <header className="case-header">
         <div className="case-meta"><span>{pad(index + 1)} / {story.category}</span><span>{project.year}</span></div>
         <div className="case-heading-row"><h2>{story.headline}</h2><p>{story.summary}</p></div>
         <div className="case-project-row"><span>{project.title}</span><span>{story.introduction}</span></div>
       </header>
-      <div className="case-story">
-        <aside className="case-stage" aria-label={`${project.title} screen sequence`}>
-          <div className="case-stage-top"><span>The product in practice</span><span><b className="case-current">01</b> / {pad(story.steps.length)}</span></div>
-          <div className="case-display" aria-hidden="true">
-            {story.steps.map((step, i) => <div key={step.src} className={`case-panel ${step.src.includes('/phone-') || step.src.includes('scoreboard/desktop-3') ? 'is-portrait' : ''}`}>
-              <ScreenArtwork src={step.src} alt="" />
-              <span className="case-panel-caption">{pad(i + 1)} — {step.label}</span>
-            </div>)}
+      <div className="case-gallery" id={`${story.id}-screens`}>
+        <div className="case-gallery-intro"><span>Inside the product</span><span>{story.steps.length} screens. Choose any view.</span></div>
+        <div className="case-gallery-layout">
+          <div className="case-gallery-copy" key={step.src}><p className="case-step-label"><span>{pad(active + 1)}</span>{step.label}</p><h3>{step.title}</h3><p className="case-step-description">{step.description}</p><a href={`#${story.id}-details`} className="case-skip">Project details <span aria-hidden="true">↘</span></a></div>
+          <div className="case-gallery-viewer">
+            <div className="case-gallery-display" onPointerDown={event => { if (event.pointerType !== 'mouse') gesture.current = { x: event.clientX, y: event.clientY } }} onPointerCancel={() => { gesture.current = null }} onPointerUp={event => {
+              const start = gesture.current
+              gesture.current = null
+              if (!start) return
+              const dx = event.clientX - start.x, dy = event.clientY - start.y
+              if (Math.abs(dx) > 45 && Math.abs(dx) > Math.abs(dy) * 1.5) select(active + (dx < 0 ? 1 : -1))
+            }}>
+              {story.steps.map((screen, i) => <div key={screen.src} className={`case-panel ${i === active ? 'is-shown' : ''}`} aria-hidden={i !== active}><ScreenArtwork src={screen.src} alt={`${project.title} — ${screen.label}`} /></div>)}
+            </div>
+            <div className="case-gallery-toolbar"><p className="case-gallery-counter" aria-live="polite" aria-atomic="true"><span>{pad(active + 1)} / {pad(story.steps.length)}</span>{step.label}</p><div className="case-gallery-arrows"><button type="button" aria-label={`${project.title}: previous screen`} onClick={() => select(active - 1)}>←</button><button type="button" aria-label={`${project.title}: next screen`} onClick={() => select(active + 1)}>→</button></div></div>
+            <div className="case-thumbnails" role="group" aria-label={`${project.title}: all ${story.steps.length} screens`} onKeyDown={onGalleryKey}>
+              {story.steps.map((screen, i) => <button ref={node => { thumbnails.current[i] = node }} type="button" key={screen.src} aria-label={`${pad(i + 1)}: ${screen.label}`} aria-pressed={active === i} onClick={() => select(i)}><span className="case-thumbnail-image"><ScreenArtwork src={screen.src} alt="" /></span><span>{pad(i + 1)}</span></button>)}
+            </div>
           </div>
-          <div className="case-stage-bottom"><nav className="case-screen-nav" aria-label={`${project.title} story chapters`}>{story.steps.map((step, i) => <a key={step.src} href={`#${story.id}-step-${i}`} aria-label={`${pad(i + 1)}: ${step.label}`}>{pad(i + 1)}</a>)}</nav><a href={`#${story.id}-details`} className="case-skip">Project details <span aria-hidden="true">↘</span></a></div>
-          <div className="case-progress" aria-hidden="true"><span className="case-progress-fill" /></div>
-        </aside>
-        <div className="case-narrative">
-          {story.steps.map((step, i) => <section key={step.src} id={`${story.id}-step-${i}`} className="case-step">
-            <div className="case-step-copy"><p className="case-step-label"><span>{pad(i + 1)}</span>{step.label}</p><h3>{step.title}</h3><p className="case-step-description">{step.description}</p></div>
-            <figure className={`case-inline-screen ${step.src.includes('/phone-') || step.src.includes('scoreboard/desktop-3') ? 'is-portrait' : ''}`}><ScreenArtwork src={step.src} alt={`${project.title} — ${step.label}`} /></figure>
-          </section>)}
         </div>
       </div>
       <section className="case-details" id={`${story.id}-details`} tabIndex={-1} aria-labelledby={`${story.id}-details-title`}>
         <div className="case-details-heading"><p className="case-details-eyebrow">Project details</p><h3 id={`${story.id}-details-title`}>{project.title}</h3><p>{project.tag}</p></div>
-        <div className="case-details-content"><p>{project.desc}</p><dl className="case-details-facts"><div><dt>Field</dt><dd>{story.category}</dd></div><div><dt>Year</dt><dd>{project.year}</dd></div><div><dt>Product screens</dt><dd>{story.steps.length}</dd></div></dl><div className="case-details-actions">{project.link && <a href={project.link} target="_blank" rel="noreferrer">Visit the live project <span aria-hidden="true">↗</span></a>}<Link to="/book">Discuss a similar project <span aria-hidden="true">↗</span></Link><a href={`#${story.id}-step-0`}>Back to the screens <span aria-hidden="true">↑</span></a></div></div>
+        <div className="case-details-content"><p>{project.desc}</p><dl className="case-details-facts"><div><dt>Field</dt><dd>{story.category}</dd></div><div><dt>Year</dt><dd>{project.year}</dd></div><div><dt>Product screens</dt><dd>{story.steps.length}</dd></div></dl><div className="case-details-actions">{project.link && <a href={project.link} target="_blank" rel="noreferrer">Visit the live project <span aria-hidden="true">↗</span></a>}<Link to="/book">Discuss a similar project <span aria-hidden="true">↗</span></Link><a href={`#${story.id}-screens`}>Back to the screens <span aria-hidden="true">↑</span></a></div></div>
       </section>
     </article>
   )
