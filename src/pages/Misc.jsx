@@ -41,7 +41,7 @@ function FormPage({ eyebrow, title, subtitle, fields, cta, type }) {
   const [done, setDone] = useState(false)
   const [sending, setSending] = useState(false)
   const [error, setError] = useState('')
-  useDocumentTitle(eyebrow)
+  useDocumentTitle(eyebrow, `${title} — ${subtitle || 'Get in touch with Simpedu LLP.'}`)
 
   async function submit(e) {
     e.preventDefault()
@@ -115,7 +115,7 @@ export function Apply() {
 
 export function Login() {
   const navigate = useNavigate()
-  useDocumentTitle('Log in')
+  useDocumentTitle('Log in', 'Sign in to your Simpedu account.')
   return (
     <Section className="auth-page">
       <Reveal className="auth-card">
@@ -135,7 +135,7 @@ export function Login() {
 export function BlogPost() {
   const { slug } = useParams()
   const title = slug.replace(/-/g, ' ').replace(/^\w/, (c) => c.toUpperCase())
-  useDocumentTitle(title)
+  useDocumentTitle(title, `${title} — article from the Simpedu team.`)
   return (
     <Section className="post">
       <Reveal as="article" className="post-body">
@@ -152,7 +152,7 @@ export function BlogPost() {
 
 // --- 404 ---
 export function NotFound() {
-  useDocumentTitle('Page not found')
+  useDocumentTitle('Page not found', 'This page does not exist. Return to the Simpedu LLP homepage.')
   return (
     <Section className="notfound">
       <Reveal>
