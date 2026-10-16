@@ -2,7 +2,7 @@ import { useEffect, useId, useRef, useState } from 'react'
 import { NavLink, Link, useLocation } from 'react-router-dom'
 import Button from './Button.jsx'
 
-const WORK_MENU = [['Web & product', '/work'], ['Graphic design', '/work']]
+const WORK_MENU = [['School management', '/work#school'], ['Sports platforms', '/work#federation'], ['Live scoring', '/work#scoreboard'], ['Commerce', '/work#commerce']]
 const SERVICES_MENU = [['Design', '/services'], ['No-code development', '/services'], ['Marketing', '/services'], ['Software development', '/services']]
 
 function Dropdown({ label, to, items, onNavigate }) {

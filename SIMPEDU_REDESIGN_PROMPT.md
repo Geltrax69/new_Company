@@ -1,3 +1,5 @@
+> Updated 16 October 2026: the requested creative work-page implementation, capability removal, generated scenery, and local/production Resend handler are documented in `SIMPEDU_CREATIVE_WORK_FIX_PROMPT.md`. That newer document supersedes conflicting gallery/device/capability instructions below.
+
 # Simpedu: current implementation and next design prompt
 
 This brief targets `/Users/lalitsingh/WORKS/simpedu_new_website`, the editable React/Vite company website. It replaces the previous document about a different compiled Next.js/ID-card website. Do not reconstruct this project from minified exports or introduce ID-card business claims based on the old document.

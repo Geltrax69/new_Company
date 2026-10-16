@@ -1,38 +1,31 @@
-# Simpedu — implementation design notes
+# Simpedu — current design system
 
-This document describes the current React/Vite site after the P2 repair pass. The site remains a light company portfolio; the broader art-direction brief is in SIMPEDU_REDESIGN_PROMPT.md.
+Updated 16 October 2026. The current implementation and maintenance brief is `SIMPEDU_CREATIVE_WORK_FIX_PROMPT.md`; earlier review documents are historical.
 
-## Typography and color
+## Foundation
 
-- Use self-hosted variable DM Sans, supplied under its OFL license in `public/fonts/`.
-- The consumed family token is `--font-body`. There is no dependency on unavailable Cosmica files or a third-party font request.
-- Base copy is 16px, compact body copy 15px, and captions 13px through rem-based tokens. Email inputs use 16px to avoid mobile focus zoom.
-- Use the existing near-black/white neutral palette. Hero emphasis is Slate (#52525b), not the pale Ash token. The homepage hero no longer has the animated cube background.
-- Headings balance; paragraphs use pretty wrapping. Changing numbers use tabular figures. Keep explicit visible focus states.
+Use the self-hosted variable DM Sans and its OFL license under `public/fonts/`. `--font-body` is the consumed family token. Body copy is 16px, compact copy 15px, captions 13px; email inputs remain at least 16px. Headings use deliberate weight and tight tracking; supporting copy stays readable. Focus states are explicit and the main-content skip link is retained.
 
-## Layout
+The general site remains light. The work experience uses warm paper #f5f3ee, dark green ink #19201c, sage #6f786b, and genuine project-specific UI colors. Large type and image composition supply emphasis rather than excessive cards, badges, or hardware frames.
 
-- Sections have fluid width and a 1200px maximum, with 24px gutters. Do not override section maximums with a broad `main > *` rule.
-- Services and portfolio summaries use two-column grids, collapsing to one column at 600px. The prior horizontally drifting rows are no longer attached to Home.
-- Use shrinkable grid tracks and min-width: 0 on actual flex/grid items. Long names/tags wrap. Email rows wrap before their contents overflow.
-- Narrow layouts collapse bento, process, and contact grids. No page-wide overflow clipping is used to conceal content.
+## Work experience
 
-## Product imagery and motion
+`src/pages/Work.jsx` and `work.css` present four editorial chapters. Each has bold product statements, real project names, generated scenic backgrounds, authentic screenshot layers, concise product copy, and a deliberately styled “Explore the screens” action. Shared catalog data remains in `src/data/projects.js`.
 
-- Home uses an authentic school dashboard as its service preview. School device galleries lead with the teacher dashboard.
-- DeviceShowcase renders only the selected screen. Labelled 44px buttons support click, left/right arrows, Home/End, selected state, and a polite status message.
-- Galleries do not autoplay. Selection uses a short fade; reduced motion retains a shorter fade.
-- Phone screens sit behind the transparent shell. Desktop screens use a code-native 16:9 frame and stand, with no opaque stock backdrop.
-- Optional fine-pointer tilt is limited to about three degrees, gated by the live reduced-motion preference, and cleaned up through GSAP matchMedia.
-- Remaining desktop/browser-chrome and commerce capture quality are asset dependencies, with exact replacement prompts and placement in the redesign brief.
+`ScreenArtwork` reads actual source sizes and presentation crops from `src/data/workMedia.js`. Original product screenshots are preserved. The presentation removes embedded browser/status chrome where crop metadata is supplied. The generated assets under `public/images/showcase/` are illustrative atmosphere, never real-client installation photography. Exact prompts and placement rules are in ASSETS.md in that folder.
 
-## Shared content and routes
+`WorkGallery` uses a native dialog with a large selected screenshot and numbered thumbnail filmstrip. It supports previous/next, arrows/Home/End, current state, Escape, focus restoration, and temporary background scroll locking. Content mounts when opened. There is no autoplay, Studio Display, hardware stand, generic dots, or details-based screenshot disclosure.
 
-- `src/data/projects.js` is the source for the four portfolio projects and their count. Home, About, and Work consume it. Count labels describe portfolio entries, not verified deployment status.
-- Footer Privacy/Terms links are absent until approved policies exist. Do not fabricate policy content. The demo-only login route is no longer promoted by the footer.
-- Navigation supports explicit disclosure toggles, Escape, route closing, and focus states. A skip link targets main content.
-- Form errors stay in normal layout, retain entered data, and support retry. Only server acceptance should produce success feedback.
+Desktop native scrolling drives background, product, and title transforms at different rates using the installed GSAP/ScrollTrigger. Queries disable and revert that setup for mobile and live reduced-motion changes. All content is readable without parallax. The gallery transition is removed under reduced motion.
 
-## Next design work
+## Homepage and navigation
 
-Follow SIMPEDU_REDESIGN_PROMPT.md for a larger product-led presentation, clean capture requests, optional generated backgrounds/hardware, case studies, and a flagship workflow sequence. Do not treat older audit findings as unresolved without checking the code.
+The complete subscription/capability section and its data/state are removed. Our work links directly to the four product chapters and has no Graphic Design item. The home lead composition uses the same lightweight studio scenery and real screenshot layers. Existing responsive grid and shared four-project count behavior is preserved. Footer policy links remain absent until approved content exists.
+
+## Enquiry flow
+
+All demo CTAs route to Book. Book, careers, and lead capture use the same client submission utility and server email handler. Errors preserve input, announce a recoverable message, and allow retry. Only a JSON server/provider acceptance with a message reference produces success. The API runs under Vite development and the Vercel serverless entrypoint; keys stay server-side. Setup is documented in the current brief and `.env.example`.
+
+## Verification rules
+
+Check normal/reduced motion, mobile/desktop gallery operation and focus, image geometry, responsive widths, route changes, and enquiry failure/retry. Use mocked providers for automated email tests. Do not publish invented claims, testimonials, awards, performance scores, or generated product UI. Keep the latest verified metadata lifecycle and existing working site flows intact.

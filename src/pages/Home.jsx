@@ -1,10 +1,8 @@
-import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Button from '../components/Button.jsx'
 import Reveal from '../components/Reveal.jsx'
 import FaqItem from '../components/FaqItem.jsx'
 import EmailForm from '../components/EmailForm.jsx'
-import CycleWord from '../components/CycleWord.jsx'
 import Section from '../components/Section.jsx'
 import ServiceCard from '../components/ServiceCard.jsx'
 import BentoCard from '../components/BentoCard.jsx'
@@ -14,6 +12,7 @@ import StepCard from '../components/StepCard.jsx'
 import CountUp from '../components/CountUp.jsx'
 import useDocumentTitle from '../useDocumentTitle.js'
 import { PROJECTS, PROJECT_COUNT } from '../data/projects.js'
+import ScreenArtwork from '../components/ScreenArtwork.jsx'
 
 const SERVICES = [
   {
@@ -47,48 +46,6 @@ const SKILLS = [
 
 const COMPANIES = PROJECTS.map(({ title, year, ...project }) => ({ ...project, name: title, status: year }))
 
-const CAP_DATA = [
-  {
-    name: 'Design',
-    groups: [
-      { title: 'UI/UX design', tags: ['Website', 'Landing page', 'Mobile & web app', 'UX/UI audit'] },
-      { title: 'Brand identity', tags: ['Logo', 'System'] },
-      { title: 'Illustration', tags: ['Custom art', 'Iconography'] },
-    ],
-  },
-  {
-    name: 'No-code development',
-    groups: [
-      { title: 'Framer', tags: ['Website builds', 'Prototypes'] },
-      { title: 'Webflow', tags: ['Web builds', 'Interactions'] },
-      { title: 'Airtable', tags: ['Databases', 'Ops'] },
-      { title: 'Zapier / Make', tags: ['Automation', 'Integrations'] },
-    ],
-  },
-  {
-    name: 'Marketing',
-    groups: [
-      { title: 'Content marketing', tags: ['Blog articles', 'Website content', 'Case studies'] },
-      { title: 'Social media marketing', tags: ['Social media ads', 'SMM strategy', 'Community management'] },
-      { title: 'SEO', tags: ['SEO audit', 'Keyword research', 'On-page SEO', 'Link building'] },
-      { title: 'Copywriting', tags: ['Ad copy', 'Sales copy', 'Taglines', 'E-mail copy'] },
-      { title: 'PPC & paid ads', tags: ['Google ads', 'Meta ads', 'Campaign setup'] },
-      { title: 'Email marketing', tags: ['Newsletters', 'E-mail templates', 'Sequences'] },
-    ],
-  },
-  {
-    name: 'Software development',
-    groups: [
-      { title: 'Frontend development', tags: ['HTML', 'CSS', 'JavaScript', 'React'] },
-      { title: 'Full stack development', tags: ['MERN', 'Django', 'ASP.NET'] },
-      { title: 'Backend development', tags: ['Node.js', 'Python', 'PHP'] },
-      { title: 'Mobile App development', tags: ['iOS', 'Android', 'React Native'] },
-      { title: 'AI development', tags: ['LLM integrations', 'OpenAI API'] },
-      { title: 'QA engineering', tags: ['Automated testing', 'Manual testing'] },
-    ],
-  },
-]
-
 const PROCESS = [
   { step: 'Step 1', title: 'Talk to us', stat: 'Free', desc: 'a friendly call about what eats your time — no pitch decks, just questions', tone: 'dark' },
   { step: 'Step 2', title: 'Scope & quote', stat: '48h', desc: 'a clear plan with timeline and pricing, so you know exactly what you get' },
@@ -111,7 +68,6 @@ const FAQS = [
 
 export default function Home() {
   useDocumentTitle(null, 'Simpedu LLP — a software company born in education, now building across fields. School management systems, sports portals and live scoring platforms. Less manual. More impact.')
-  const [activeCap, setActiveCap] = useState(0)
   return (
     <>
       <Section className="hero hero-product">
@@ -130,23 +86,9 @@ export default function Home() {
           </div>
         </Reveal>
         <Reveal className="hero-right hero-visual" delay={0.1}>
-          <div className="hero-device-stack">
-            <img
-              src="/work/school/desktop-1.webp"
-              alt="Simpedu school management dashboard showing student statistics and charts"
-              className="hero-desktop"
-              loading="eager"
-              width="2560"
-              height="1325"
-            />
-            <img
-              src="/work/school/phone-7.webp"
-              alt="Simpedu teacher mobile view"
-              className="hero-phone"
-              loading="eager"
-              width="1206"
-              height="2622"
-            />
+          <div className="hero-device-stack home-product-scene">
+            <ScreenArtwork src="/work/school/desktop-1.webp" alt="Simpedu school management dashboard" className="home-product-desktop" eager />
+            <ScreenArtwork src="/work/school/phone-7.webp" alt="Simpedu teacher dashboard" className="home-product-phone" eager />
           </div>
           <p className="hero-caption">Real product screenshots — Simpedu school platform</p>
         </Reveal>
@@ -255,33 +197,6 @@ export default function Home() {
               <Reveal key={c.name} delay={i * 0.06}><CompanyCard {...c} /></Reveal>
             ))}
           </div>
-        </div>
-      </Section>
-
-      <Section className="capability">
-        <Reveal className="cap-left">
-          <h2 className="heading">One subscription.<br />Every capability.</h2>
-          <ul className="cap-list">
-            {CAP_DATA.map((c, i) => (
-              <li key={c.name}>
-                <button className={i === activeCap ? 'active' : ''} onClick={() => setActiveCap(i)}>{c.name}</button>
-              </li>
-            ))}
-          </ul>
-          <Link to="/book" className="cap-cta">
-            <span className="cap-cta-visual" />
-            <Button as="span">Get started</Button>
-          </Link>
-        </Reveal>
-        <div className="cap-grid" key={activeCap}>
-          {CAP_DATA[activeCap].groups.map((g) => (
-            <div key={g.title} className="cap-tile">
-              <strong>{g.title}</strong>
-              <div className="cap-tile-tags">
-                {g.tags.map((t) => <TagPill key={t}>{t}</TagPill>)}
-              </div>
-            </div>
-          ))}
         </div>
       </Section>
 

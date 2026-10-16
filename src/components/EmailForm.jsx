@@ -1,5 +1,6 @@
 import { useId, useState } from 'react'
 import Button from './Button.jsx'
+import { submitInquiry } from '../lib/submitInquiry.js'
 
 const EMAIL_RE = /^[^\s@]+@[^\s@]+\.[^\s@]+$/
 
@@ -17,16 +18,11 @@ export default function EmailForm({ cta = 'Get started', type = 'lead' }) {
     if (!EMAIL_RE.test(email)) { setState('error'); setErrorMsg('Enter a valid email'); return }
     setState('sending')
     try {
-      const r = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type, email }),
-      })
-      if (!r.ok) throw new Error('send failed')
+      await submitInquiry({ type, email })
       setState('done')
-    } catch {
+    } catch (error) {
       setState('sendError')
-      setErrorMsg('Something went wrong. Please try again.')
+      setErrorMsg(error.message)
     }
   }
 

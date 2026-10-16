@@ -8,3 +8,6 @@ source-images
 .env
 .env.local
 .vercel
+
+.env.*
+!.env.example

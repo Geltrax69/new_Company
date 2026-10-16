@@ -6,6 +6,7 @@ import Section from '../components/Section.jsx'
 import Button from '../components/Button.jsx'
 import TagPill from '../components/TagPill.jsx'
 import useDocumentTitle from '../useDocumentTitle.js'
+import { submitInquiry } from '../lib/submitInquiry.js'
 
 // --- Services & solutions ---
 const SERVICE_GROUPS = [
@@ -49,15 +50,10 @@ function FormPage({ eyebrow, title, subtitle, fields, cta, type }) {
     setError('')
     const data = Object.fromEntries(new FormData(e.target).entries())
     try {
-      const r = await fetch('/api/send-email', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ type, ...data }),
-      })
-      if (!r.ok) throw new Error('send failed')
+      await submitInquiry({ type, ...data })
       setDone(true)
-    } catch {
-      setError('Something went wrong. Please try again, or email us directly at contact@simpedu.in or support@simpedu.in.')
+    } catch (error) {
+      setError(error.message)
     }
     setSending(false)
   }
@@ -91,12 +87,12 @@ function FormPage({ eyebrow, title, subtitle, fields, cta, type }) {
 
 export function Book() {
   return <FormPage
-    eyebrow="Book a demo" title="Let's scope your project" subtitle="Tell us what you're building — we'll come back with a plan and a quote."
+    eyebrow="Book a demo" title="Let's scope your project" subtitle="Tell us what you want to build. We’ll arrange a conversation around your project."
     cta="Request demo" type="demo"
     fields={[
-      { name: 'name', label: 'Full name', required: true, placeholder: 'Jane Doe' },
-      { name: 'email', label: 'Work email', type: 'email', required: true, placeholder: 'jane@company.com' },
-      { name: 'company', label: 'Company', placeholder: 'Acme Inc.' },
+      { name: 'name', label: 'Full name', required: true, placeholder: 'Your full name' },
+      { name: 'email', label: 'Work email', type: 'email', required: true, placeholder: 'you@company.com' },
+      { name: 'company', label: 'Company', placeholder: 'Company or institution' },
       { name: 'about', label: 'What do you need?', type: 'textarea', placeholder: 'A landing page, a brand refresh, ongoing design…' },
     ]} />
 }
