@@ -8,16 +8,16 @@ The owner clarified that a normal gallery is not the desired experience and supp
 
 Observed sequence: the page enters a dark section; a huge two-line headline holds near the viewport center; foreground images rise across it, alternating left/right/center and landscape/portrait sizes; captions travel with images; the headline remains behind them until the section ends. The important mechanism is persistent typography plus a moving, overlapping image track, not a carousel transition.
 
-The Work page now interprets that structure with original Simpedu content:
+The current premium pass keeps the scroll structure and brings it into the existing site's theme:
 
-- Near-black #0c0e0d, warm white #f5f3ee, muted green #b8c89f, and a pale green closing invitation.
-- Four real project chapters, each with an oversized two-line uppercase statement in a native CSS sticky viewport. Project metadata and quotes stay in normal document flow.
-- Four selected product screens per chapter scroll over the typography in alternating positions and widths. A landscape dashboard leads the school chapter; other frames use the catalog screenshots. Portrait screens sit over the existing generated limestone scenery, without hardware shells.
-- GSAP adds modest foreground vertical offsets tied directly to native scroll. Native CSS provides the sticky headline; there are no pin spacers, forced scroll engines, autoplay, entrance opacity hiding, or continuous React state updates on scroll.
-- “Keep exploring” inserts every remaining screenshot into the same scroll collection. Expansion focuses and scrolls to the first added screen. “Show the edit” returns to four views and focuses the project details. Each chapter has a keyboard-accessible skip-to-details link.
-- The previous modal component and gallery CSS have been removed. There are no arrows, thumbnail carousel, modal scroll lock, or close button in this experience.
-- At 320–600px, headlines and staggered screens are scaled for the viewport and parallax displacement is reduced. Live reduced-motion changes revert GSAP and replace sticky overlap with a readable static sequence. Content remains visible before JavaScript initializes.
-- The homepage capability/subscription grid and Graphic Design Work-menu entry remain removed. Home retains its studio background and real product composition. Resend wiring remains unchanged.
+- Shared DM Sans, white, graphite and cool gray; no isolated dark-green portfolio theme. `src/premium.css` refines common navigation, buttons, page headings, footer and Home. Existing form behavior and backend are preserved.
+- `ProductComposition` supplies the same generated silver ribbon and authentic dashboard, commerce and scoreboard layers to Home and Work. The sculpture is illustrative brand art. Screens are never generated. Hovering or focusing Work's project index previews that specific project; no autoplay.
+- Four real project chapters retain oversized two-line sticky statements. Screens pass in front with alternating positions, refined frames and shadows, captions, and shorter gaps.
+- Foreground screen translation, small rotation and scale changes are tied to native scrolling with a 0.25-second scrub. Scroll-linked transforms use `ease: none` so input maps consistently to progress; this is not a time-based linear entrance. Each sticky stage has a small progress rule.
+- “There’s more to this story” inserts the remaining screenshots inline and focuses the first new image. “Back to the selection” collapses to four views and focuses project details. Chapter skip links and the footer contact anchor work.
+- On small screens, type and layouts adapt and screen rotation is removed. Live reduced-motion removes sticky overlap and parallax, preserves the normal reading flow, and disables preview movement.
+- Shared buttons have restrained hover and pressed states. The heavy inset button treatment is removed. Home's unsupported named testimonial was replaced with an unattributed, factual studio approach statement.
+- The homepage capability/subscription grid, Graphic Design Work-menu item, modal gallery, hardware shells, carousel dots and monitor stands remain removed.
 
 Use the installed frontend design, animation principles, and accessible motion skills where relevant. Do not apply unrelated skills or replace the existing React/Vite/CSS stack. Do not copy reference logos, exact writing, photos, or unsubstantiated company claims.
 
@@ -56,11 +56,11 @@ The Vite development command serves the API; a plain static file server or `vite
 
 ## Copy-ready continuation prompt
 
-Continue the current Simpedu React/Vite site. Maintain the Romans-inspired scroll choreography implemented in `src/pages/Work.jsx` and `src/pages/work.css`: huge stationary two-line type, real product screens passing in front, alternating placement and scale, and captions moving with each screen. Keep four real product chapters and all existing catalog screenshots. Do not turn this back into a modal, slider, ordinary static card grid, monitor mockup, or “View more screenshots” disclosure.
+Continue the current Simpedu React/Vite site. Maintain the Romans-inspired scroll choreography implemented in `src/pages/Work.jsx` and `src/pages/work.css`: large stationary two-line type, real product screens passing in front, alternating placement and scale, and captions moving with each screen. Keep four real product chapters and all existing catalog screenshots. Match the white/graphite site theme, refined DM Sans hierarchy and current image framing in `src/premium.css`. Preserve the shared ProductComposition on Home and Work and its project-index hover/keyboard previews. Do not turn this back into a modal, slider, ordinary static card grid, monitor mockup, or “View more screenshots” disclosure.
 
 Use CSS sticky for the typography and the installed GSAP/ScrollTrigger for modest foreground depth. Keep native scroll and scoped cleanup. On small screens preserve the same scroll concept with shorter offsets. Under live prefers-reduced-motion, remove sticky/parallax and use normal document flow. Keep meaningful headings, alt text, visible focus, per-project skip links, and expansion focus on the first newly added screenshot. Test expansion and collapse at every chapter because inserted content changes scroll geometry.
 
-Preserve `ScreenArtwork` and source-specific crop metadata. Do not generate application UI, customer records, quotes, metrics, or awards. Existing optimized backgrounds are sufficient; no additional generated images are required for this interaction. Exact reusable background prompts are in `public/images/showcase/ASSETS.md`. Use studio scenery behind portrait UI and on Home; leave landscape product screens large and readable.
+Preserve `ScreenArtwork` and source-specific crop metadata. Do not generate application UI, customer records, quotes, metrics, or awards. The generated silver-loop backdrop is the current brand asset; the older studio/arena files are retained historical variants. Exact reusable background prompts are in `public/images/showcase/ASSETS.md`. Use silver-loop scenery behind portrait UI and on Home; leave landscape product screens large and readable.
 
 Keep the removed homepage capability block and Graphic Design menu item removed. Preserve Resend's shared server handler, Vite middleware, Vercel entrypoint, and server-only secrets. Test email with mocked transport; acknowledge success only after provider acceptance.
 

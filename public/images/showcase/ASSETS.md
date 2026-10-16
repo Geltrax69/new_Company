@@ -2,12 +2,18 @@
 
 Created with the built-in ImageGen tool on 16 October 2026. These are illustrative backgrounds, not photographs of Simpedu offices, customers, or installations. Real product screenshots are separate HTML image layers. No UI text or product screens were generated.
 
-## Files and placement
+## Current files and placement
 
-- `studio-1600.webp` (40,132 bytes) and `studio-800.webp` (11,278 bytes): warm architectural scenery behind the school and Uniminute chapters. The 800px file also frames the home hero. Desktop/mobile picture sources select the appropriate derivative.
-- `arena-1600.webp` (113,376 bytes) and `arena-800.webp` (33,950 bytes): empty sports-hall scenery behind the federation and ScoreBoard chapters. It must never be described as a photographed customer installation.
-- Screens remain the authentic sources under `public/work/`. `src/data/workMedia.js` records their intrinsic sizes and CSS crop metadata, removing embedded capture chrome in presentation without overwriting the original images.
-- Optimized output was resized and encoded with Pillow; no composited UI is baked into a background. Generated originals remain in Codex's generated-image directory, outside the deployed repository.
+- `silver-loop-1600.webp` (32,260 bytes) and `silver-loop-800.webp` (11,868 bytes): current shared brand art. The Home and Work opening compositions use responsive picture sources; Work portrait panels and the Home process visual use the 800px version. White, silver, and graphite match the site's existing neutral palette. Real dashboard, commerce, and scoreboard UI remain separate HTML layers.
+- `studio-1600.webp`, `studio-800.webp`, `arena-1600.webp`, and `arena-800.webp` are retained earlier scenic variants. They are no longer referenced by the current source. Do not restore green/beige chapter backgrounds without a deliberate brand decision.
+- Screens remain authentic sources under `public/work/`. `src/data/workMedia.js` records their intrinsic sizes and presentation crops. Source assets are not overwritten.
+- Generated images were optimized to responsive WebP derivatives with Pillow. No UI is baked into the generated artwork. Originals remain in Codex's generated-image directory outside the repository.
+
+## Silver loop — exact generation prompt
+
+Create ONE ultra-refined editorial brand photograph / physically based 3D still life for an independent software design studio. Landscape 16:9 composition. A single sculptural continuous ribbon of satin-finished silver metal folds in an elegant fluid open loop in the RIGHT HALF of the image. The ribbon is broad like a strip of polished paper, softly rounded, softly reflective brushed aluminum with delicate crisp highlights and charcoal reflections, not liquid or chrome blobs. It is an abstract visual metaphor of complex becoming simple. A large white curved architectural cyclorama and pale cool gray floor. Museum-grade art direction, soft directional daylight from upper left, long delicate contact shadow, restrained tactile surface, extraordinary material realism and sculptural silhouette. LEFT HALF is almost empty white negative space. Palette exclusively ivory white, silver, and soft graphite. No color tint, no beige room, no gold, no green, no neon. No devices, no monitors, no phones, no interface, no letters, no logos, no human figures, no watermark. View from slightly above eye level, medium-long lens, beautifully balanced negative space, dimensional and confident rather than futuristic. The image is a standalone decorative background for separately composited real software screenshots, not a website mockup. Keep the most striking loop near the right third, with plenty of calm space in the lower left.
+
+Generated with the built-in ImageGen tool, 16 October 2026. Original dimensions: 1672 × 941. Illustration only, not evidence of a client installation.
 
 ## Exact generation prompts
 

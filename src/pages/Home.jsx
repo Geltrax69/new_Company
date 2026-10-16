@@ -12,7 +12,7 @@ import StepCard from '../components/StepCard.jsx'
 import CountUp from '../components/CountUp.jsx'
 import useDocumentTitle from '../useDocumentTitle.js'
 import { PROJECTS, PROJECT_COUNT } from '../data/projects.js'
-import ScreenArtwork from '../components/ScreenArtwork.jsx'
+import ProductComposition from '../components/ProductComposition.jsx'
 
 const SERVICES = [
   {
@@ -24,7 +24,7 @@ const SERVICES = [
   },
   {
     title: 'Graphic design & marketing material',
-    bg: '#13351f',
+    bg: '#2c2c31',
     tagTone: 'overlay',
     preview: <div className="prev-type"><span>Social</span><span>Brand</span><span>Print</span><span>Digital</span></div>,
     tags: ['Social media creative', 'Banners', 'Pitch decks', 'Packaging', 'Email design', 'Any graphic material'],
@@ -60,10 +60,10 @@ const HOW = [
 ]
 
 const FAQS = [
-  ['How fast will I get my designs?', 'Most tasks land within 24–48 hours. Larger projects are broken into daily deliverables so you always see progress.'],
-  ['What can I request?', "Web and product UI, branding, illustration, social, decks, motion, even development — if it's a creative task, it's in scope."],
-  ['Is there a limit on tasks?', 'Add as many as you want to the queue. We work through them one or two at a time, in order.'],
-  ['Can I pause or cancel?', 'Anytime, no contracts. Pause when work is light and resume the day you need us again.'],
+  ['What does Simpedu build?', 'School management software, sports federation platforms, live scoreboards, e-commerce and custom web products. Our work page shows the products and their screens.'],
+  ['How does a project start?', 'Tell us about the problem and the people who need to use the software. We will discuss the scope, then agree on a plan, timeline and quote.'],
+  ['Can I see your products before booking?', 'Yes. Explore Our work to scroll through real product screens and follow the available live project links.'],
+  ['What happens after launch?', 'We deploy the product, help your team get started and discuss the ongoing support and improvements your project needs.'],
 ]
 
 export default function Home() {
@@ -72,6 +72,7 @@ export default function Home() {
     <>
       <Section className="hero hero-product">
         <Reveal className="hero-left">
+          <p className="home-kicker">Independent design & software studio</p>
           <h1 className="display">
             Complex work.<br />Beautifully simplified.
           </h1>
@@ -86,11 +87,8 @@ export default function Home() {
           </div>
         </Reveal>
         <Reveal className="hero-right hero-visual" delay={0.1}>
-          <div className="hero-device-stack home-product-scene">
-            <ScreenArtwork src="/work/school/desktop-1.webp" alt="Simpedu school management dashboard" className="home-product-desktop" eager />
-            <ScreenArtwork src="/work/school/phone-7.webp" alt="Simpedu teacher dashboard" className="home-product-phone" eager />
-          </div>
-          <p className="hero-caption">Real product screenshots — Simpedu school platform</p>
+          <ProductComposition className="home-product-scene" />
+          <p className="hero-caption">Selected work / Education, sport & commerce</p>
         </Reveal>
       </Section>
 
@@ -138,15 +136,10 @@ export default function Home() {
       <Section id="how" className="solve">
         <Reveal className="solve-left">
           <h2 className="heading">We solve the bottlenecks that kill your speed</h2>
-          <div className="testimonial-card">
-            <div className="t-head">
-              <div className="t-avatar" />
-              <div>
-                <strong>Jason Cornelius</strong>
-                <span>Co-Founder at Perseus Defense</span>
-              </div>
-            </div>
-            <p>“Game-changer for our team. Working with Simpedu has been one of the best decisions we've made.”</p>
+          <div className="studio-principle">
+            <span>Our approach</span>
+            <p>One team from the first sketch to the software your people use every day.</p>
+            <Link to="/about">Meet Simpedu <span aria-hidden="true">↗</span></Link>
           </div>
         </Reveal>
         <Reveal className="panel" delay={0.1}>
@@ -235,8 +228,8 @@ export default function Home() {
 
       <Reveal as="section" id="start" className="consult">
         <div className="consult-card">
-          <h2 className="display-sm">Free consultation to scope your creative projects</h2>
-          <Button as={Link} to="/book" className="consult-btn">›››&nbsp;&nbsp;Book demo&nbsp;&nbsp;‹‹‹</Button>
+          <h2 className="display-sm">Bring us the problem. We’ll shape the next step.</h2>
+          <Button as={Link} to="/book" className="consult-btn">Book a conversation ↗</Button>
         </div>
         <div className="consult-proof">
           <h3 className="heading">Built by Simpedu LLP</h3>
@@ -252,7 +245,7 @@ export default function Home() {
       </Section>
 
       <Reveal as="section" className="cta-final">
-        <h2 className="display-sm">Get your <span className="cycle-word">product</span> done without headache</h2>
+        <h2 className="display-sm">Have something in mind?<br />Let’s make it work.</h2>
         <EmailForm cta="Get started" />
       </Reveal>
     </>

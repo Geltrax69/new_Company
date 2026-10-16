@@ -559,10 +559,6 @@ p { text-wrap: pretty; }
   .workflow-step img { max-height: 300px; }
 }
 
-/* Generated scenery frames authentic screens; no desktop hardware mockup. */
-.home-product-scene { aspect-ratio: 1.38; background: url('/images/showcase/studio-800.webp') center / cover; display: flex; align-items: center; padding: 10%; }
-.home-product-desktop { width: 100%; border-radius: 6px; box-shadow: 0 12px 30px rgb(0 0 0 / .14); }
-.home-product-phone { position: absolute; width: 25%; right: 4%; bottom: 5%; border-radius: 8px; box-shadow: 0 12px 28px rgb(0 0 0 / .16); }
 .form-error { padding: 14px 16px; border-radius: 10px; background: #fff2ef; color: #90331f; font-size: .9375rem; }
 .stack-form .btn:disabled, .email-row .btn:disabled { opacity: .6; cursor: wait; }
 .bento > *, .approval-grid > *, .why > *, .values-grid > * { min-width: 0; }
