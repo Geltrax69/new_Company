@@ -57,7 +57,7 @@ function FormPage({ eyebrow, title, subtitle, fields, cta, type }) {
       if (!r.ok) throw new Error('send failed')
       setDone(true)
     } catch {
-      setError('Something went wrong. Please try again, or email us directly at hello@simpedu.in.')
+      setError('Something went wrong. Please try again, or email us directly at help@simpedu.in.')
     }
     setSending(false)
   }

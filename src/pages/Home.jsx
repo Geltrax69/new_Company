@@ -1,7 +1,6 @@
 import { useState } from 'react'
 import { Link } from 'react-router-dom'
 import Button from '../components/Button.jsx'
-import Badge from '../components/Badge.jsx'
 import Reveal from '../components/Reveal.jsx'
 import FaqItem from '../components/FaqItem.jsx'
 import EmailForm from '../components/EmailForm.jsx'
@@ -202,10 +201,10 @@ export default function Home() {
               <div className="t-avatar" />
               <div>
                 <strong>Jason Cornelius</strong>
-                <span>Co-Founder at Perseus Defense <Badge variant="yc">Y</Badge> (S25)</span>
+                <span>Co-Founder at Perseus Defense</span>
               </div>
             </div>
-            <p>“Game-changer for our team. Working with Simpedu has been one of the best decisions we've made as a YC startup.”</p>
+            <p>“Game-changer for our team. Working with Simpedu has been one of the best decisions we've made.”</p>
           </div>
         </Reveal>
         <Reveal className="panel" delay={0.1}>
