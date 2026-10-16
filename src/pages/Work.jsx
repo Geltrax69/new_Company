@@ -56,6 +56,10 @@ export default function Work() {
           <div className="case-wide">
             <img src="/work/sepaktakraw/desktop-1.webp" alt="Haryana Sepak Takraw Association website homepage" loading="lazy" />
           </div>
+          <details className="case-more">
+            <summary>View more screenshots</summary>
+            <DeviceShowcase images={CASES[1].images} kind="desktop" label={CASES[1].title} />
+          </details>
         </Reveal>
 
         {/* 03 ScoreBoard: dominant wide display */}
@@ -71,6 +75,10 @@ export default function Work() {
           <div className="case-hero-img">
             <img src="/work/scoreboard/desktop-1.webp" alt="Live scoreboard display showing match score" loading="lazy" />
           </div>
+          <details className="case-more">
+            <summary>View more screenshots</summary>
+            <DeviceShowcase images={CASES[2].images} kind="desktop" label={CASES[2].title} />
+          </details>
         </Reveal>
 
         {/* 04 Uniminute: phone pairing */}
@@ -93,6 +101,10 @@ export default function Work() {
               <figcaption>Product details</figcaption>
             </figure>
           </div>
+          <details className="case-more">
+            <summary>View more screenshots</summary>
+            <DeviceShowcase images={CASES[3].images} kind="phone" label={CASES[3].title} />
+          </details>
         </Reveal>
       </Section>
 

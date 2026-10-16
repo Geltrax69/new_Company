@@ -9,13 +9,20 @@ export default function CycleWord({ words, interval = 2600 }) {
   const reducedMotion = useReducedMotion()
   
   useEffect(() => {
-    if (reducedMotion) return
+    if (reducedMotion) {
+      setI(0)
+      setFade(true)
+      return
+    }
+    let timeout
     const id = setInterval(() => {
       setFade(false)
-      const timeout = setTimeout(() => { setI((n) => (n + 1) % words.length); setFade(true) }, 350)
-      return () => clearTimeout(timeout)
+      timeout = setTimeout(() => { setI((n) => (n + 1) % words.length); setFade(true) }, 350)
     }, interval)
-    return () => clearInterval(id)
+    return () => {
+      clearInterval(id)
+      clearTimeout(timeout)
+    }
   }, [words.length, interval, reducedMotion])
   
   return <span className="cycle-word" style={{ opacity: fade ? 1 : 0 }}>{words[i]}</span>

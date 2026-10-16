@@ -585,8 +585,8 @@ p { text-wrap: pretty; }
 .hero-actions { display: flex; gap: 12px; margin-top: 24px; flex-wrap: wrap; }
 .hero-visual { position: relative; }
 .hero-device-stack { position: relative; }
-.hero-desktop { width: 100%; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); display: block; }
-.hero-phone { position: absolute; right: -24px; bottom: -32px; width: 28%; border-radius: 20px; box-shadow: 0 16px 40px rgba(0,0,0,0.2); border: 4px solid #111; }
+.hero-desktop { width: 100%; height: auto; border-radius: 16px; box-shadow: 0 20px 60px rgba(0,0,0,0.15); display: block; }
+.hero-phone { position: absolute; right: -24px; bottom: -32px; width: 28%; height: auto; border-radius: 20px; box-shadow: 0 16px 40px rgba(0,0,0,0.2); border: 4px solid #111; }
 .hero-caption { font-size: 13px; color: var(--color-steel); margin-top: 48px; text-align: center; }
 
 @media (max-width: 900px) {
@@ -597,7 +597,8 @@ p { text-wrap: pretty; }
 
 /* Distinct project compositions */
 .case { display: grid; gap: 32px; margin-bottom: 80px; }
-.case-index { position: static; transform: none; font-size: 14px; color: var(--color-steel); font-weight: 600; display: block; margin-bottom: 16px; }
+.case-index { position: static; transform: none; font-size: 14px; color: var(--color-steel); font-weight: 600; display: block; margin-bottom: 16px; grid-column: 1 / -1; }
+.case-more { grid-column: 1 / -1; }
 .case-duo { display: grid; grid-template-columns: 1fr 1fr; gap: 24px; }
 .case-duo figure { margin: 0; }
 .case-duo img { width: 100%; border-radius: 16px; box-shadow: 0 12px 32px rgba(0,0,0,0.1); display: block; }
@@ -618,7 +619,7 @@ p { text-wrap: pretty; }
 .workflow-steps { display: grid; grid-template-columns: repeat(3, 1fr); gap: 32px; margin-top: 48px; }
 .workflow-step { text-align: center; display: flex; flex-direction: column; }
 .workflow-step .workflow-media { height: 380px; display: flex; align-items: center; justify-content: center; margin-bottom: 20px; }
-.workflow-step img { max-height: 380px; max-width: 100%; width: auto; border-radius: 16px; box-shadow: 0 12px 32px rgba(0,0,0,0.1); display: block; object-fit: contain; }
+.workflow-step img { max-height: 380px; max-width: 100%; width: auto; height: auto; border-radius: 16px; box-shadow: 0 12px 32px rgba(0,0,0,0.1); display: block; object-fit: contain; }
 .workflow-step h3 { font-size: 20px; margin-bottom: 8px; }
 .workflow-step p { color: var(--color-steel); font-size: 15px; }
 
