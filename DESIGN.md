@@ -6,17 +6,17 @@ Updated 16 October 2026. The current implementation and maintenance brief is `SI
 
 Use the self-hosted variable DM Sans and its OFL license under `public/fonts/`. `--font-body` is the consumed family token. Body copy is 16px, compact copy 15px, captions 13px; email inputs remain at least 16px. Headings use deliberate weight and tight tracking; supporting copy stays readable. Focus states are explicit and the main-content skip link is retained.
 
-The general site remains light. The work experience uses warm paper #f5f3ee, dark green ink #19201c, sage #6f786b, and genuine project-specific UI colors. Large type and image composition supply emphasis rather than excessive cards, badges, or hardware frames.
+The general site remains light. The work experience uses near-black #0c0e0d, warm white #f5f3ee, muted green #b8c89f, a pale green #d1ecaa closing section, and genuine project-specific UI colors. Large type and image composition supply emphasis rather than excessive cards, badges, or hardware frames.
 
 ## Work experience
 
-`src/pages/Work.jsx` and `work.css` present four editorial chapters. Each has bold product statements, real project names, generated scenic backgrounds, authentic screenshot layers, concise product copy, and a deliberately styled “Explore the screens” action. Shared catalog data remains in `src/data/projects.js`.
+`src/pages/Work.jsx` and `work.css` present four scroll collections inspired by the owner's Romans video. Giant two-line uppercase headings hold in a native CSS sticky stage while staggered foreground product screens pass in front. Alternating positions and widths create the sequence; captions move with the screens. GSAP/ScrollTrigger adds small scroll-linked vertical offsets without scroll hijacking or pin spacers.
 
-`ScreenArtwork` reads actual source sizes and presentation crops from `src/data/workMedia.js`. Original product screenshots are preserved. The presentation removes embedded browser/status chrome where crop metadata is supplied. The generated assets under `public/images/showcase/` are illustrative atmosphere, never real-client installation photography. Exact prompts and placement rules are in ASSETS.md in that folder.
+Four selected screens appear initially in each chapter. “Keep exploring” adds the rest inline, focuses the first new screen, and scrolls it into view. Collapse returns focus to details. Skip links bypass each image sequence. The former WorkGallery modal is removed.
 
-`WorkGallery` uses a native dialog with a large selected screenshot and numbered thumbnail filmstrip. It supports previous/next, arrows/Home/End, current state, Escape, focus restoration, and temporary background scroll locking. Content mounts when opened. There is no autoplay, Studio Display, hardware stand, generic dots, or details-based screenshot disclosure.
+`ScreenArtwork` reads source dimensions and presentation crops from `src/data/workMedia.js`; originals remain intact. Existing generated studio scenery supports portrait screenshots and Home. No new image generation is required. Backgrounds are illustrative; exact prompts are in `public/images/showcase/ASSETS.md`.
 
-Desktop native scrolling drives background, product, and title transforms at different rates using the installed GSAP/ScrollTrigger. Queries disable and revert that setup for mobile and live reduced-motion changes. All content is readable without parallax. The gallery transition is removed under reduced motion.
+Small screens retain the sticky scroll concept with smaller motion offsets. Live reduced-motion changes revert GSAP and replace sticky overlap with normal document flow. Images are never initially hidden. Scoped matchMedia contexts clean up on expansion, preference changes, and route unmount.
 
 ## Homepage and navigation
 
@@ -28,4 +28,4 @@ All demo CTAs route to Book. Book, careers, and lead capture use the same client
 
 ## Verification rules
 
-Check normal/reduced motion, mobile/desktop gallery operation and focus, image geometry, responsive widths, route changes, and enquiry failure/retry. Use mocked providers for automated email tests. Do not publish invented claims, testimonials, awards, performance scores, or generated product UI. Keep the latest verified metadata lifecycle and existing working site flows intact.
+Check normal/reduced motion, mobile/desktop scroll choreography, expansion and focus, image geometry, responsive widths, route changes, and enquiry failure/retry. Use mocked providers for automated email tests. Do not publish invented claims, testimonials, awards, performance scores, or generated product UI. Keep the latest verified metadata lifecycle and existing working site flows intact.
