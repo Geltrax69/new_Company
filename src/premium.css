@@ -1,4 +1,10 @@
 /* Shared finishing layer: existing DM Sans, white / graphite, softer material. */
+.home-hero-field { position: relative; isolation: isolate; overflow: clip; }
+.home-cubes { position: absolute; inset: 0; z-index: -1; pointer-events: none; opacity: .75; mask-image: linear-gradient(to bottom, transparent, #000 12%, #000 78%, transparent); }
+.home-cubes-static { position: absolute; inset: 0; background-color: #fafafa; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='132' height='76' viewBox='0 0 132 76'%3E%3Cpath fill='%23fafafa' d='M66 0 132 38 66 76 0 38Z'/%3E%3Cpath fill='%23e4e4e7' d='M0 0 66 38 66 76 0 38Z'/%3E%3Cpath fill='%23d4d4d8' d='M132 0 66 38 66 76 132 38Z'/%3E%3C/svg%3E"); }
+.home-hero-field::after { content: ''; position: absolute; inset: 0; z-index: -1; pointer-events: none; background: linear-gradient(90deg, #fffffff5 0%, #ffffffd9 36%, #ffffff38 76%, #ffffff26); }
+.home-hero-field .hero-visual { background: #ffffffa8; border-radius: 16px; padding: 16px; }
+@media (max-width: 900px) { .home-hero-field::after { background: linear-gradient(to bottom, #ffffffed 0%, #ffffffd9 48%, #ffffff70); }.home-hero-field .hero-visual { padding: 12px; } }
 :root { --page-max-width: 1280px; --ease-settle: cubic-bezier(.22,1,.36,1); --shadow-subtle: 0 1px 2px #00000012, 0 4px 8px #00000008; }
 html { -moz-osx-font-smoothing: grayscale; }
 .nav { max-width: none; width: 100%; padding-inline: max(24px, calc((100vw - 1232px) / 2)); border-bottom: 1px solid #18181b0a; background: #ffffffed; backdrop-filter: blur(16px); will-change: auto; }

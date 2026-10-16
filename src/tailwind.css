@@ -1,0 +1,13 @@
+/* Registry utilities only: preserve the site's existing reset and typography. */
+@layer theme, base, components, utilities;
+@import "tailwindcss/theme.css" layer(theme);
+@import "tailwindcss/utilities.css" layer(utilities);
+
+@theme inline {
+  --color-background: var(--color-snow);
+  --color-foreground: var(--color-ink);
+  --color-muted: var(--color-mist);
+  --color-muted-foreground: var(--color-slate);
+  --color-primary: var(--color-obsidian);
+  --color-primary-foreground: var(--color-snow);
+}

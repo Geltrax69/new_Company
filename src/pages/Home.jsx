@@ -13,6 +13,7 @@ import CountUp from '../components/CountUp.jsx'
 import useDocumentTitle from '../useDocumentTitle.js'
 import { PROJECTS, PROJECT_COUNT } from '../data/projects.js'
 import ProductComposition from '../components/ProductComposition.jsx'
+import HomeCubes from '../components/HomeCubes'
 
 const SERVICES = [
   {
@@ -70,27 +71,30 @@ export default function Home() {
   useDocumentTitle(null, 'Simpedu LLP — a software company born in education, now building across fields. School management systems, sports portals and live scoring platforms. Less manual. More impact.')
   return (
     <>
-      <Section className="hero hero-product">
-        <Reveal className="hero-left">
-          <p className="home-kicker">Independent design & software studio</p>
-          <h1 className="display">
-            Complex work.<br />Beautifully simplified.
-          </h1>
-          <p className="body-lg">
-            We're Simpedu LLP — a software company born in education, now
-            building across fields. From school management systems to live
-            sports scoreboards, we design and ship products that cut the manual work.
-          </p>
-          <div className="hero-actions">
-            <Link to="/work" className="btn btn-pill">Explore our work</Link>
-            <Link to="/book" className="btn btn-outline">Book demo</Link>
-          </div>
-        </Reveal>
-        <Reveal className="hero-right hero-visual" delay={0.1}>
-          <ProductComposition className="home-product-scene" />
-          <p className="hero-caption">Selected work / Education, sport & commerce</p>
-        </Reveal>
-      </Section>
+      <div className="home-hero-field">
+        <HomeCubes />
+        <Section className="hero hero-product">
+          <Reveal className="hero-left">
+            <p className="home-kicker">Independent design & software studio</p>
+            <h1 className="display">
+              Complex work.<br />Beautifully simplified.
+            </h1>
+            <p className="body-lg">
+              We're Simpedu LLP — a software company born in education, now
+              building across fields. From school management systems to live
+              sports scoreboards, we design and ship products that cut the manual work.
+            </p>
+            <div className="hero-actions">
+              <Link to="/work" className="btn btn-pill">Explore our work</Link>
+              <Link to="/book" className="btn btn-outline">Book demo</Link>
+            </div>
+          </Reveal>
+          <Reveal className="hero-right hero-visual" delay={0.1}>
+            <ProductComposition className="home-product-scene" />
+            <p className="hero-caption">Selected work / Education, sport & commerce</p>
+          </Reveal>
+        </Section>
+      </div>
 
       <Section className="workflow-sequence">
         <Reveal>
