@@ -8,7 +8,7 @@ The owner rejected the previous independently floating image layers. The new aut
 
 Four projects use the restored stable editorial scroll grid: one stage stays in place while narrative sections select matching paired-screen compositions. Crossfades take 240ms. There is no independent translation, rotation, scale, giant text behind images, forced scroll engine or pinned fullscreen slideshow. Only the progress rule tracks continuous scroll. Numbered screen links and a details link support direct navigation.
 
-`src/data/workStories.js` retains individual screen copy. `src/data/workScenes.js` defines meaningful pairings and scene copy. Update both when products change. All 32 product WebPs are included in 16 paired scenes: school 12 images / 6 scenes, federation 4 / 2, scoreboard 8 / 4, commerce 8 / 4. No expansion control hides images. The numbered navigation scrolls horizontally when needed and keeps the current screen visible. Project details have their own visible heading, product name, metadata, description and links.
+`src/data/workStories.js` retains individual screen copy. `src/data/workScenes.js` defines meaningful pairings and scene copy. Update both when products change. All 32 product WebPs are included in 22 scenes (10 pairs and 12 single screens): school 12 images / 6 scenes, federation 4 / 4 single-screen steps, scoreboard 8 / 8 single-screen steps, commerce 8 / 4. No expansion control hides images. The numbered navigation scrolls horizontally when needed and keeps the current screen visible. Project details have their own visible heading, product name, metadata, description and links.
 
 Mobile, short viewports and live reduced motion receive the full narrative with each image directly beside/below its description in ordinary flow. The CSS/GSAP media lifecycle must revert on preference/viewport changes and route exit.
 
@@ -59,4 +59,6 @@ Keep the single aligned ProductComposition shared by Home and Work, white/graphi
 
 Preserve the removed homepage capability block and Graphic Design menu item, plus the working shared Resend handler, Vite middleware and Vercel entrypoint. Keep secrets server-side and test email with mocked transport.
 
-Verify all 32 screens across all 16 paired scenes in four cases, forward and reverse scrolling, stable stage geometry, current-screen state, direct navigation, image fit, complete asset coverage, details anchors and focus, responsive widths from 320–1440px, short viewports, live reduced motion, Home and route cleanup. Inspect normal and fallback browser screenshots. Run tests/build and report only verified results.
+Verify all 32 screens across all 22 scenes (10 pairs and 12 single screens) in four cases, forward and reverse scrolling, stable stage geometry, current-screen state, direct navigation, image fit, complete asset coverage, details anchors and focus, responsive widths from 320–1440px, short viewports, live reduced motion, Home and route cleanup. Inspect normal and fallback browser screenshots. Run tests/build and report only verified results.
+
+Projects 2 (HSTA) and 3 (ScoreBoard) retain their original unframed single-screen presentation and full original screen order. Pairing applies only to Simpedu and Uniminute.

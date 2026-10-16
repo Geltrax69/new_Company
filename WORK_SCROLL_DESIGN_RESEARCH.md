@@ -1,4 +1,6 @@
-# Current update — paired product scenes
+# Current update — paired school/commerce, original sports projects
+
+Owner correction: HSTA and ScoreBoard use their original single-screen stories (4 and 8 steps). Simpedu retains 6 pairs and Uniminute retains 4 pairs. Total: 22 scroll scenes covering all 32 images. Pairing recommendations below apply to school/commerce; the earlier sports pairings are superseded.
 
 The restored scroll design from `3a40827` remains in use. The owner supplied paired web/phone and app-showcase references. Every original image is now composed with a related screen inside the existing stage, rather than assigning one scroll section per image.
 

@@ -14,7 +14,7 @@ The current direction is documented in `WORK_SCROLL_DESIGN_RESEARCH.md`. It supe
 
 `src/pages/Work.jsx` presents four curated case studies. Real product information leads into an editorial two-column layout: narrative on the left, one fixed paired-screen stage on the right. Every source WebP is part of the main story: school 12, federation 4, scoreboard 8 and commerce 8. Nothing is hidden behind an expansion button. The individual screen copy lives in `src/data/workStories.js`; `src/data/workScenes.js` groups those screens into meaningful pairs. The full catalog remains in `src/data/projects.js`.
 
-Desktop CSS sticky holds the stage while narrative sections select one composed pair at a time. The pairings reduce 32 single-image scroll steps to 16 scenes: school 6, federation 2, scoreboard 4, commerce 4. Whole scenes crossfade over 240ms; they do not independently translate, rotate or scale. Numbered links, a current counter and a scroll progress rule provide orientation. The final step has trailing space to avoid releasing the stage prematurely. Each case ends with a clearly titled project-details section containing the product name, scope, year, full image count and relevant links. Details anchors target that section, with room beneath the sticky navigation.
+Desktop CSS sticky holds the stage while narrative sections select one composed pair at a time. The pairings reduce 32 single-image scroll steps to 16 scenes: school 6 paired scenes, federation 4 single screens, scoreboard 8 single screens, commerce 4 paired scenes. Whole scenes crossfade over 240ms; they do not independently translate, rotate or scale. Numbered links, a current counter and a scroll progress rule provide orientation. The final step has trailing space to avoid releasing the stage prematurely. Each case ends with a clearly titled project-details section containing the product name, scope, year, full image count and relevant links. Details anchors target that section, with room beneath the sticky navigation.
 
 Below 901px, below 650px viewport height, or under live reduced motion, every narrative step includes its paired composition in natural flow. Native scrolling and contextual cleanup are retained. The default unenhanced layout is readable without animation setup.
 
@@ -33,3 +33,5 @@ All demo CTAs route to Book. Book, careers, and lead capture use the same client
 ## Verification rules
 
 Check normal/reduced motion, mobile/desktop scroll choreography, expansion and focus, image geometry, responsive widths, route changes, and enquiry failure/retry. Use mocked providers for automated email tests. Do not publish invented claims, testimonials, awards, performance scores, or generated product UI. Keep the latest verified metadata lifecycle and existing working site flows intact.
+
+Projects 2 (HSTA) and 3 (ScoreBoard) retain their original unframed single-screen presentation and full original screen order. Pairing applies only to Simpedu and Uniminute.

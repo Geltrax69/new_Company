@@ -16,13 +16,14 @@ test('every product WebP is included exactly once in its visible story and catal
   })
 })
 
-test('paired scroll scenes include every product WebP exactly once', async () => {
+test('paired and original single-screen stories include every product WebP exactly once', async () => {
   const { WORK_SCENES } = await import('../src/data/workScenes.js')
   directories.forEach((directory, index) => {
     const sources = WORK_SCENES[index].scenes.flatMap(scene => scene.screens.map(screen => screen.src))
     const files = readdirSync(new URL(`../public/work/${directory}/`, import.meta.url))
       .filter(name => name.endsWith('.webp')).map(name => `/work/${directory}/${name}`).sort()
     assert.deepEqual([...sources].sort(), files, `${directory}: paired scenes must include every source exactly once`)
-    assert(WORK_SCENES[index].scenes.every(scene => scene.screens.length === 2))
+    assert.equal(WORK_SCENES[index].scenes.length, [6, 4, 8, 4][index])
+    assert(WORK_SCENES[index].scenes.every(scene => scene.screens.length === ([0, 3].includes(index) ? 2 : 1)))
   })
 })

@@ -15,6 +15,7 @@ const pad = value => String(value).padStart(2, '0')
 
 function Chapter({ project, story, index }) {
   const chapter = useRef(null)
+  const paired = story.scenes.some(scene => scene.screens.length > 1)
 
   useLayoutEffect(() => {
     const media = gsap.matchMedia()
@@ -67,11 +68,11 @@ function Chapter({ project, story, index }) {
       <header className="case-header">
         <div className="case-meta"><span>{pad(index + 1)} / {story.category}</span><span>{project.year}</span></div>
         <div className="case-heading-row"><h2>{story.headline}</h2><p>{story.summary}</p></div>
-        <div className="case-project-row"><span>{project.title}</span><span>{story.scenes.length} paired scenes · {story.steps.length} product screens</span></div>
+        <div className="case-project-row"><span>{project.title}</span><span>{paired ? `${story.scenes.length} paired scenes · ` : ''}{story.steps.length} product screens</span></div>
       </header>
       <div className="case-story">
         <aside className="case-stage" aria-label={`${project.title} screen sequence`}>
-          <div className="case-stage-top"><span>Paired product scenes</span><span><b className="case-current">01</b> / {pad(story.scenes.length)}</span></div>
+          <div className="case-stage-top"><span>{paired ? 'Paired product scenes' : 'The product in practice'}</span><span><b className="case-current">01</b> / {pad(story.scenes.length)}</span></div>
           <div className="case-display">
             {story.scenes.map(scene => <div key={scene.id} className="case-panel"><PairedScreens scene={scene} project={project} /></div>)}
           </div>
