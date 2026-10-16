@@ -2,11 +2,11 @@ import { useLayoutEffect, useRef, useState } from 'react'
 import { Link } from 'react-router-dom'
 import gsap from 'gsap'
 import ScrollTrigger from 'gsap/ScrollTrigger'
-import ScreenArtwork from '../components/ScreenArtwork.jsx'
+import PairedScreens from '../components/PairedScreens.jsx'
 import ProductComposition from '../components/ProductComposition.jsx'
 import useDocumentTitle from '../useDocumentTitle.js'
 import { PROJECTS } from '../data/projects.js'
-import { WORK_STORIES as STORIES } from '../data/workStories.js'
+import { WORK_SCENES as STORIES } from '../data/workScenes.js'
 import './work.css'
 
 gsap.registerPlugin(ScrollTrigger)
@@ -29,7 +29,11 @@ function Chapter({ project, story, index }) {
         const counter = root.querySelector('.case-current')
         const select = index => {
           steps.forEach((step, i) => step.classList.toggle('is-current', i === index))
-          panels.forEach((panel, i) => panel.classList.toggle('is-shown', i === index))
+          panels.forEach((panel, i) => {
+            panel.classList.toggle('is-shown', i === index)
+            panel.inert = i !== index
+            panel.setAttribute('aria-hidden', String(i !== index))
+          })
           indicators.forEach((link, i) => {
             if (i === index) link.setAttribute('aria-current', 'step')
             else link.removeAttribute('aria-current')
@@ -50,6 +54,7 @@ function Chapter({ project, story, index }) {
         ctx.revert()
         storyRoot.classList.remove('is-enhanced')
         root.querySelectorAll('.is-current, .is-shown').forEach(node => node.classList.remove('is-current', 'is-shown'))
+        root.querySelectorAll('.case-panel').forEach(panel => { panel.inert = false; panel.removeAttribute('aria-hidden') })
       }
     })
     ScrollTrigger.refresh()
@@ -62,24 +67,21 @@ function Chapter({ project, story, index }) {
       <header className="case-header">
         <div className="case-meta"><span>{pad(index + 1)} / {story.category}</span><span>{project.year}</span></div>
         <div className="case-heading-row"><h2>{story.headline}</h2><p>{story.summary}</p></div>
-        <div className="case-project-row"><span>{project.title}</span><span>{story.introduction}</span></div>
+        <div className="case-project-row"><span>{project.title}</span><span>{story.scenes.length} paired scenes · {story.steps.length} product screens</span></div>
       </header>
       <div className="case-story">
         <aside className="case-stage" aria-label={`${project.title} screen sequence`}>
-          <div className="case-stage-top"><span>The product in practice</span><span><b className="case-current">01</b> / {pad(story.steps.length)}</span></div>
-          <div className="case-display" aria-hidden="true">
-            {story.steps.map((step, i) => <div key={step.src} className={`case-panel ${step.src.includes('/phone-') || step.src.includes('scoreboard/desktop-3') ? 'is-portrait' : ''}`}>
-              <ScreenArtwork src={step.src} alt="" />
-              <span className="case-panel-caption">{pad(i + 1)} — {step.label}</span>
-            </div>)}
+          <div className="case-stage-top"><span>Paired product scenes</span><span><b className="case-current">01</b> / {pad(story.scenes.length)}</span></div>
+          <div className="case-display">
+            {story.scenes.map(scene => <div key={scene.id} className="case-panel"><PairedScreens scene={scene} project={project} /></div>)}
           </div>
-          <div className="case-stage-bottom"><nav className="case-screen-nav" aria-label={`${project.title} story chapters`}>{story.steps.map((step, i) => <a key={step.src} href={`#${story.id}-step-${i}`} aria-label={`${pad(i + 1)}: ${step.label}`}>{pad(i + 1)}</a>)}</nav><a href={`#${story.id}-details`} className="case-skip">Project details <span aria-hidden="true">↘</span></a></div>
+          <div className="case-stage-bottom"><nav className="case-screen-nav" aria-label={`${project.title} story chapters`}>{story.scenes.map((step, i) => <a key={step.id} href={`#${story.id}-step-${i}`} aria-label={`${pad(i + 1)}: ${step.label}`}>{pad(i + 1)}</a>)}</nav><a href={`#${story.id}-details`} className="case-skip">Project details <span aria-hidden="true">↘</span></a></div>
           <div className="case-progress" aria-hidden="true"><span className="case-progress-fill" /></div>
         </aside>
         <div className="case-narrative">
-          {story.steps.map((step, i) => <section key={step.src} id={`${story.id}-step-${i}`} className="case-step">
+          {story.scenes.map((step, i) => <section key={step.id} id={`${story.id}-step-${i}`} className="case-step">
             <div className="case-step-copy"><p className="case-step-label"><span>{pad(i + 1)}</span>{step.label}</p><h3>{step.title}</h3><p className="case-step-description">{step.description}</p></div>
-            <figure className={`case-inline-screen ${step.src.includes('/phone-') || step.src.includes('scoreboard/desktop-3') ? 'is-portrait' : ''}`}><ScreenArtwork src={step.src} alt={`${project.title} — ${step.label}`} /></figure>
+            <div className="case-inline-scene"><PairedScreens scene={step} project={project} /></div>
           </section>)}
         </div>
       </div>

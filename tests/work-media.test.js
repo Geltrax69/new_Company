@@ -15,3 +15,14 @@ test('every product WebP is included exactly once in its visible story and catal
     assert.deepEqual([...PROJECTS[index].images].sort(), files, `${directory}: catalog must include every source`)
   })
 })
+
+test('paired scroll scenes include every product WebP exactly once', async () => {
+  const { WORK_SCENES } = await import('../src/data/workScenes.js')
+  directories.forEach((directory, index) => {
+    const sources = WORK_SCENES[index].scenes.flatMap(scene => scene.screens.map(screen => screen.src))
+    const files = readdirSync(new URL(`../public/work/${directory}/`, import.meta.url))
+      .filter(name => name.endsWith('.webp')).map(name => `/work/${directory}/${name}`).sort()
+    assert.deepEqual([...sources].sort(), files, `${directory}: paired scenes must include every source exactly once`)
+    assert(WORK_SCENES[index].scenes.every(scene => scene.screens.length === 2))
+  })
+})

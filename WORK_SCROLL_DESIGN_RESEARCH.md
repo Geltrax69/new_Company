@@ -1,3 +1,22 @@
+# Current update — paired product scenes
+
+The restored scroll design from `3a40827` remains in use. The owner supplied paired web/phone and app-showcase references. Every original image is now composed with a related screen inside the existing stage, rather than assigning one scroll section per image.
+
+- School: six pairs — office/teacher, access/sign-in, fee records/mobile payments, reports/exam results, parent dashboard/timetable, attendance entry/history.
+- Federation: two pairs — public website/directory and management/publishing.
+- ScoreBoard: four pairs — display/control, team/match setup, workspace/settings, timeout/result.
+- Uniminute: four phone pairs — discovery, catalogue/detail, store types and cart/support.
+
+All 32 WebPs appear exactly once in the 16-scene data. The filesystem regression test enforces that invariant. Screens remain separate, sharp HTML images; code-native frames and the retained generated backdrop provide art direction. No new raster image or invented product UI was needed. Each screen links to the full-size original.
+
+The existing native CSS sticky stage, 240ms scene crossfades, progress rule, numbered scene links, reduced-motion fallback and named project-details anchors remain. Inactive desktop panels are inert and hidden from assistive technology; mobile/fallback compositions retain accessible full-size links.
+
+Verified paired-scene results: production build and 10 tests passed, including filesystem coverage for every source exactly once in scene data. Browser checks covered 96 scene/viewport combinations, 48 desktop transitions, full-size links, direct and reverse navigation, all four details anchors, inactive-panel inert state and live reduced motion. No browser page errors. At 1440 × 900 the school case is 4,651px, compared with 8,431px in the twelve-single-screen version (44.8% shorter). The paired stage was checked for clipping down to a 650px-high desktop viewport. No new generated image or dependency was added.
+
+The previous research below is retained for provenance. Its single-image counts and initial verification refer to earlier revisions; paired scenes are the current implementation.
+
+---
+
 # Work presentation — research and implementation decision
 
 16 October 2026. This direction supersedes the earlier floating-image / giant-background-type implementation and the earlier premium review's motion recommendations.

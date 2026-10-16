@@ -78,3 +78,37 @@
   .work-invitation { padding-block: 56px 64px; }.work-invitation h2 { font-size: 2.8rem; }
 }
 @media (prefers-reduced-motion: reduce) { .case-step-copy, .case-screen-nav a { transition: color .15s ease, background-color .15s ease; } }
+/* Each scroll state is one deliberately arranged pair of authentic UI screens. */
+.case-panel { padding: 0; gap: 0; }
+.case-inline-scene { height: clamp(380px,44vw,600px); margin-top: 28px; border-radius: 18px; overflow: hidden; }
+.is-enhanced .case-inline-scene { display: none; }
+.paired-scene { --pair-phone-height: min(440px,calc(100svh - 340px)); --pair-web-height: min(200px,calc((100svh - 470px) / 2)); width: 100%; height: 100%; display: flex; flex-direction: column; padding: 24px; background: #e9ebef url('/images/showcase/silver-loop-800.webp') center / cover; }
+.paired-scene-mark { color: #52525b; font-size: .625rem; letter-spacing: .12em; text-transform: uppercase; }
+.paired-scene-screens { flex: 1; min-height: 0; display: flex; align-items: center; justify-content: center; gap: 24px; padding-block: 20px; }
+.paired-screen { min-width: 0; margin: 0; }
+.paired-screen-frame { display: block; color: inherit; text-decoration: none; transition: box-shadow .2s ease; }
+.paired-screen .screen-artwork { width: 100%; outline: none; box-shadow: none; border-radius: 0; }
+.paired-screen figcaption { display: flex; justify-content: center; gap: 8px; margin-top: 10px; font-size: .625rem; color: #52525b; line-height: 1.4; }
+.paired-screen.is-phone { width: min(35%,calc(var(--pair-phone-height) * var(--pair-ratio))); }
+.paired-screen.is-phone .paired-screen-frame { padding: 5px; border-radius: 25px; border: 1px solid #a1a1aa; background: linear-gradient(140deg,#6b6b72,#17171a 25%,#303036 75%,#92929b); box-shadow: inset 0 0 0 1px #000,0 18px 28px #00000026; }
+.paired-screen.is-phone .screen-artwork { border-radius: 19px; }
+.paired-screen.is-web .paired-screen-frame { overflow: hidden; border: 1px solid #00000026; border-radius: 7px; box-shadow: 0 12px 28px #0000001a; background: white; }
+.paired-window-bar { display: flex; gap: 4px; align-items: center; height: 14px; padding-left: 7px; background: #fafafa; border-bottom: 1px solid #e4e4e7; }.paired-window-bar i { display: block; width: 3px; height: 3px; background: #c4c4ca; border-radius: 50%; }
+.paired-scene-caption { display: flex; justify-content: center; gap: 12px; font-size: .625rem; color: #52525b; }
+.layout-mixed .paired-screen.is-web { width: 69%; }.layout-mixed .paired-screen.is-phone { width: min(25%,calc(var(--pair-phone-height) * var(--pair-ratio))); }
+.layout-web-pair .paired-scene-screens { flex-direction: column; gap: 14px; padding-inline: 16px; }
+.layout-web-pair .paired-screen.is-web { width: min(88%,calc(var(--pair-web-height) * var(--pair-ratio))); }
+.layout-web-pair .paired-screen-1 { align-self: flex-start; }.layout-web-pair .paired-screen-2 { align-self: flex-end; }
+.layout-web-pair .paired-screen figcaption { justify-content: flex-start; margin-top: 5px; font-size: .5625rem; }
+.layout-phones { background: radial-gradient(ellipse at 30% 50%,#ffffff0d,transparent 50%),radial-gradient(ellipse at 75% 70%,#ffffff08,transparent 50%),#101114; }
+.layout-phones .paired-scene-mark, .layout-phones .paired-scene-caption, .layout-phones figcaption { color: #c5c5cf; }
+.layout-phones .paired-screen-1 { margin-top: -20px; }.layout-phones .paired-screen-2 { margin-top: 20px; }
+.layout-phones .paired-screen-frame { box-shadow: 0 0 0 1px #ffffff0d,0 24px 32px #00000066; }
+.paired-screen-frame:hover { box-shadow: 0 0 0 2px #71717a,0 16px 32px #00000026; }
+@media (max-width: 900px) {
+  .case-inline-scene { margin: 0; height: 410px; }.paired-scene { padding: 16px; --pair-phone-height: 300px; --pair-web-height: 130px; }.paired-scene-screens { gap: 12px; }.paired-scene-mark, .paired-scene-caption { font-size: .5rem; }.paired-screen figcaption { font-size: .5rem; }
+  .paired-screen.is-phone { width: min(42%,calc(var(--pair-phone-height) * var(--pair-ratio))); }.layout-mixed .paired-screen.is-phone { width: 27%; }.layout-mixed .paired-screen.is-web { width: 68%; }
+  .paired-screen.is-phone .paired-screen-frame { padding: 3px; border-radius: 18px; }.paired-screen.is-phone .screen-artwork { border-radius: 14px; }.layout-web-pair .paired-scene-screens { padding-inline: 0; }
+}
+@media (max-width: 600px) { .case-inline-scene { margin-top: 24px; height: 370px; }.paired-scene { --pair-phone-height: 280px; --pair-web-height: 130px; padding: 14px; }.paired-scene-screens { gap: 12px; }.paired-window-bar { height: 10px; }.paired-screen figcaption { font-size: .5rem; }.paired-scene-caption { gap: 8px; font-size: .5rem; } }
+.layout-phones .paired-screen-frame:focus-visible { outline: 2px solid #fff; outline-offset: 6px; }
