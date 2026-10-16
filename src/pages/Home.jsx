@@ -261,7 +261,7 @@ export default function Home() {
 
       <Section className="capability">
         <Reveal className="cap-left">
-          <h2 className="heading">One subscription.<br />Every <CycleWord words={CAP_DATA.map((c) => c.name.split(' ')[0].toLowerCase())} /><br />capability</h2>
+          <h2 className="heading">One subscription.<br />Every capability.</h2>
           <ul className="cap-list">
             {CAP_DATA.map((c, i) => (
               <li key={c.name}>
@@ -300,7 +300,7 @@ export default function Home() {
 
       <Section className="how">
         <Reveal className="how-head">
-          <h2 className="heading center">How it works</h2>
+          <h2 className="heading center">How we work</h2>
           <p className="body-lg center">No agency maze, no freelancer roulette.<br />Just a team that builds.</p>
         </Reveal>
         <div className="how-body">
